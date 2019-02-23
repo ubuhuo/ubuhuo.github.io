@@ -6,7 +6,20 @@
 title: 小白维基
 subtitle: 语言，框架，架构，技术有关的一切都在这里。
 description: 语言，框架，架构，技术有关的一切都在这里。
-keywords: 小白,维基,小白维基,技术维基站,技术博客
+keywords: 
+  - 小白
+  - 维基
+  - 小白维基
+  - 技术维基站
+  - 技术博客
+  - 操作系统
+  - 数据库
+  - 科学上网
+  - 编程思维
+  - 编程框架
+  - 编程语言
+  - 网络笔记
+  - 软件使用
 author: Ryoma
 language: zh-CN
 timezone:
@@ -123,3 +136,6 @@ nofollow:
   enable: true
   exclude:
     - blanc.site
+    - www.blanc.site
+    - wiki.blanc.site
+    - blog.blanc.site
