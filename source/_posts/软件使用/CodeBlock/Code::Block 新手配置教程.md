@@ -1,11 +1,11 @@
 ---
-title: 'Code::Block 新手配置教程'
+title: Code::Block 新手配置教程
 date: 2017/3/13
-categories:
+categories: 
   - 软件使用
   - CodeBlock
-tags:
-  - 'Code::Block 新手配置教程'
+tags: 
+  - Code::Block 新手配置教程
 copyright: true
 abbrlink: 51f295ff
 ---

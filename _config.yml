@@ -8,10 +8,9 @@ subtitle: 语言，框架，架构，技术有关的一切都在这里。
 description: 语言，框架，架构，技术有关的一切都在这里。
 keywords: 
   - 小白
-  - 维基
+  - 一只小白
+  - 依依东望
   - 小白维基
-  - 技术维基站
-  - 技术博客
   - 操作系统
   - 数据库
   - 科学上网
@@ -126,7 +125,7 @@ baidusitemap:
   path: baidusitemap.xml
 
 baidu_url_submit:
-  count: 10 ## 提交最新的一个链接
+  count: 100 ## 提交最新的一个链接
   host: wiki.blanc.site ## 在百度站长平台中注册的域名
   token: PcbqETSph6QrJSJA ## 请注意这是您的秘钥， 所以请不要把博客源代码发布在公众仓库里!
   path: baidu_urls.txt ## 文本文档的地址， 新链接会保存在此文本文档里
