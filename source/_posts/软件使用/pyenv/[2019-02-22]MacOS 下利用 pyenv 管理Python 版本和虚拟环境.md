@@ -1,6 +1,6 @@
 ---
 title: MacOS 下利用 pyenv 管理Python 版本和虚拟环境
-date: 2017/7/4
+date: 2019/2/22
 categories:
   - 软件使用
   - pyenv
