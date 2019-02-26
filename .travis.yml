@@ -11,7 +11,7 @@ after_script:
   - git config user.email "18797343@qq.com"
   - git add .
   - git commit -m "Update docs"
-  - git push --force --quiet "https://${travis}@${GH_REF}" backups:backups
+  - git push --force --quiet "https://${wiki}@${GH_REF}" backups:backups
 branches:
   only:
     - wiki
