@@ -50,3 +50,14 @@ abbrlink: e94a0a36
 vi /etc/ssh/sshd_config
 systemctl restart sshd.service
 ```
+
+## 设置 SSH 不自动断开连接
+
+```powershell
+vim /etc/ssh/sshd_config
+# 修改两处的值为：
+ClientAliveInterval 60
+ClientAliveCountMax 10
+# 使修改的ssh配置文件生效：
+service sshd reload
+```
