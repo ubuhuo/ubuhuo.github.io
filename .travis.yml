@@ -1,9 +1,12 @@
 language: node_js
 node_js: stable
+
 install:
   - npm install
+
 script:
   - hexo g
+
 after_script:
   - cd ./public
   - git init
@@ -11,10 +14,10 @@ after_script:
   - git config user.email "18797343@qq.com"
   - git add .
   - git commit -m "Update docs"
-  - git push --force --quiet "https://${wiki}@${GH_REF}" backups:backups
+  - git push --force --quiet "https://${wiki}@${GH_REF}" master:master
 branches:
   only:
-    - wiki
+    - backups
 env:
   global:
     - GH_REF: github.com/ubuhuo/ubuhuo.github.io.git
