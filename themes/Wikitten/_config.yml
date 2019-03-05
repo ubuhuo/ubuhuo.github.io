@@ -33,7 +33,9 @@ customize:
         weibo: https://weibo.com/xiaobaidh
         github: https://github.com/ubuhuo
         rss: /atom.xml
-    social_link_tooltip: true # enable the social link tooltip, options: true, false
+    social_link_tooltip: true
+    aging:
+        enable: true
 
 # Widgets
 widgets: # default use category only

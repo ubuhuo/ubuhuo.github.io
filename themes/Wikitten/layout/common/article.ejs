@@ -59,6 +59,8 @@
             <% } %>
         <% } %>
         <% if (show_all_content) { %>
+            <!-- 内容失效提醒 -->
+            <%- partial('plugin/aging') %>
             <%- post.content %>
             </div>
         <% } else { %>
