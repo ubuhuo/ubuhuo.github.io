@@ -7,6 +7,7 @@ categories:
 tags:
   - tmux 入门
 copyright: true
+abbrlink: 9e40babb
 ---
 
 ```

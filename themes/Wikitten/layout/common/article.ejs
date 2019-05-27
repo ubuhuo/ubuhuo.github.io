@@ -60,7 +60,7 @@
         <% } %>
         <% if (show_all_content) { %>
             <!-- 内容失效提醒 -->
-            <%- partial('plugin/aging') %>
+            <%- partial('plugin/aging', { date_format: null }) %>
             <%- post.content %>
             </div>
         <% } else { %>
