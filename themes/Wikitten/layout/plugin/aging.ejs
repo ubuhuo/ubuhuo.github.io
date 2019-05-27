@@ -3,7 +3,7 @@
         <p>
             请注意：本文编写于 <%= date(post.date, date_format) %>，最后修改于 <%= date(post.updated, date_format) %> ，其中某些信息可能已经失去时效性。
         </p>
-    <% } else if ((post.updated.format('YYYY') - moment().format('YYYY'))) { %>
+    <% } else if ((post.updated.format('MM') - moment().format('MM'))) { %>
         <p>
             请注意：本文编写于 <%= date(post.date, date_format) %>，最后修改于 <%= date(post.updated, date_format) %> ，其中某些信息可能已经失去时效性。
         </p>
