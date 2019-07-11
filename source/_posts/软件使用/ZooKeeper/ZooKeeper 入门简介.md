@@ -93,8 +93,8 @@ Zookeeper 一个最常用的使用场景就是用于担任服务生产者和服�
 
 [JavaGuide：ZooKeeper 相关概念总结][4]
 
-[1]: https://wiki.blanc.site/
-[2]: https://wiki.blanc.site/
+[1]: https://wiki.blanc.site/archives/f1bf1c1a.html
+[2]: https://wiki.blanc.site/archives/a07e5380.html
 [3]: https://img.blanc.site//wiki/img/20190711195553.png
 [4]: https://snailclimb.top/JavaGuide/#/system-design/framework/ZooKeeper
 [5]: https://img.blanc.site//wiki/img/20190711200430.png
