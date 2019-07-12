@@ -7,6 +7,7 @@ categories:
 tags:
   - ZooKeeper 命令
 copyright: true
+abbrlink: 2b7b1ffc
 ---
 
 ## zkServer

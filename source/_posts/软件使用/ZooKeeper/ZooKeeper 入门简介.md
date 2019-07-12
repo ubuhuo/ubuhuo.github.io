@@ -7,6 +7,7 @@ categories:
 tags:
   - ZooKeeper 入门简介
 copyright: true
+abbrlink: f1db9330
 ---
 
 ## 是什么？
