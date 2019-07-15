@@ -51,12 +51,12 @@
                 <% } %>
             <% } %>
         <% } else { %>
-            <% if (post.toc) { %>
-                <div id="toc" class="toc-article">
-                <strong class="toc-title"><%= __('article.catalogue') %></strong>
-                    <%- toc(post.content) %>
-                </div>
-            <% } %>
+            
+            <div id="toc" class="toc-article">
+            <strong class="toc-title"><%= __('article.catalogue') %></strong>
+                <%- toc(post.content) %>
+            </div>
+            
         <% } %>
         <% if (show_all_content) { %>
             <!-- 内容失效提醒 -->
