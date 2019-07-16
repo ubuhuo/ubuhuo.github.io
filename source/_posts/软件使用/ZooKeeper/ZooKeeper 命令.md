@@ -36,9 +36,9 @@ abbrlink: 2b7b1ffc
 | set path data [version] | 修改当前节点的数据内容  如果指定版本，需要和当前节点的数据版本一致 |
 | delete path [version] | 删除指定路径的节点，如果有子节点要先删除子节点 |
 | rmr path  | 删除当前路径节点及其所有子节点 |
-|  setquota -n|-b val path | 设置节点配额（比如限制节点数据长度，限制节点中子节点个数）|
+|  setquota -n｜-b val path | 设置节点配额（比如限制节点数据长度，限制节点中子节点个数）|
 | listquota path | 查看路径节点的配额信息 |
-| delquota [-n|-b] path  | 删除节点路径的配额信息 |
+| delquota [-n｜-b] path  | 删除节点路径的配额信息 |
 | connect host:port 和 clost | 在当前连接中连接其他的 ZooKeeper 服务器和关闭服务器 |
 | history 和 redo cmdno | 查看客户端这次会话所执行的所有命令 和 执行指定历史命令 |
 
