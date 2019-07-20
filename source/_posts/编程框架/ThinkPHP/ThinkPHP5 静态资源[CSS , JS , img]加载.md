@@ -1,5 +1,5 @@
 ---
-title: 'ThinkPHP5 静态资源[CSS , JS , img]加载'
+title: ThinkPHP5 静态资源[CSS , JS , img]加载
 date: 2018/3/5
 categories:
   - 编程框架
@@ -7,7 +7,6 @@ categories:
 tags:
   - ThinkPHP5 静态资源加载
 copyright: true
-abbrlink: d9089534
 ---
 
 说起这个静态资源加载可真的是一把心酸泪呀，各种路径问题[绝对、相对]，还有前段时间写 `WordPress` 主题也是，需要通过各种内置钩子或函数模版来解决路径问题；

@@ -7,7 +7,6 @@ categories:
 tags:
   - U盘安装 Linux 异常处理
 copyright: true
-abbrlink: 8678286b
 ---
 
 之前也遇到过这种情况只是没有记录下来导致这次遇到的时候又百度了一遍，很麻烦，所以干脆就自己记录下来方便以后查询。

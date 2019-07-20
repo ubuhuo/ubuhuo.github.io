@@ -1,7 +1,5 @@
 ---
-title: >-
-  CentOS7 + Python3 + Django(rest_framework) + MariaDB + nginx + uwsgi 部署 API
-  开发环境
+title: CentOS7 + Python3 + Django(rest_framework) + MariaDB + nginx + uwsgi 部署 API 开发环境
 date: 2018/8/17
 categories:
   - 编程框架
@@ -9,7 +7,6 @@ categories:
 tags:
   - Django 部署
 copyright: true
-abbrlink: 22a754d3
 ---
 
 这是一个 `Django` 环境部署教程，也是一个我坑爹的 `Django` 环境部署记录：

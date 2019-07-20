@@ -7,7 +7,6 @@ categories:
 tags:
   - Django 笔记
 copyright: true
-abbrlink: 953c2552
 ---
 
 本文所用 `Django` 代码版本：`2.1.3`
