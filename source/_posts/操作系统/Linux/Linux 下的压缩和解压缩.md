@@ -21,9 +21,9 @@ copyright: true
 
 `Linux` 下最常用的打包程序就是 `tar` 了，使用 `tar` 程序打出来的包我们常称为 `tar包`，tar包 文件的命令通常都是以 `.tar` 结尾的。生成 `tar包` 后，就可以用其它的程序来进行压缩了。
 
-### 1. 基本用法：
+### 基本用法：
 
-#### 1.1 打包 -c
+#### 打包 -c
 
 ```
 # 将所有 .jpg 文件打包为 all.tar
@@ -32,7 +32,7 @@ tar -cf all.tar *.jpg
 # -f 指定包的文件名
 ```
 
-#### 1.2 添加 -r
+#### 添加 -r
 
 ```
 # 将所有 .gif 文件添加到 all.tar
@@ -41,7 +41,7 @@ tar -rf all.tar *.gif
 # -f 指定包的文件名
 ```
 
-#### 1.3 更新 -u
+#### 更新 -u
 
 ```
 # 更新 all.tar 中 logo.gif 文件
@@ -50,7 +50,7 @@ tar -uf all.tar logo.gif
 # -f 指定包的文件名
 ```
 
-#### 1.4 列出 -t
+#### 列出 -t
 
 ```
 # 列出 all.tar 中所有文件
@@ -59,7 +59,7 @@ tar -tf all.tar
 # -f 指定包的文件名
 ```
 
-#### 1.5 解包 -x
+#### 解包 -x
 
 ```
 # 解包 all.tar 中所有文件
@@ -68,11 +68,11 @@ tar -xf all.tar
 # -f 指定包的文件名
 ```
 
-### 2. tar 与其他压缩程序
+### tar 与其他压缩程序
 
 为了方便用户在打包解包的同时可以压缩或解压文件，`tar` 提供了一种特殊的功能：可以在打包或解包的同时调用其它的压缩程序，比如：`gzip` `bzip2` 等。
 
-#### 2.1 tar 与 gzip
+#### tar 与 gzip
 
 `gzip` 是 `GNU` 组织开发的一个压缩程序，`.gz`结尾的文件就是 `gzip` 压缩的结果。
 
@@ -80,7 +80,7 @@ tar -xf all.tar
 
 `tar` 中使用 `-z` 这个参数来调用 `gzip`，举例说明：
 
-##### 2.1.1 打包并使用 gzip 压缩
+##### 打包并使用 gzip 压缩
 
 ```
 tar -czf all.tar.gz *.jpg
@@ -89,7 +89,7 @@ tar -czf all.tar.gz *.jpg
 # -f 指定包的文件名
 ```
 
-##### 2.1.2 使用 gzip 解压缩并解包
+##### 使用 gzip 解压缩并解包
 
 ```
 tar -xzf all.tar.gz
@@ -99,7 +99,7 @@ tar -xzf all.tar.gz
 ```
 
 
-#### 2.2 tar 与 bzip2
+#### tar 与 bzip2
 
 `bzip2` 是一个压缩能力更强的压缩程序，`.bz2` 结尾的文件就是 `bzip2` 压缩的结果。
 
@@ -107,7 +107,7 @@ tar -xzf all.tar.gz
 
 `tar` 中使用 `-j` 这个参数来调用 `bzip2`，举例说明：
 
-##### 2.2.1 打包并使用 bzip2 压缩
+##### 打包并使用 bzip2 压缩
 
 ```
 tar -cjf all.tar.bz2 *.jpg
@@ -116,7 +116,7 @@ tar -cjf all.tar.bz2 *.jpg
 # -f 指定包的文件名
 ```
 
-##### 2.2.2 使用 bzip2 解压缩并解包
+##### 使用 bzip2 解压缩并解包
 
 ```
 tar -xjf all.tar.bz2
@@ -125,7 +125,7 @@ tar -xjf all.tar.bz2
 # -f 指定包的文件名
 ```
 
-#### 2.3 tar 与 compress 
+#### tar 与 compress 
 
 `compress` 也是一个压缩程序，但使用人数并不多，`.Z` 结尾的文件就是 `compress` 压缩的结果。
 
@@ -133,7 +133,7 @@ tar -xjf all.tar.bz2
 
 `tar` 中使用 `-Z` 这个参数来调用 `compress`，举例说明：
 
-##### 2.3.1 打包并使用 compress 压缩
+##### 打包并使用 compress 压缩
 
 ```
 tar -cZf all.tar.Z *.jpg
@@ -142,7 +142,7 @@ tar -cZf all.tar.Z *.jpg
 # -f 指定包的文件名
 ```
 
-##### 2.3.2 使用 compress 解压缩并解包
+##### 使用 compress 解压缩并解包
 
 ```
 tar -xZf all.tar.Z
@@ -151,7 +151,7 @@ tar -xZf all.tar.Z
 # -f 指定包的文件名
 ```
 
-### 3. 总结 tar 知识
+### 总结 tar 知识
 
 ```
 -c 打包
@@ -176,25 +176,25 @@ tar -xZf all.tar.Z
 
 `.zip` 和 `.rar` 是 `Window` 下的常见压缩文件，`Linux`也有相应的方法来解压它们：
 
-### 1. zip 
+### zip 
 
 `Linux` 下提供了 `zip` 和 `unzip` 程序，`zip` 是压缩命令程序，`unzip` 是解压命令程序。它们的参数选项很多，这里只做简单介绍：
 
-#### 1.1 压缩
+#### 压缩
 
 ```
 # 将所有 .jpg 文件压缩成一个 zip 包
 zip all.zip *.jpg
 ```
 
-#### 1.2 解压
+#### 解压
 
 ```
 # 将 all.zip 中的所有文件解压出来
 unzip all.zip
 ```
 
-### 2. rar
+### rar
 
 要在 `Linux` 下处理 `.rar` 文件，需要安装 `RAR for Linux`，可以从网上下载
 
@@ -202,14 +202,14 @@ unzip all.zip
 
 安装后就有了 `rar` 和 `unrar` 这两个命令程序，`rar` 压缩，`unrar` 解压。依旧只做简单介绍：
 
-#### 2.1 压缩
+#### 压缩
 
 ```
 # 将所有 .jpg 文件压缩成 all.rar，该程序会将 .rar 扩展名将自动附加到包名后
 rar a all *.jpg
 ```
 
-#### 2.2 解压
+#### 解压
 
 ```
 # 将 all.rar 中的所有文件解压出来
