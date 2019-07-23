@@ -6,7 +6,6 @@ categories:
 tags:
   - 不翻墙上 Google
 copyright: true
-abbrlink: 573af784
 ---
 
 ## 如何不翻墙下载 Chrome
