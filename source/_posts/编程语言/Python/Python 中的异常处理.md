@@ -332,6 +332,6 @@ def upload_avatar(request):
 
 
 [1]: https://docs.python.org/zh-cn/3/tutorial/errors.html
-[2]: https://wiki.blanc.site
+[2]: https://wiki.blanc.site/archives/4007339e.html
 [3]: https://www.zlovezl.cn/articles/three-rituals-of-exceptions-handling/
 [4]: https://zhuanlan.zhihu.com/p/33454825?group_id=941986895471882240
