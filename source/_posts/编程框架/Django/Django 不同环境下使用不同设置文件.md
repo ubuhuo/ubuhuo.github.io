@@ -104,6 +104,11 @@ export ENV="SERVER"
 
 只要能完成以上两点就能自定义属于自己的方案。
 
+## 参考
+
+[EveryDay：Django 工程结构以及利用 Git 分支进行生产环境切换][1]
+[SmartKeyerror：Django 开发环境与生产环境的区分][2]
+
 [1]: https://smartkeyerror.com/%E5%B7%A5%E7%A8%8B%E7%BB%93%E6%9E%84.html
 [2]: http://code4fs.xyz/article/2/
 [3]: https://img.blanc.site//wiki/img/20190725100859.png
