@@ -7,7 +7,6 @@ categories:
 tags:
   - webpack 4 入门
 copyright: true
-abbrlink: 72d385fc
 ---
 
 ## 导读
