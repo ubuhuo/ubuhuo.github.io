@@ -7,7 +7,6 @@ categories:
 tags:
   - Git 远程仓库 pull/push
 copyright: true
-abbrlink: 6c235203
 ---
 
 ## 1. 简要说明使用 Git 操作远程仓库时 pull 和 push 命令机制及原理
