@@ -7,7 +7,6 @@ categories:
 tags:
   - vue-cli 下配置 Element + axios + Mockjs
 copyright: true
-abbrlink: b4f7e05e
 ---
 
 近期打算配合学习计划写一个小的匿名树洞，打算结合之前学习的 `ThinkPHP5` 和正在学习的 `Vue` 两个框架，最近在写项目的前端部分踩了好多坑还在一步一步摸索中。
