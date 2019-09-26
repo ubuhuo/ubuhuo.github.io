@@ -7,7 +7,6 @@ categories:
 tags:
   - MySQL 修改数据库名
 copyright: true
-abbrlink: ef1e0835
 ---
 
 首先，`MySQL` 没有直接更改数据库名称的命令；
