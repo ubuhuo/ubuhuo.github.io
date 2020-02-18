@@ -19,7 +19,7 @@ keywords:
   - 编程语言
   - 网络笔记
   - 软件使用
-author: Ryoma
+author: ryomahan
 language: zh-CN
 timezone:
 
@@ -95,7 +95,7 @@ theme: Wikitten
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   - type: git
-    repo: https://github.com/ubuhuo/ubuhuo.github.io.git
+    repo: https://github.com/ryomahan/ryomahan.github.io.git
     branch: master
   - type: baidu_url_submitter
 

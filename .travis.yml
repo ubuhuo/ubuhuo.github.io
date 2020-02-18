@@ -10,14 +10,14 @@ script:
 after_script:
   - cd ./public
   - git init
-  - git config user.name "ubuhuo"
-  - git config user.email "18797343@qq.com"
+  - git config user.name "ryomahan"
+  - git config user.email "ryomahan1996@gmail.com"
   - git add .
-  - git commit -m "Update docs"
+  - git commit -m "Update Documents"
   - git push --force --quiet "https://${wiki}@${GH_REF}" master:master
 branches:
   only:
     - backups
 env:
   global:
-    - GH_REF: github.com/ubuhuo/ubuhuo.github.io.git
+    - GH_REF: github.com/ryomahan/ryomahan.github.io

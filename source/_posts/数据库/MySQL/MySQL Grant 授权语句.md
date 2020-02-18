@@ -15,7 +15,7 @@ copyright: true
 
 ```mysql
 GRANT privilege[,privilege,...] ON database.table 
--> TO username@user_ip [INDENTIFIED BY password_you_want]
+-> TO username@user_ip [IDENTIFIED BY password_you_want]
 -> [REQUIRE tsl_option] [WITH [GRANT_OPTION] resource_option]];
 ```
 
@@ -58,3 +58,11 @@ SHOW privileges;
 # 查看已经分配给某个特定用户的 GRANT 语句
 SHOW GRANTS FOR username@user_ip
 ```
+
+## 参考
+
+[易百教程-MySQL授予权限（Grant语句）][1]
+[简书-Rick_Ji-mysql的grant权限][2]
+
+[1]: https://www.yiibai.com/mysql/grant.html
+[2]: https://www.jianshu.com/p/fd1cb8657702
