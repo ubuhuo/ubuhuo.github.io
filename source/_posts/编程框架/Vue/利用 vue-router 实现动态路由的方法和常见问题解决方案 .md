@@ -122,7 +122,7 @@ const LOGIN_PAGE_NAME = 'login'
 
 // 实例化 Router 对象
 const router = new Router({
-  staticRoutes,
+  routes: staticRoutes,
   mode: 'history'
 })
 
@@ -172,7 +172,7 @@ const loadView = (viewPath) => {
 }
 
 const filterAsyncRouter = (routeList) => {
-  return routeList.map((route) => {
+  return routeList.filter((route) => {
     if (route.component) {
       if (route.component === 'Main') {
         // 如果 component = Main 说明是布局组件
@@ -187,6 +187,7 @@ const filterAsyncRouter = (routeList) => {
       if (route.children && route.children.length) {
         route.children = filterAsyncRouter(route.children)
       }
+      return true
     }
   })
 }
