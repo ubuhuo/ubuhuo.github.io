@@ -4,10 +4,7 @@ date: 2017/9/9
 categories:
   - 编程语言
   - Python
-tags:
-  - Python + OpenCV 图像处理
 copyright: true
-abbrlink: '50486745'
 ---
 
 `Windows` 下同时存在 `Python2` 和 `Python3` 使用 `pip` 时系统报错：`Fatal error in launcher: Unable to create process using '"'` 的解决方案

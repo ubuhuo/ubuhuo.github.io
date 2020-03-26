@@ -4,10 +4,7 @@ date: 2018/6/25
 categories:
   - 编程语言
   - PHP
-tags:
-  - PHP 判断文件存在函数选择
 copyright: true
-abbrlink: '44e28494'
 ---
 
 [原文链接](https://blog.csdn.net/zmzwll1314/article/details/51550016)

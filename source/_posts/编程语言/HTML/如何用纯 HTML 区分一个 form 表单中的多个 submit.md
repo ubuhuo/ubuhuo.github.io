@@ -4,10 +4,7 @@ date: 2017/7/27
 categories:
   - 编程语言
   - HTML
-tags:
-  - 纯 HTML 区分 form 表单中多个 submit
 copyright: true
-abbrlink: cd7f373a
 ---
 
 当然可以用 `JS` 的方法，但是对于初学者来说 `JS` 函数有些麻烦，在这里我分享两个纯 `HTML` 区分一个 `form` 中不同 `submit` 的方法：

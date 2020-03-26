@@ -4,10 +4,7 @@ date: 2018/1/20
 categories:
   - 编程语言
   - HTML
-tags:
-  - 利用 position + rgba 将 HTML 背景灰化
 copyright: true
-abbrlink: 8b008844
 ---
 
 最近正在摸索着写自己的第一个主题，在 `Copy` 大佬页面设计的时候发现虽然用了同一张图做背景我 `Copy` 出来的页面却显得很不协调：

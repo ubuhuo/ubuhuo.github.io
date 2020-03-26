@@ -4,10 +4,7 @@ date: 2018/5/12
 categories:
   - 编程语言
   - PHP
-tags:
-  - PHP 常用缓存技术的总结
 copyright: true
-abbrlink: 60232ab3
 ---
 
 1、全页面静态化缓存：将页面全部生成为 `HTML` 静态页面，用户访问时直接访问静态页面，不走 `PHP` 服务器的解析流程。此种方式在 `CMS` 系统中比较常见，如 `dedecms`。

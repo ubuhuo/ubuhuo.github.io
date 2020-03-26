@@ -5,9 +5,8 @@ categories:
   - 编程语言
   - CSS
 tags:
-  - 一劳永逸的搞定 flex 布局
+  - flex 布局
 copyright: true
-abbrlink: 2db90137
 ---
 
 

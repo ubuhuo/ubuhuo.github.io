@@ -4,10 +4,7 @@ date: 2018/6/23
 categories:
   - 编程语言
   - PHP
-tags:
-  - PHP 静态方法和非静态方法简单对比
 copyright: true
-abbrlink: e639e72a
 ---
 
 ## 静态方法优点

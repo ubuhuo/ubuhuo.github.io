@@ -4,8 +4,6 @@ date: 2019/8/4
 categories:
   - 编程语言
   - Python
-tags:
-  - Python 文件后缀
 copyright: true
 ---
 

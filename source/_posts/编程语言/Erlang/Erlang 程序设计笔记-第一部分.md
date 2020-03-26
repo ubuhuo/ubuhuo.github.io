@@ -7,7 +7,6 @@ categories:
 tags:
   - Erlang 程序设计笔记
 copyright: true
-abbrlink: 76405d8b
 ---
 
 ## 第一章：什么是并发

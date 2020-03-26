@@ -5,9 +5,8 @@ categories:
   - 编程语言
   - Python
 tags:
-  - Python + OpenCV 图像处理
+  - 图像处理
 copyright: true
-abbrlink: 19ed6e31
 ---
 
 ## 1. 读取、写入和展示图片

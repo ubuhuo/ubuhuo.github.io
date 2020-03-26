@@ -4,10 +4,7 @@ date: 2018/1/27
 categories:
   - 编程语言
   - HTML
-tags:
-  - 固定一个 div 在另一个 div 的底部
 copyright: true
-abbrlink: c0d98826
 ---
 
 ```html
