@@ -7,7 +7,6 @@ categories:
 tags:
   - Nginx rtmp 模块配合 OBS 推流实现直播(监控)功能
 copyright: true
-abbrlink: 3f439512
 ---
 
 写的有点仓促，有问题的话可以随时留言。

@@ -6,7 +6,6 @@ categories:
 tags:
   - Shadowsocks
 copyright: true
-abbrlink: 7f71ea0e
 ---
 
 ## 1. 前记

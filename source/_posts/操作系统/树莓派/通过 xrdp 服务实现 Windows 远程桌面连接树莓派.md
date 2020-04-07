@@ -7,7 +7,6 @@ categories:
 tags:
   - 远程连接树莓派
 copyright: true
-abbrlink: 903c69be
 ---
 
 受同学影响，最近接触到了树莓派，又加上自己技痒想试一下这个小东西究竟能做什么，所以开始了树莓派学习之旅。

@@ -7,7 +7,6 @@ categories:
 tags:
   - VMware 安装 CentOS 后网络设置
 copyright: true
-abbrlink: 4dedf7b2
 ---
 
 这是一个适用性比较小解决方法，若此方法不能解决你遇到的问题请自行百度其他方法。

@@ -7,7 +7,6 @@ categories:
 tags:
   - RESTful 接口设计规范
 copyright: true
-abbrlink: 7e15b804
 ---
 
 本文所有内容皆为个人根据网上文章整理思考所得并非权威指南，仅供参考。

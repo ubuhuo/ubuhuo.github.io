@@ -5,9 +5,8 @@ categories:
   - 软件使用
   - Node.js
 tags:
-  - Linux 下安装 Node.js
+  - Node.js
 copyright: true
-abbrlink: 6bfb5db9
 ---
 
 ## 1. 选择合适的 Node.js 安装包

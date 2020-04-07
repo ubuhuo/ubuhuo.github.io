@@ -7,7 +7,6 @@ categories:
 tags:
   - Linux 学习笔记
 copyright: true
-abbrlink: e29d57f0
 ---
 
 ## 常用命令

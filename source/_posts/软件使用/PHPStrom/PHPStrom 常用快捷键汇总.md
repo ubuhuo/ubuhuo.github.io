@@ -5,9 +5,8 @@ categories:
   - 软件使用
   - PHPStrom
 tags:
-  - PHPStrom 常用快捷键汇总
+  - PHPStrom
 copyright: true
-abbrlink: 297592c5
 ---
 
 `PhpStorm` 是 `JetBrains` 公司开发的一款商业的 `PHP` 集成开发工具，`PhpStorm` 可随时帮助用户对其编码进行调整，运行单元测试或者提供可视化`Debug` 功能。下面为大家介绍一些软件中常用的快捷键。

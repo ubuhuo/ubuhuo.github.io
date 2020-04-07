@@ -5,9 +5,8 @@ categories:
   - 软件使用
   - SublimeText
 tags:
-  - Sublime Text 3 安装 SVN 插件
+  - Sublime Text 3
 copyright: true
-abbrlink: 59657ebc
 ---
 
 ## 1. 第一步

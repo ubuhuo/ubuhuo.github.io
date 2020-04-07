@@ -7,7 +7,6 @@ categories:
 tags:
   - ThinkPHP5 配置 redis 缓存
 copyright: true
-abbrlink: d2b8c7e4
 ---
 
 最近再写一个小的学校论坛项目，项目是基于 `Vue + ThinkPHP5` 开发的，在开发过程中遇到一个小问题让我纠结了好久，就是如何实现用户给帖子点赞。

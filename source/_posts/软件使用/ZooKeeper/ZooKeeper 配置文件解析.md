@@ -7,7 +7,6 @@ categories:
 tags:
   - ZooKeeper 配置文件解析
 copyright: true
-abbrlink: bb55e9ff
 ---
 
 ## 最低配置

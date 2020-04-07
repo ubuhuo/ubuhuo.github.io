@@ -5,9 +5,8 @@ categories:
   - 软件使用
   - Chrome
 tags:
-  - 解析谷歌 Chrome 各分支版本
+  - Chrome 各分支版本
 copyright: true
-abbrlink: decc86d5
 ---
 
 > 文章内容来自 [cnBeta：解析谷歌Chrome各分支版本][1]

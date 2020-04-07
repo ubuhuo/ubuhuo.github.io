@@ -7,7 +7,6 @@ categories:
 tags:
   - ThinkPHP5 Nginx 配置
 copyright: true
-abbrlink: 71825b94
 ---
 
 ## 1. 为什么要配置 Nginx？

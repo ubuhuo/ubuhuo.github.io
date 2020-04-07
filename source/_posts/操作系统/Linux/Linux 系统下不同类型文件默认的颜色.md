@@ -7,7 +7,6 @@ categories:
 tags:
   - Linux 不同类型文件默认的颜色
 copyright: true
-abbrlink: 1d036a8c
 ---
 
 白色：表示普通文件

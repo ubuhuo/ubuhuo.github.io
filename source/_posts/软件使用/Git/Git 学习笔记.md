@@ -5,9 +5,9 @@ categories:
   - 软件使用
   - Git
 tags:
-  - Git 学习笔记
+  - Git
+  - 学习笔记
 copyright: true
-abbrlink: 3c3cdb74
 ---
 
 ## 创建版本库

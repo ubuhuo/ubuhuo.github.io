@@ -7,7 +7,6 @@ categories:
 tags:
   - TP5 无法接收 Post 参数
 copyright: true
-abbrlink: 87acc549
 ---
 
 `ThinkPHP` 版本： `5.0.16`

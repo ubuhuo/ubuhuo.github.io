@@ -7,7 +7,6 @@ categories:
 tags:
   - man page 使用手册
 copyright: true
-abbrlink: ee66e659
 ---
 
 ## 入门

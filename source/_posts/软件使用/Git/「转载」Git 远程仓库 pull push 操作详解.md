@@ -5,7 +5,7 @@ categories:
   - 软件使用
   - Git
 tags:
-  - Git 远程仓库 pull/push
+  - Git
 copyright: true
 ---
 

@@ -7,7 +7,6 @@ categories:
 tags:
   - MacOS pyenv 使用教程
 copyright: true
-abbrlink: ec1d408f
 ---
 
 ## pyenv 介绍

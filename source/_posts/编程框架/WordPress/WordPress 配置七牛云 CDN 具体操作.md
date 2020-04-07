@@ -5,9 +5,8 @@ categories:
   - 编程框架
   - WordPress
 tags:
-  - WordPress 配置七牛云 CDN
+  - WordPress
 copyright: true
-abbrlink: 6ec97606
 ---
 
 ## 1. 前言

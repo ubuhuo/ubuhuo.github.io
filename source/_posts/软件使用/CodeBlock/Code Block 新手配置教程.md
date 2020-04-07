@@ -5,9 +5,8 @@ categories:
   - 软件使用
   - CodeBlock
 tags: 
-  - Code::Block 新手配置教程
+  - Code::Block
 copyright: true
-abbrlink: 51f295ff
 ---
 
 ## 1. 前言
