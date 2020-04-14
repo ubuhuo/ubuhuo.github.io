@@ -20,7 +20,7 @@ customize:
         author: Ryoma
         author_title: 毕己一生，依依东望。
         location: Jinan, China
-        follow: https://github.com/ubuhuo/
+        follow: https://github.com/ryomahan/
     highlight: monokai
     sidebar: left
     category_perExpand: false
@@ -31,7 +31,7 @@ customize:
         wordpress: https://blog.blanc.site
         twitter: https://twitter.com/ryomahan1996
         weibo: https://weibo.com/xiaobaidh
-        github: https://github.com/ubuhuo
+        github: https://github.com/ryomahan
         rss: /atom.xml
     social_link_tooltip: true
     aging:
@@ -60,12 +60,12 @@ search:
     baidu: false # you need to disable other search engines to use Baidu search, options: true, false
 
 # History version 
-# https://coding.net/u/ubuhuo/p/wiki_blanc/edit/master/source/_posts/分类/分类/名字.md
+# https://coding.net/u/ryomahan/p/wiki_blanc/edit/master/source/_posts/分类/分类/名字.md
 history_control: # make you wiki has history version control in page
     enable: true
     server_link: https://github.com
-    user: ubuhuo
-    repertory: ubuhuo.github.io
+    user: ryomahan
+    repertory: ryomahan.github.io
     branch: backups
 
 # Comment
