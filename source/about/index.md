@@ -37,7 +37,15 @@ Hexo 插件列表：
 | [hexo-generator-sitemap][10] | 自动生成 sitemap |
 | [hexo-genertaor-baidu-sitemap][11] | 自动生成百度 sitemap |
 
+## Timeline
 
+### 2020-04-26
+
+开启时间线，记录维基站点变(mo)更(gai)历史
+
+### 2020-04-26
+
+修改文章时效性提示样式
 
 [1]: https://www.imalan.cn/
 [2]: https://blog.imalan.cn/archives/108/
