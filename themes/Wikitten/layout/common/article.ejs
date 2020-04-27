@@ -50,19 +50,17 @@
                     <p><%- post.content.substring(0, br_position + 1) %><p>
                 <% } %>
             <% } %>
-        <% } else if (0) { %>
+        <% } else if (0 > 1) { %>
             <!-- 封印 toc -->
             <div id="toc" class="toc-article">
             <strong class="toc-title"><%= __('article.catalogue') %></strong>
                 <%- toc(post.content) %>
             </div>
-            
         <% } %>
         <% if (show_all_content) { %>
             <!-- 内容失效提醒 -->
             <%- partial('plugin/aging', { date_format: null }) %>
             <%- post.content %>
-            </div>
         <% } else { %>
             </div>   
             <div class="article-more-link">
