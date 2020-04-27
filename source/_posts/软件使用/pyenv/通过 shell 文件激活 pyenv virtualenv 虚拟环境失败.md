@@ -37,3 +37,11 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 pyenv acitvate env_name
 ```
+
+## 参考
+
+1. [笨小康：pyenv激活虚拟环境失败][1]
+2. [沥川：使用 pyenv 和 pyenv-virtualenv 配置虚拟环境][2]
+
+[1]: https://www.cnblogs.com/walker-/p/10976027.html
+[2]: https://hugo1030.github.io/tech/pynv-virtualenv/
