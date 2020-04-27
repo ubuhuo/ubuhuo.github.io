@@ -23,6 +23,6 @@
     "hexo-directory-category": "^1.0.7",
     "hexo-generator-category": "^1.0.0",
     "hexo-generator-json-content": "^4.2.3",
-    "hexo-generator-baidu-sitemap": "^1.1.4"
+    "hexo-generator-baidu-sitemap": "^0.1.6"
   }
 }
