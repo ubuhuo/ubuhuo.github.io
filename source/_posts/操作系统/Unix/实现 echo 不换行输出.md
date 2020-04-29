@@ -63,5 +63,7 @@ echo -n "hello world"
 ## 参考
 1. [lllxy：echo不换行的实现][1]
 2. `man echo`
+3. [Linux 命令大全-echo 命令][2]
 
 [1]: https://blog.csdn.net/lllxy/article/details/3423580
+[2]: https://man.linuxde.net/echo
