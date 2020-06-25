@@ -44,10 +44,10 @@
     // To Top
     if ($('#sidebar').length) {
         $(document).on('scroll', function () {
-            if ($(document).width() >= 800) {
+            if ($(document).width() >= 700) {
                 if(($(this).scrollTop() > toTop) && ($(this).scrollTop() > 0)) {
                     $('#toTop').fadeIn();
-                    $('#toTop').css('left', $('#sidebar').offset().left);
+                    $('#toTop').css('right', $('#sidebar').offset().right);
                 } else {
                     $('#toTop').fadeOut();
                 }
@@ -58,6 +58,26 @@
             $('body, html').animate({ scrollTop: 0 }, 600);
         });
     }
+    
+    // TOC
+    $(window).resize(function() {
+        if ($(document).scrollTop() >= tocBarTop) {
+            $(".toc-wrap").css("width", $("#sidebar").width() - 40)
+        }
+    })
+    const tocBarTop = $(".toc-flag").offset().top + $(".toc-wrap").height()
+    if ($(document).scrollTop() >= tocBarTop) {
+        $(".toc-wrap").addClass("toc-wrap-fixed")
+        $(".toc-wrap").css("width", $("#sidebar").width() - 40)
+    }
+    $(document).on('scroll', function () {
+        if ($(document).scrollTop() >= tocBarTop) {
+            $(".toc-wrap").addClass("toc-wrap-fixed")
+            $(".toc-wrap").css("width", $("#sidebar").width() - 40)
+        } else {
+            $(".toc-wrap").removeClass("toc-wrap-fixed")
+        }
+    })
     
     // Task lists in markdown
     $('ul > li').each(function() {

@@ -36,14 +36,7 @@
         </div>
         <% } %>
     </div>
-    <% if (is_post()) { %>
-        <div class="toc-wrap">
-            <h3>
-                <span>文章目录</span>
-            </h3>
-            <%- toc(page.content) %>
-        </div>
-    <% } %>
+
     <% if (site.posts.length) { %>
         <div class="widget-wrap widget-list">
             <h3 class="widget-title"><span><%= __('widget.links') %></span></h3>

@@ -41,13 +41,14 @@ copyright: true
 ```powershell
 /etc/sudoers
 找到："root ALL=(ALL) ALL"
-在下面添加"xxx ALL=(ALL) ALL"(xxx是你的用户名)，保存。
+在下面添加"xxx ALL=(ALL) ALL"(xxx是用户名)，保存。
 ```
 
 ## 修改默认 SSH 端口
 ```powershell
-vi /etc/ssh/sshd_config
-systemctl restart sshd.service
+vim /etc/ssh/sshd_config
+# 修改 Port 为想要设置的端口
+systemctl restart sshd
 ```
 
 ## 设置 SSH 不自动断开连接
@@ -55,8 +56,9 @@ systemctl restart sshd.service
 ```powershell
 vim /etc/ssh/sshd_config
 # 修改两处的值为：
-ClientAliveInterval 60
-ClientAliveCountMax 10
+ClientAliveInterval 60 # 每隔多少秒服务器端向客户端发送心跳
+ClientAliveCountMax 10 # 多少次心跳无响应之后认为 Client 断开
+
 # 使修改的ssh配置文件生效：
-service sshd reload
+systemctl restart sshd
 ```

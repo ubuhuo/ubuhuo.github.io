@@ -22,7 +22,7 @@ customize:
         location: Jinan, China
         follow: https://github.com/ryomahan/
     highlight: monokai
-    sidebar: left
+    sidebar: right
     category_perExpand: false
     thumbnail: true
     favicon: /favicon.ico
@@ -43,8 +43,9 @@ widgets: # default use category only
     # - recent_posts
     # - archive
     # - tag
-    - tagcloud
-    - links
+    - toc
+    # - tagcloud
+    # - links
     
 # Excerpt 
 ## Auto creat excerpt with not <!--more-->

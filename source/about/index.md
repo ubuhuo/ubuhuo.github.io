@@ -47,6 +47,13 @@ Hexo 插件列表：
 
 修改文章时效性提示样式
 
+### 2020-06-26
+
+去除了一些错误显示 
+修改了 toTop 按钮的位置 
+实现了 sidebar TOC 组件
+将 sidebar 和 profile 组件进行位置互换
+
 [1]: https://www.imalan.cn/
 [2]: https://blog.imalan.cn/archives/108/
 [3]: https://hexo.io
