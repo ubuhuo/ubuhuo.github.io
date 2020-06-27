@@ -48,7 +48,7 @@ Web 框架在如今是比较常见的，比较知名的 Python Web 框架有：D
 
 首先解释一下为什么我在过去两年的过程中没有见过 WSGI 却依旧可以进行 Web 编程：因为现在的大多数框架都已经帮我们将 WSGI 标准封装在框架底层。甚至，我用的 Django REST Framework 框架连 HTTP Request 和 HTTP Response 都帮我封装好了。所以，就算我完全不了解 WSGI 这种偏底层的协议也能够进行日常的 Web 开发。
 
-那 WSGI 到底帮我们解决了什么问题？这个在 [PEP 3333][4] 中有详细的解释，我简单的说一下我的理解：在 WSGI 诞生之前，就已经存在了大量使用 Python 编写的 Web 应用框架，相应的也存在很多 Web 服务器。但是，各个 Python Web 框架和 Python Web 服务器之间不能互相兼容。夸张一点说，在当时如果想要开发一个 Web 框架说不定还得单独为这个框架开发一个 Web 服务器（而且这个服务器别的框架还不能用）。为了解决这一现象 Python 社区提交了 [PEP 333][1]，正式提出了 WSGI 这个概念。
+那 WSGI 到底解决了什么问题？这个在 [PEP 3333][4] 中有详细的解释，简单的说一下我的理解：在 WSGI 诞生之前，就已经存在了大量使用 Python 编写的 Web 应用框架，相应的也存在很多 Web 服务器。但是，各个 Python Web 框架和 Python Web 服务器之间不能互相兼容。夸张一点说，在当时如果想要开发一个 Web 框架说不定还得单独为这个框架开发一个 Web 服务器（而且这个服务器别的框架还不能用）。为了解决这一现象 Python 社区提交了 [PEP 333][1]，正式提出了 WSGI 这个概念。
 
 简单的理解：只要是兼容 WSGI 的 Web 服务器和 Web 框架就能配套使用。开发服务器的程序员只需要考虑在兼容 WSGI 的情况下如何更好的提升服务器程序的性能；开发框架的程序员只需要考虑在兼容 WSGI 的情况下如何适应尽可能多业务开发逻辑（以上只是举例并非真的这样）。
 
@@ -56,7 +56,7 @@ WSGI 解放了 Web 开发者的精力让他们可以专注于自己需要关注�
 
 ## WSGI 做了什么事情？
 
-注：这是我是为了简练而写成了 WSGI 做了什么事情，实际上 WSGI 只是一个规范并不是实际的代码，准确的来说应该是「符合 WSGI 规范的 Web 体系做了什么事情？」
+注：为了简练而写成了 WSGI 做了什么事情，实际上 WSGI 只是一个规范并不是实际的代码，准确的来说应该是「符合 WSGI 规范的 Web 体系做了什么事情？」
 
 上面已经提到，WSGI 通过规范化 Web 框架和 Web 服务器之间的接口，让兼容了 WSGI 的框架和服务器能够自由组合使用……
 
@@ -79,81 +79,90 @@ Middleware 属于三个部分中最为特别的一个，对于 Server 他是一�
 
 ### 一个符合 WSGI 规范的最小 Python Web 项目实例
 
-为了方便展示我们先来构建一个符合 WSGI 规范的 Python Web 项目示例：
+为了方便展示先来构建一个符合 WSGI 规范的 Python Web 项目示例：
+
+#### 源码
+
+注：示例基于 Python3
 
 ```python
-# server.py | wsgi server
+# 本示例代码改自参考文章 5：
+# Huang Huang 的博客-翻译项目系列-让我们一起来构建一个 Web 服务器
+# /path_to_code/server.py
+# Examples of wsgi server
+import sys
 import socket
+# 分别从应用模块和中间件模块中引入相应模块
+from application import application
+from middleware import TestMiddleware
+
+# 根据系统导入响应的 StringIO 模块
+# StringIO：用于文本 I/O 的内存数据流
 try:
     from io import StringIO
 except ImportError:
     from cStringIO import StringIO
-import sys
+
 
 class WSGIServer(object):
-    address_family = socket.AF_INET
-    socket_type = socket.SOCK_STREAM
-    request_queeu_size = 1
+    request_queeu_size = 1              # 请求队列长度
+    address_family = socket.AF_INET     # 设置地址簇
+    socket_type = socket.SOCK_STREAM    # 设置 socket 类型
 
     def __init__(self, server_address):
+        # Server 初始化方法（构造函数）
         # Create a listening socket
         self.listen_socket = listen_socket = socket.socket(
             self.address_family,
             self.socket_type
         )
-        # 配置 socket 允许再次使用当前 address 
+        # 设置 socket 允许重复使用 address
         listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         # Bind 绑定端口
         listen_socket.bind(server_address)
         # Activate 激活
         listen_socket.listen(self.request_queeu_size)
-        # Get server host name and port
+        # 获取并记录 server host 和 port
         host, port = self.listen_socket.getsockname()[:2]
         self.server_name = socket.getfqdn(host)
         self.server_port = port
-        # Return headers set by Web framework/Wen application
+        # Return headers set by Web framework/application
         self.headers_set = []
     
     def set_app(self, application):
+        # 将传入的 application 设置为实例属性
         self.application = application
     
     def server_forever(self):
+        # 开启 server 循环函数
         listen_socket = self.listen_socket
         while True:
-            # New client connection
+            # 获取 client socket 参数 | client_connection 是 client socket 实例
+            # 这里会创建一个阻塞，直到接受到 client 连接为止
             self.client_connection, client_address = listen_socket.accept()
-            # Handle one reuqest and close the client connection. Then
-            # loop over to wait for another client connection
+            # 调用 handle_one_request 方法处理一次请求并关闭 client 连接然后继续等待新的连接进入
             self.handle_one_request()
     
     def handle_one_request(self):
+        # 处理请求的入口方法 | 用来处理一次请求
+        # 从 client socket 中获取 request data
         self.request_data = request_data = self.client_connection.recv(1024)
-        # Print formatted request data a la 'curl -v'
-        # print("".join("< {line}\n".format(line=line)
-        #                 for line in request_data.splitlines()
-        # ))
         
+        # 调用 parse_request 方法， 传入接收到的 request_data 并对其进行解析
         self.parse_request(request_data)
 
-        # Construct environment dictionary using request data
-        # 通过 request data 构造环境变量字典
-        env = self.get_environ()
+        # 通过已有数据构造环境变量字典
+        environ = self.get_environ()
 
-        # It's time to call our application callable and get
-        # back a result that will become HTTP response body
-        result = self.application(env, self.start_response)
+        # 调用 application，传入已经生成好的 environ 和 start_response，返回一个可迭代的 Response 对象
+        result = self.application(environ, self.start_response)
 
-        # Construct a response and send it back to the client
+        # 调用 finish_response 方法，构造一个响应并返回给客户端
         self.finish_response(result)
     
     def parse_request(self, text):
         # 取行
         request_line = text.splitlines()[0]
-        # 删除指定字符
-        # print(request_line)
-        # print(type(request_line))
-        # request_line = request_line.rstrip("\r\n")
-        # Break down the request line into components
         # 打碎请求行到组件中
         (self.request_method,
          self.path,
@@ -162,10 +171,6 @@ class WSGIServer(object):
     
     def get_environ(self):
         env = {}
-        # The following code snippet does not follow PEP8 conventions
-        # but it's formatted the way it is for demonstration purposes
-        # to emphasize the required variables and their values
-        # Required WSGI variables
         env["wsgi.version"] = (1, 0)
         env["wsgi.url_scheme"] = "http"
         env["wsgi.input"] = StringIO(self.request_data.decode("utf-8"))
@@ -181,77 +186,103 @@ class WSGIServer(object):
         return env
     
     def start_response(self, status, response_headers, exc_info=None):
+        # 按照 WSGI 规范提供一个 start_response 给 application
         # Add necessary必要的 server headers
         server_headers = [
-            ("Date", "Tue, 31 Mar 2015 12:51:48 GMT"),
+            ("Date", "Tue, 31 Mar 2020 12:51:48 GMT"),
             ("Server", "WSGIServer 0.2")
         ]
         self.headers_set = [status, response_headers + server_headers]
         
-        # To adhere to WSGI specification the start_response must return
-        # a 'write' callable. We simplicity's sake we'll ignore that detail
-        # for now
-        # return self.finish_response
+        # 按照 WSGI 协议，应该在这里返回一个 write()，但这里为了简便就省略了
+        # 会在后续分析 wsgiref 源码时提及此处
     
     def finish_response(self, result):
+        # 通过现有参数整理出一个响应体
         try:
             status, response_headers = self.headers_set
+            # 响应第一部分：HTTP 协议以及状态码
             response = f"HTTP/1.1 {status}\r\n"
+            # 响应第二部分：将生成好的响应头递归式的传入响应体内
             for header in response_headers:
                 response += "{0}: {1}\r\n".format(*header)
+            # 通过 \r\n 进行空行
             response += "\r\n"
+            # 响应第三部分：将响应主题信息追加到响应体内
             for data in result:
                 response += data
-            # Print formatted response data a la 'curl -v'
-            print("".join(
-                "> {line}\n".format(line=line)
-                for line in response.splitlines()
-            ))
+            # 通过 senall 将响应发送给客户端
+            # 注意：在 Python3 下，如果你构建的响应体为 str 类型，需要进行 encode 转换为 bytes
             self.client_connection.sendall(response.encode())
         finally:
+            # 关闭连接
             self.client_connection.close()
 
 SERVER_ADDRESS = (HOST, PORT) = "", 8888
 
 def make_server(server_address, application):
     server = WSGIServer(server_address)
-    server.set_app(application)
+    # 注意这里的调用过程，需要通过中间件模块包裹应用模块
+    server.set_app(TestMiddleware(application))
     return server
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        sys.exit("Provide a WSGI application object as module:callable")
-    app_path = sys.argv[1]
-    module, application = app_path.split(":")
-    module = __import__(module)
-    application = getattr(module, application)
+    # 创建 WSGI server
     httpd = make_server(SERVER_ADDRESS, application)
     print(f"WSGIServer: Serving HTTP on port: {PORT}...\n")
+    # 进入循环，捕获请求
     httpd.server_forever()
 ```
 
 ```python
-# middleware.py | wsgi middleware.py
+# /path_to_code/middleware.py
+# Examples of wsgi middleware
+class TestMiddleware(object):
 
+    def __init__(self, application):
+        self.application = application
 
+    def core(self, environ, start_response):
+        old_response = self.application(environ, start_response)
+        new_response = old_response + ["middleware add this message\n"]
+        return new_response
+
+    def __call__(self, environ, start_response):
+        return self.core(environ, start_response)
 ```
 
 ```python
-# application.py | wsgi application
-
-def app(environ, start_response):
+# /path_to_code/application.py
+# Examples of wsgi application
+def application(environ, start_response):
     status = "200 OK"
     response_headers = [("Content-Type", "text/plain")]
     start_response(status, response_headers)
     return ["hello world from a simple WSGI application!\n"]
 ```
 
+#### 运行
+
+将三段代码分别复制到同一目录的三个文件（如果没有按照示例给出的命名记得更改一下 server 模块中相应的 import 的模块名）中。
+
+注：以下操作默认你完全按照示例代码中给出的命名进行文件命名
+
+1. 启动 server：`python /path_to_code/server.py`
+2. 通过浏览器浏览 `127.0.0.1:8888` 查看效果
+3. 通过 curl 命令 `curl -v http://127.0.0.1:8888` 查看完整输出
+4. 对比 `curl -v https://baidu.com` 的输出查看区别
+
+#### 分析
+
+1. 原理分析
+2. 浏览器结果分析
+3. curl 结果分析
+
+## 解读 PEP-3333 中的某些细节
 
 ### WSGI 中的坑
 
-## 解读 PEP 3333 中的某些细节
-
-## 通过 Python wsgiref 官方库来看看官方是如何实现一个符合 WSGI 标准的 Python Web 体系
+## Python wsgiref 官方库源码分析
 
 ## 参考
 
@@ -259,6 +290,9 @@ def app(environ, start_response):
 2. [PEP 3333 Python Web Server Gateway Interface v1.0.1][2]
 3. [知乎-方应杭-「每日一题」什么是 Web 服务器（server）][5]
 4. [Skyline75489-Python WSGI学习笔记][7]
+5. [Huang Huang 的博客-翻译项目系列-让我们一起来构建一个 Web 服务器][8]
+6. [掘金-
+liaochangjiang-Python Web开发：开发wsgi中间件][9]
 
 [1]: https://www.python.org/dev/peps/pep-333/
 [2]: https://www.python.org/dev/peps/pep-3333/
@@ -267,3 +301,5 @@ def app(environ, start_response):
 [5]: https://zhuanlan.zhihu.com/p/22544725
 [6]: https://www.python.org/dev/peps/pep-3333/#specification-overview
 [7]: https://skyline75489.github.io/post/2014-9-8_python-wsgi-learning.html
+[8]: https://mozillazg.com/tag/rang-wo-men-yi-qi-lai-gou-jian-yi-ge-web-fu-wu-qi.html
+[9]: https://juejin.im/post/5ccb8bb8f265da03981fd577
