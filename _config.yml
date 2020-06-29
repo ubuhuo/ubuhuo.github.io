@@ -31,6 +31,9 @@ permalink: archives/:abbrlink.html
 abbrlink:
   alg: crc32  # 算法：crc16(default) and crc32
   rep: hex    # 进制：dec(default) and hex
+  drafts: false
+  auto_category:
+    enable: false
 
 # Directory
 source_dir: source
