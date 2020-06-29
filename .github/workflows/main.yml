@@ -22,7 +22,7 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-        git config --global user.name 'ryoma'
+        git config --global user.name 'ryomahan'
         git config --global user.email 'ryomahan1996@gmail.com'
 
         npm i -g hexo-cli
