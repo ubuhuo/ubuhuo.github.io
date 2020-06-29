@@ -98,7 +98,7 @@ theme: Wikitten
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   - type: git
-    repo: https://github.com/ryomahan/ryomahan.github.io.git
+    repo: git@github.com/ryomahan/ryomahan.github.io.git
     branch: master
   - type: baidu_url_submitter
 
