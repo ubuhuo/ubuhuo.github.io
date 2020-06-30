@@ -332,7 +332,7 @@ server.server_forever()
 
 ### 可迭代对象和可调用对象
 
-可迭代对象（callable）和可迭代对象（iterable）在 PEP 3333 中最c常见的两个词汇，在 WSGI 规范中它们分别代表：实现了 `__call__` 的对象和实现了 `__iter__` 的对象。
+可迭代对象（callable）和可迭代对象（iterable）在 PEP 3333 中最常见的两个词汇，在 WSGI 规范中它们分别代表：实现了 `__call__` 的对象和实现了 `__iter__` 的对象。
 
 ### Unicode | bytes | str
 
