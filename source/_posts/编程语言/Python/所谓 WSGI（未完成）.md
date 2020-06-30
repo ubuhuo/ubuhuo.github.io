@@ -92,9 +92,6 @@ Middleware 属于三个部分中最为特别的一个，对于 Server 他是一�
 # Examples of wsgi server
 import sys
 import socket
-# 分别从应用模块和中间件模块中引入相应模块
-from application import application
-from middleware import TestMiddleware
 
 # 根据系统导入响应的 StringIO 模块
 # StringIO：用于文本 I/O 的内存数据流
@@ -217,21 +214,6 @@ class WSGIServer(object):
         finally:
             # 关闭连接
             self.client_connection.close()
-
-SERVER_ADDRESS = (HOST, PORT) = "", 8888
-
-def make_server(server_address, application):
-    server = WSGIServer(server_address)
-    # 注意这里的调用过程，需要通过中间件模块包裹应用模块
-    server.set_app(TestMiddleware(application))
-    return server
-
-if __name__ == "__main__":
-    # 创建 WSGI server
-    httpd = make_server(SERVER_ADDRESS, application)
-    print(f"WSGIServer: Serving HTTP on port: {PORT}...\n")
-    # 进入循环，捕获请求
-    httpd.server_forever()
 ```
 
 ```python
@@ -261,28 +243,172 @@ def application(environ, start_response):
     return ["hello world from a simple WSGI application!\n"]
 ```
 
+```python
+# /path_to_code/run.py
+# running Example
+from server import WSGIServer
+from application import application
+from middleware import TestMiddleware
+
+# 规定 server host 和 server port
+server_address = (host, port) = "", 8888
+# 创建 server 实例
+server = WSGIServer(server_address)
+# 设置本 server 对应的 middleware 以及 application
+server.set_app(TestMiddleware(application))
+# 输出提示性语句
+print(f"WSGIServer: Serving HTTP on port: {port}...\n")
+# 进入 server socket 监听循环
+server.server_forever()
+```
+
 #### 运行
 
-将三段代码分别复制到同一目录的三个文件（如果没有按照示例给出的命名记得更改一下 server 模块中相应的 import 的模块名）中。
+将四段代码分别复制到同一目录的四个文件（如果没有按照示例给出的命名记得更改一下 run 模块中相应的 import 的模块名）中。
 
 注：以下操作默认你完全按照示例代码中给出的命名进行文件命名
 
-1. 启动 server：`python /path_to_code/server.py`
+1. 启动 server：`python /path_to_code/run.py`
 2. 通过浏览器浏览 `127.0.0.1:8888` 查看效果
 3. 通过 curl 命令 `curl -v http://127.0.0.1:8888` 查看完整输出
 4. 对比 `curl -v https://baidu.com` 的输出查看区别
 
 #### 分析
 
-1. 原理分析
-2. 浏览器结果分析
-3. curl 结果分析
+##### 代码运行流程分析
+
+上面我根据 WSGI 协议编写了三个文件（模块）：server.py middleware.py application.py，分别对应 WSGI 里 server middleware application 这三个概念。然后通过 run.py 引入三个模块组成了一个完整的 server-middleware-application Web 程序并监听本地 8888 端口。
+
+通过 run.py 中的代码我们能够清晰的看到一个 WSGI 类型的 Web 程序的运行流程：
+1. 创建 wsgi server socket 实例对象（调用 `server.__init__` 方法）
+2. 将准备好的 middleware 以及 application 对象导入给 server 实例（调用 `server.set_app` 方法）
+3. 运行 server 监听指定端口（调用 `server.server_forever` 方法）
+
+通过 server.py 中的代码能够清晰的看到一个 WSGI 类型的 Web 程序是如何处理 HTTP 请求的：
+1. 通过 `server_forever` **监听到**客户端请求并**记录请求信息**
+2. 调用 `handle_one_request` 方法处理此请求
+    1. 通过请求 socket **获取请求数据**
+    2. 通过 `parse_request` 方法将请求数据**解析**成所需格式
+    3. 通过 `get_environ` 方法利用现有数据构造环境变量**字典**
+    4. 将生成好的 environ 参数和 start_response 方法传给 application 对象（**也可能是 middleware 伪装的 application 对象**），并获取响应结果
+    5. 将响应结果传给 `finish_response` 方法构造一个**可迭代的**响应对象返回给客户端并结束本次请求
+
+通过 middleware.py 中的代码就能够理解一个 WSGI 中间件是如何工作的：
+1. 通过在 `__init__` 方法中接收一个 application 将自己伪装成一个 server
+2. 通过在 `__call__` 方法中接收 environ 和 start_response 参数将自己伪装成一个 application
+通过这两点伪装 middleware 能够很好的粘合在 server 和 application 之间完成中间逻辑处理，在 [PEP 3333][10] 中指明了中间件的几点常见用途。
+
+至于 application.py 在这里就真的只是一个简单的单文件 WSGI 应用。当然也可以尝试用写好的 server.py 和 middleware.py 对接像 Django 这样的框架，但需要对代码做一些修改，这里就不展开讨论了，有兴趣可以自己尝试。
+
+##### 浏览器结果分析
+
+在运行 run.py 之后使用浏览器浏览 `127.0.0.1:8888` 并查看结果如下：
+
+![浏览器结果 1][11]
+![浏览器结果 2][12]
+![浏览器结果 3][13]
+
+通过控制台可以清晰地看到响应头和响应主体的内容是符合我们预期的
+
+##### curl 结果分析
+
+通过 `curl http://127.0.0.1:8888` 可以看到响应主体：
+
+![curl 结果 1][14]
+
+通过 `curl -v http://127.0.0.1:8888` 可以看到详细的请求和响应内容：
+
+![curl 结果 2][15]
+
+通过 `curl -v https://baidu.com` 获取百度首页的响应内容以作比较：
+
+![curl 结果 3][16]
+
+可以看到目前浏览网页常用的正常请求要比自己构建的测试示例要复杂的多，这也是为什么经常使用 Web 框架而非单文件应用来处理这些请求的原因。
 
 ## 解读 PEP-3333 中的某些细节
 
+[PEP 3333][2] 我只读到了 [Buffering and Streaming][22] 章节，并且没能很好的理解此章节所描述的东西，因此在下面的细节分析中大都是此章节之前的一些内容。
+
+### 可迭代对象和可调用对象
+
+可迭代对象（callable）和可迭代对象（iterable）在 PEP 3333 中最c常见的两个词汇，在 WSGI 规范中它们分别代表：实现了 `__call__` 的对象和实现了 `__iter__` 的对象。
+
+### Unicode | bytes | str
+
+这是一组比较基础的概念：
+1. Unicode 是一种字符编码标准
+2. bytes 和 str 是 Python 中两种不同的数据类型
+
+Python3 中字符串的默认类型是 str，在内存中以 Unicode 表示。如果要在网络中传输或保存为磁盘文件，需要将 str 转换为 bytes 类型。
+
+#### Unicode | UCS | UTF
+
+1. Unicode（万国码、国际码、统一码、单一码）是计算机科学领域里的一项业界标准。它对世界上大部分的文字系统进行了整理、编码，使得电脑可以用更为简单的方式来呈现和处理文字。Unicode 伴随着通用字符集的标准而发展，同时也以书本的形式对外发表。
+2. UCS（Universal Character Set，通用字符集）是由ISO制定的ISO 10646（或称ISO/IEC 10646）标准所定义的标准字符集。
+3. UTF（Unicode Transformation Format），Unicode 定义了两种映射方式：一种叫 the Unicode Transformation Format (UTF) 编码, 还有一种叫 Universal Character Set (UCS) 编码。一种编码映射一定范围（可能是子集）的 Unicode 码点（code points ）成代码值（code value）的序列。编码名字后面的数字代表一个代码值的位数（UTF使用位数，UCS 使用字节数）,UTF-8 和UTF-16是最常使用的编码。
+
+#### bytes | str
+
+> Python3 里面的 str 是在内存中对文本数据进行使用的，bytes 是对二进制数据使用的。
+>
+> str 可以 encode 为 bytes，但是 bytes 不一定可以 decode 为 tr。实际上 `bytes.decode(‘latin1’)` 可以称为 str，也就是说 decode 使用的编码决定了 `decode()` 的成败，同样的，UTF-8 编码的 bytes 字符串用 GBK 去 `decode()` 也会出错。
+>
+> bytes一般来自网络读取的数据、从二进制文件（图片等）读取的数据、以二进制模式读取的文本文件(.txt, .html, .py, .cpp等)
+> 
+> from [知乎-猿人学-Python 3 中str 和 bytes 的区别][19]
+
+#### WSGI 中的 String
+
+WSGI 中规定了两种 String：
+1. Native String（常说的 str）用来表示 request/response headers and metadata
+2. ByteString（Python3 中用 byte type 来表示）用于 request/response 的 body（例如：PUT/POST 输入和 HTML 页面输出）
+
+在 [PEP 3333][20] 中有对这部分的详细说明。
+
+### 三个主要组成部件
+
+了解了以上基础概念之后再具体的看一下 WSGI 的三个主要组成部件：
+
+#### Application/Framework | 下文简称 application
+
+1. application 是一个**必须且只能**接收两个参数的 callable，形如 `application(environ, start_response)`。而且这两个参数只能以**位置参数**的形式被传入。
+2. environ 和 start_response 只是习惯性命名，对于具体传入的对象名称没有做要求。
+3. application 必须可被**多次调**用，因为所有的 server/gateway（CGI 除外）都会发出此类的重复请求。
+4. [environ 是一个字典参数][21]，包含了 CGI 风格的环境变量。必须使用**内置的 Python 字典类型**（不能是子类或自定义的 UserDict），并且允许 application **以任何它想要的方式修改**。字典还包括某些 **WSGI 变量**，并且还可能包括 **server 特定的拓展参数**，它们的命名需要遵守**相应规范**。
+5. start_response 参数也是一个 callable，接收两个必要的未知参数和一个可选参数，三个参数依次默认命名为：status, response_headers, exc_info，即 `start_response(status, response_headers, exc_info=None)`。
+6. status 是一个状态**字符串**（str），例如：`"200 OK"`
+7. response_headers 是一个描述 HTTP Response Headers 的 (header_name, header_value) **元组列表**。
+8. 可选参数 exc_info 只有当 application 捕获到错误并且视图向浏览器（客户端）显示时才会调用。
+9. start_response callable 必须返回一个 write(body_data) callable，这个 callable 需要一个位置参数：一个要作为 HTTP 响应体一部分的 bytestring（**注意：wirte callabel 只是为了支持某些现有框架的必要输出 API 而提供的；如果可以避免的话，新的 application/gateway 应该避免使用它**）。
+10. 当 callable（**如果实现了 write 这个 callable 指的就是 write；如果没有，这个 callable 指的就是 start_response 本身**）被 server 调用时，**必须**返回一个产生零个或多个字符串的 iterable。可以通过多种方式实现，如：一个字符串列表、application 是一个 generator 函数或 application 是一个实现了 `__iter__` 的对象。**无论如何**，application 必须返回一个能够产生零个或多个字符串 iterable。
+11. application 应该负责确保被写入的字符串是**适合** client 的格式的。
+12. 如果 `len(iterable)` 能够被成功执行（这里的 iterable 指的是第 10 条中的 iterable）则其返回的必须是**一个 server 能够信赖的结果**。也就是说 application 返回的 iterable 如果提供了一个有效的 `__len__` 方法就必须能够获得**准确值**。
+13. 如果 application 返回的 iterable 有 close 方法，server **必须**在当前请求**完成后**调用它，无论请求是否正常完成（为了支持 application 释放资源）。
+14. application 应该检查其所需要的变量是否存在并对变量不存在的情况做好处理方案。
+
+#### Server/Gateway | 下文简称 server
+
+1. server 必须以无缓冲（unbuffered）的方式将 yielded bytestrings 传输到 client，在下一次请求之前完成每一个 bytestring 的传输。换句话说 application 应该自己实现缓存。（对于这部分我理解的不是很透彻，大多都是直译的 [PEP 3333][2]）
+2. server 不能直接使用 application 返回的 iterable 的其他属性。
+3. server 应该尽可能多的提供 CGI 变量。
+4. 符合 WSGI 规范的 server 应该记录所提供的变量。
+
+#### Middleware
+
+1. middleware 是一个单独的对象，可能在一些 application 中扮演 server 同时在一些 server 中扮演 application。
+
 ### WSGI 中的坑
 
+1. 要确定在那些地方使用 str，在那些地方使用 bytes
+
 ## Python wsgiref 官方库源码分析
+
+可以参考我的开源库 [read-python][23] 中 practices/for_wsgiref 目录下的 [server.py][24] 文件。
+
+在这个文件中我提取了 Python wsgiref 官方库的必要代码汇聚成一个文件实现了一个和 `wsgiref.WSGIServer` 大致同样功能的 `WSGIServer` 类。
+
+Python wsgiref 官方库对 WSGI 规范的实现更加抽象，加上一些历史原因使得代码分布在多个官方库中，我在抽离代码的过程中学到了很多但是同样也产生了很多困惑，我在源码中使用 `TODO 疑惑 XXX` 的形式将我的困惑表达出来了，如果你感兴趣并且恰好知道解决我疑惑的方法，欢迎直接给我的代码仓库提交 Issues。
 
 ## 参考
 
@@ -291,8 +417,12 @@ def application(environ, start_response):
 3. [知乎-方应杭-「每日一题」什么是 Web 服务器（server）][5]
 4. [Skyline75489-Python WSGI学习笔记][7]
 5. [Huang Huang 的博客-翻译项目系列-让我们一起来构建一个 Web 服务器][8]
-6. [掘金-
-liaochangjiang-Python Web开发：开发wsgi中间件][9]
+6. [掘金- liaochangjiang-Python Web开发：开发wsgi中间件][9]
+7. [维基百科-Unicode][17]
+8. [维基百科-通用字符集][18]
+9. [知乎-猿人学-Python 3 中str 和 bytes 的区别][19]
+10. [Python 官方文档-术语对照表][25]
+
 
 [1]: https://www.python.org/dev/peps/pep-333/
 [2]: https://www.python.org/dev/peps/pep-3333/
@@ -303,3 +433,19 @@ liaochangjiang-Python Web开发：开发wsgi中间件][9]
 [7]: https://skyline75489.github.io/post/2014-9-8_python-wsgi-learning.html
 [8]: https://mozillazg.com/tag/rang-wo-men-yi-qi-lai-gou-jian-yi-ge-web-fu-wu-qi.html
 [9]: https://juejin.im/post/5ccb8bb8f265da03981fd577
+[10]: https://www.python.org/dev/peps/pep-3333/#middleware-components-that-play-both-sides
+[11]: https://img.blanc.site//wiki/img/20200630114909.png
+[12]: https://img.blanc.site//wiki/img/20200630114908.png
+[13]: https://img.blanc.site//wiki/img/20200630114910.png
+[14]: https://img.blanc.site//wiki/img/20200630115755.png
+[15]: https://img.blanc.site//wiki/img/20200630115754.png
+[16]: https://img.blanc.site//wiki/img/20200630115753.png
+[17]: https://zh.wikipedia.org/wiki/Unicode
+[18]: https://zh.wikipedia.org/wiki/%E9%80%9A%E7%94%A8%E5%AD%97%E7%AC%A6%E9%9B%86#Unicode%E5%92%8CISO_10646%E7%9A%84%E5%85%B3%E7%B3%BB
+[19]: https://zhuanlan.zhihu.com/p/56901822
+[20]: https://www.python.org/dev/peps/pep-3333/#unicode-issues
+[21]: https://www.python.org/dev/peps/pep-3333/#environ-variables
+[22]: https://www.python.org/dev/peps/pep-3333/#buffering-and-streaming
+[23]: https://github.com/ryomahan/read-python
+[24]: https://github.com/ryomahan/read-python/blob/master/practices/for_wsgiref/server.py
+[25]: https://docs.python.org/zh-cn/3/glossary.html
