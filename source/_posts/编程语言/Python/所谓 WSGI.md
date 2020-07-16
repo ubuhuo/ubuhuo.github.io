@@ -77,7 +77,7 @@ Middleware 属于三个部分中最为特别的一个，对于 Server 他是一�
 
 通过上一小节能够大概的了解到 WSGI 在一次完整的请求中究竟做了什么。下面再来介绍一下一个完整的 WSGI Web 体系是如何工作的。
 
-### 一个符合 WSGI 规范的最小 Python Web 项目实例
+### 一个符合 WSGI 规范的 Python Web 项目实例
 
 为了方便展示先来构建一个符合 WSGI 规范的 Python Web 项目示例：
 
@@ -102,7 +102,7 @@ except ImportError:
 
 
 class WSGIServer(object):
-    request_queeu_size = 1              # 请求队列长度
+    request_queue_size = 1              # 请求队列长度
     address_family = socket.AF_INET     # 设置地址簇
     socket_type = socket.SOCK_STREAM    # 设置 socket 类型
 
@@ -118,7 +118,7 @@ class WSGIServer(object):
         # Bind 绑定端口
         listen_socket.bind(server_address)
         # Activate 激活
-        listen_socket.listen(self.request_queeu_size)
+        listen_socket.listen(self.request_queue_size)
         # 获取并记录 server host 和 port
         host, port = self.listen_socket.getsockname()[:2]
         self.server_name = socket.getfqdn(host)
