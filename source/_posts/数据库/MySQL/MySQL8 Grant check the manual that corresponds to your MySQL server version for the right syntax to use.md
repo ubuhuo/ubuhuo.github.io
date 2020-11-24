@@ -21,12 +21,12 @@ grant all on *.* to 'root'@'%' identified by 'testpassword';
 ```
 
 ```mysql
-1064 - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'IDENTIFIED BY 'Rhyaonma1996-'' at line 1
+1064 - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'IDENTIFIED BY 'testpassword' at line 1
 ```
 
 ## 问题解决
 
-最开始判断为加密规则的问题后续检查后发现之前已经就该过加密规则了，因此排除这一错误原因。谷歌搜索后找到了 [一篇文章][] 给出了解决方案：
+最开始判断为加密规则的问题后续检查后发现之前已经就该过加密规则了，因此排除这一错误原因。谷歌搜索后找到了 [一篇文章][1] 给出了解决方案：
 
 ```mysql
 create user 'root'@'%' identified by 'testpassword';
