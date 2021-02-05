@@ -92,32 +92,23 @@ div.article-meta-button
     padding: 0 article-padding
     line-height: line-height
     p, table
+        margin-bottom: 1em
         line-height: line-height
-        margin: line-height 0
     h1, h2, h3, h4, h5, h6
+        padding-left: 1.7%;
+        border-left: 4px solid #565a5f;
+        margin-left: -40px; 
         font-weight: bold
         line-height: line-height-title
         margin: line-height-title 0
         display: table
-        .headerlink
-            &::before
-                content: "#"
-                visibility: hidden
-            float: left
-            margin-left: -20px
-            line-height: 1
-        &:hover .headerlink
-            text-decoration: none
-            &::before
-                visibility: visible
     a
         color: color-link
         text-decoration: none
         &:hover
             text-decoration: underline
     ul, ol, dl
-        margin-top: line-height
-        margin-bottom: line-height
+        margin-bottom: 1em
         li.task-list
             margin-left: 0
             list-style: none
@@ -142,7 +133,7 @@ div.article-meta-button
     blockquote
         position: static
         font-family: font-serif
-        font-size: 1.1em
+        font-size: 1em
         margin: 0 -20px
         padding: 10px 20px 10px 54px
         background: #fcfcfc

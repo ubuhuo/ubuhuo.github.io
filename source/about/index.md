@@ -54,6 +54,10 @@ Hexo 插件列表：
 实现了 sidebar TOC 组件
 将 sidebar 和 profile 组件进行位置互换
 
+### 2021-02-05
+
+修改了站点字体和部分样式
+
 [1]: https://www.imalan.cn/
 [2]: https://blog.imalan.cn/archives/108/
 [3]: https://hexo.io
