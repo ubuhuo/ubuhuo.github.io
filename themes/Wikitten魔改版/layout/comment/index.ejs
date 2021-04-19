@@ -1,0 +1,5 @@
+<% if (post.comments) { %>
+    <% if (theme.comment.valine.enable) { %>
+        <section id="comments"> <%- partial('comment/valine') %> </section>
+    <% } %>
+<% } %>
