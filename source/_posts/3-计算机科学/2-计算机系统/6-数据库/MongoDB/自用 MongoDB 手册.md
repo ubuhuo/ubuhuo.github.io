@@ -4,7 +4,6 @@ date: 2020/04/20
 categories:
   - 3-计算机科学
   - 2-计算机系统
-  - 2-操作系统
   - 6-数据库
   - MongoDB
 tags:

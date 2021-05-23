@@ -3,7 +3,6 @@ title: ThinkPHP5 的 Nginx 配置
 date: 2018/3/5
 categories:
   - 1-网络笔记
-  - ThinkPHP
 tags:
   - ThinkPHP
 copyright: true
