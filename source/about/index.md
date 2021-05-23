@@ -58,6 +58,10 @@ Hexo 插件列表：
 
 修改了站点字体和部分样式
 
+### 2021-05-23
+
+修改站点目录结构和标签方式
+
 [1]: https://www.imalan.cn/
 [2]: https://blog.imalan.cn/archives/108/
 [3]: https://hexo.io
