@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    
+    <title>Erlang 程序设计笔记-第一部分 | 小白维基</title>
+    
+    
+        <meta name="keywords" content="Erlang 程序设计笔记">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="第一章：什么是并发在本书中，我们讲学习如何将 并行 活动描述为相互通信的多组 并行 进程，并学习如何编写并发程序。 在日常用语中，并发（concurrent）、同时（simultaneous）和并行（parallel）等词几乎表示同一个意思。但在编程语言中需要做更精确的区分。 如果只有一台单核的计算机，是无法在上面运行并行程序的。因为只有一个 CPU，而它一次只能做一件事。然而，可以在单核计算机上">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Erlang 程序设计笔记-第一部分">
+<meta property="og:url" content="https://wiki.blanc.site/archives/76405d8b.html">
+<meta property="og:site_name" content="小白维基">
+<meta property="og:description" content="第一章：什么是并发在本书中，我们讲学习如何将 并行 活动描述为相互通信的多组 并行 进程，并学习如何编写并发程序。 在日常用语中，并发（concurrent）、同时（simultaneous）和并行（parallel）等词几乎表示同一个意思。但在编程语言中需要做更精确的区分。 如果只有一台单核的计算机，是无法在上面运行并行程序的。因为只有一个 CPU，而它一次只能做一件事。然而，可以在单核计算机上">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-11-19T00:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-23T12:08:45.163Z">
+<meta property="article:author" content="ryomahan">
+<meta property="article:tag" content="Erlang 程序设计笔记">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="小白维基" type="application/atom+xml">
+    
+    
+        <link rel="icon" href="/favicon.ico">
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110100486-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-110100486-1');
+</script>
+    
+    
+        <meta name="google-site-verification" content="D9ld5oQABBxIwNpgD_WN61p51-ZcABZ6Olt4HKcxlWw">
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?fac7e69191f0847b886888aa7c794fa7";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- 字体引入 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 4.2.1"></head>
+</html>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">小白维基</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://www.gravatar.com/avatar/e30ee2d02a4632e35575fec3944497df">
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://www.gravatar.com/avatar/e30ee2d02a4632e35575fec3944497df?s=128">
+            <h2 id="name">Ryoma</h2>
+            <h3 id="title">毕己一生，依依东望。</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Jinan, China</span>
+            <a id="follow" target="_blank" href="https://github.com/ryomahan/" rel="external nofollow noopener noreferrer">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                105
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                65
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://blog.blanc.site" target="_blank" title="wordpress" class="tooltip">
+                            <i class="fa fa-wordpress"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/ryomahan1996" target="_blank" title="twitter" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/xiaobaidh" target="_blank" title="weibo" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://github.com/ryomahan" target="_blank" title="github" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class="tooltip">
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+
+    
+        <div class="widget-wrap widget-list">
+            <h3 class="widget-title"><span>链接</span></h3>
+            <div class="widget">
+                <ul>
+                    
+                        <li>
+                            <a href="https://www.blanc.site" target="_blank">依依东望</a>
+                        </li>
+                    
+                        <li>
+                            <a href="https://blog.blanc.site" target="_blank">一只小白</a>
+                        </li>
+                    
+                        <li>
+                            <a href="https://wiki.blanc.site" target="_blank">小白维基</a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    
+</aside>
+
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id="categories">
+        <h3 class="widget-title">
+            <span>分类</span>
+            &nbsp;
+            <a id="allExpand" href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            1-网络笔记
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8678286b.html">U盘安装 Linux distribution 提示 waring /dev/root does not exist</a></li>  <li class="file"><a href="/archives/ee66e659.html">适合 Linux 新手的 man page 使用手册</a></li>  <li class="file"><a href="/archives/3c798f3a.html">「转载」如何选择开源许可证？</a></li>  <li class="file"><a href="/archives/573af784.html">不翻墙下载 Chrome + 不用 VPN 上 Google</a></li>  <li class="file"><a href="/archives/50486745.html">Fatal error in launcher：Unable to create process using '"'</a></li>  <li class="file"><a href="/archives/7cd2d86d.html">Web 安全学习笔记</a></li>  <li class="file"><a href="/archives/7f71ea0e.html">影梭（Shadowsocks）服务端安装、配置及多用户</a></li>  <li class="file"><a href="/archives/6bfb5db9.html">Linux 下安装 Node.js</a></li>  <li class="file"><a href="/archives/3f439512.html">Nginx rtmp 模块配合 OBS 推流实现直播(监控)功能</a></li>  <li class="file"><a href="/archives/ff98c7a2.html">CentOS7 下配置 Nginx + PHP7 + MariaDB + ThinkPHP5.1</a></li>  <li class="file"><a href="/archives/71825b94.html">ThinkPHP5 的 Nginx 配置</a></li>  <li class="file"><a href="/archives/f63c0d8d.html">「转载」同步和异步的区别</a></li>  <li class="file"><a href="/archives/e94a0a36.html">新部署一台Linux云服务器时常用的命令</a></li>  <li class="file"><a href="/archives/22a754d3.html">CentOS7 + Python3 + Django(rest_framework) + MariaDB + nginx + uwsgi 部署 API 开发环境</a></li>  <li class="file"><a href="/archives/ab4a885.html">Python 虚拟环境：virtualenv 以及 virtualenvwrapper</a></li>  <li class="file"><a href="/archives/72d385fc.html">webpack 4 入门</a></li>  <li class="file"><a href="/archives/f1bf1c1a.html">单点问题</a></li>  <li class="file"><a href="/archives/a07e5380.html">注册中心</a></li>  <li class="file"><a href="/archives/cb0153ff.html">「未完成」正则中的贪婪模式与非贪婪模式</a></li>  <li class="file"><a href="/archives/7172d605.html">正则表达式中的回溯过程</a></li>  <li class="file"><a href="/archives/2c12e091.html">CentOS 7 安装 Java 环境</a></li>  <li class="file"><a href="/archives/9a031a35.html">Linux 下的压缩和解压缩</a></li>  <li class="file"><a href="/archives/4b35af27.html">「转载」水晶头接法</a></li>  <li class="file"><a href="/archives/c7ab70f8.html">软件版本号命名规则</a></li>  <li class="file"><a href="/archives/6f328d06.html">鸭子类型</a></li>  <li class="file"><a href="/archives/f2b92668.html">各个平台的包管理器</a></li>  <li class="file"><a href="/archives/42f2446d.html">写给小白的 ShadowSocks 全平台客户端使用说明</a></li>  <li class="file"><a href="/archives/4fcffd79.html">各种软件配置文件规范</a></li>  <li class="file"><a href="/archives/16f6299.html">MySQL8 Grant check the manual that corresponds to your MySQL server version for the right syntax to use.m</a></li>  <li class="file"><a href="/archives/37910dd2.html">计算机的启动</a></li>  <li class="file"><a href="/archives/4940711f.html">8086 处理器寻址方式</a></li>  <li class="file"><a href="/archives/ab9fcc5d.html">虚拟机常见的网络模式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            2-软件使用
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Chrome
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/decc86d5.html">「转载」解析谷歌 Chrome 各分支版本</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            CodeBlock
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/51f295ff.html">Code::Block 新手配置教程</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Django
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/953c2552.html">Django 笔记-1-从请求到响应</a></li>  <li class="file"><a href="/archives/55c5932a.html">Django 不同环境下使用不同设置文件</a></li>  <li class="file"><a href="/archives/dfb4f33e.html">Django 时间字段中 auto_now 和 auto_now_add 的区别</a></li>  <li class="file"><a href="/archives/8bf18292.html">Django admin 笔记</a></li>  <li class="file"><a href="/archives/44c1e81d.html">Django app 笔记</a></li>  <li class="file"><a href="/archives/5d9ebead.html">Django 中有趣又有用的代码设计</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Excel
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6cc2e3a0.html">Excel 利用函数获取行号、列号、当前行的上一行</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            JetBrains
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/e82cc623.html">JetBrains 系列软件如何在 macOS 下快速创建文件</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            PHPStrom
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/297592c5.html">PHPStrom 常用快捷键汇总</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            SublimeText
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/59657ebc.html">Sublime Text 3 安装 SVN 插件</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            ThinkPHP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/d9089534.html">ThinkPHP5 静态资源[CSS , JS , img]加载</a></li>  <li class="file"><a href="/archives/87acc549.html">解决 TP5 无法接收客户端 Post 传递的 Json 参数</a></li>  <li class="file"><a href="/archives/7d2dd65c.html">ThinkPHP5 下商城类微信小程序下单 + 支付开发流程图</a></li>  <li class="file"><a href="/archives/28f0dfb7.html">ThinkPHP5 + 梦网实现手机验证码登陆后台逻辑</a></li>  <li class="file"><a href="/archives/d2b8c7e4.html">Windows 下 ThinkPHP5 配置 redis 缓存</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VMware
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/4dedf7b2.html">VMware 安装 CentOS 后网络设置</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VOX
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/aeea741e.html">解决 macOS 下 VOX 中文乱码问题</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VSCode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/a29d84d8.html">VS Code + PHPStudy 断点调试 PHP</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Vue
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b4f7e05e.html">vue-cli 下配置 Element + axios + Mockjs</a></li>  <li class="file"><a href="/archives/793400e.html">解决 Vue CSS 样式重复载入，为 Vue 添加全局 less 或 sass 基础样式库</a></li>  <li class="file"><a href="/archives/341c107a.html">Vue Router 实现动态路由和常见问题解决方案</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            WordPress
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6ec97606.html">WordPress 配置七牛云 CDN 具体操作</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            ZooKeeper
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/f1db9330.html">ZooKeeper 入门简介</a></li>  <li class="file"><a href="/archives/2b7b1ffc.html">ZooKeeper 命令</a></li>  <li class="file"><a href="/archives/bb55e9ff.html">ZooKeeper 配置文件解析</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            zsh
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/2025325c.html">zsh 历史文件损坏</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            命令行工具
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Git
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/3c3cdb74.html">Git 学习笔记</a></li>  <li class="file"><a href="/archives/6c235203.html">「转载」Git 远程仓库 pull/push 操作详解</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            curl
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/41e09627.html">格式化 curl 输出的 json 内容</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            dmidecode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/89447a6c.html">dmidecode 解析</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            homebrew
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/819175d6.html">homebrew tap</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            pip
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b47b33aa.html">pip 自动生成或安装 requiremen 依赖</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            pyenv
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6005f6af.html">macOS 下利用 pyenv 管理 Python 版本和虚拟环境</a></li>  <li class="file"><a href="/archives/22859f2b.html">利用本地缓存解决 pyenv 下载缓慢问题</a></li>  <li class="file"><a href="/archives/911a03cb.html">通过 shell 文件激活 pyenv virtualenv 虚拟环境失败</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            tmux
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/9e40babb.html">tmux 入门 + 快捷键整理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            vim
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/211d6e8d.html">vim 创建文件时根据文件类型自动添加内容</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            3-计算机科学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            1-理论计算机科学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            1-数据结构和算法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/f3c5e08e.html">数据结构笔记1-概论</a></li>  <li class="file"><a href="/archives/e3cbe031.html">数据结构笔记2-线性表</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            4-编程语言和编译器
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            C&CPP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/154e48dc.html">cpp 中的声明和定义</a></li>  <li class="file"><a href="/archives/ca916e4c.html">对比 C 和 CPP 中 struct class 和 union</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Erlang
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file active"><a href="/archives/76405d8b.html">Erlang 程序设计笔记-第一部分</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            HTML
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/cd7f373a.html">如何用纯 HTML 区分一个 form 表单中的多个 submit</a></li>  <li class="file"><a href="/archives/8b008844.html">利用 position + rgba 将 HTML 背景灰化</a></li>  <li class="file"><a href="/archives/c0d98826.html">固定一个 div 在另一个 div 的底部</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            PHP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/60232ab3.html">「转载」PHP 常用缓存技术的总结</a></li>  <li class="file"><a href="/archives/e639e72a.html">「转载」PHP 静态方法和非静态方法简单对比</a></li>  <li class="file"><a href="/archives/44e28494.html">「转载」PHP 判断文件存在是用 file_exists 还是 is_file</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Python
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/19ed6e31.html">Python + OpenCV 图像处理-1</a></li>  <li class="file"><a href="/archives/4007339e.html">Python 中的内置异常</a></li>  <li class="file"><a href="/archives/e0455099.html">Python 中的异常处理</a></li>  <li class="file"><a href="/archives/7a294715.html">所谓 WSGI</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Shell
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8f9d5c85.html">Shell 获取当前脚本的绝对路径</a></li>  <li class="file"><a href="/archives/17043032.html">echo</a></li>  <li class="file"><a href="/archives/b422aa7d.html">Shell 区分不同 Unix 系统</a></li>  <li class="file"><a href="/archives/3beb222a.html">Shell 基础语法</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            TypeScript
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/e7cd2bef.html">TypeScript 名词理解</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            汇编语言
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/f3934733.html">x86汇编指令</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            2-计算机系统
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            2-操作系统
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            CiscoIOS
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/3bd55461.html">Cisco IOS 系列-0-概览</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Linux
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/1d036a8c.html">Linux 系统下不同类型文件默认的颜色</a></li>  <li class="file"><a href="/archives/d19e8f5d.html">Linux 学习笔记-1</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            macOS
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/607dec48.html">macOS 如何删除自带 ABC 输入法</a></li>  <li class="file"><a href="/archives/26aeca3.html">macOS 访达常用快捷键</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            5-计算机安全和密码学
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/a45966e2.html">块加密的工作模式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            6-数据库
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            MongoDB
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b880b012.html">自用 MongoDB 手册</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            MySQL
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/ef1e0835.html">MySQL 修改数据库名</a></li>  <li class="file"><a href="/archives/466aea21.html">MySQL GRANT 授权语句</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            3-计算机应用技术
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            4-人工智能
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8fbb5ea2.html">人工智能-0-概览</a></li>  <li class="file"><a href="/archives/61dc3b15.html">神经网络-1-概览</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            4-软件工程
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            RESTful
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/7e15b804.html">RESTful 笔记-1-接口设计规范</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/archives/f15c2f60.html">「转载」互联网产品研发流程概论</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+        
+  <div class="toc-flag"></div>
+  <div class="toc-wrap">
+      <h3>
+          <span>文章目录</span>
+      </h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#第一章：什么是并发"><span class="toc-number">1.</span> <span class="toc-text">第一章：什么是并发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-给并发建模"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 给并发建模</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1-开始模拟"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1.1 开始模拟</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-2-发送消息"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.1.2 发送消息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-3-接收消息"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.1.3 接收消息</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-并发的益处"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 并发的益处</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-并发程序和并行计算机"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 并发程序和并行计算机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-顺序和并发编程语言"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 顺序和并发编程语言</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第二章：Erlang-速览"><span class="toc-number">2.</span> <span class="toc-text">第二章：Erlang 速览</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Shell"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 Shell</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-操作符"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.1.1 &#x3D; 操作符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-2-变量和原子的语法"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.1.2 变量和原子的语法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-进程、模块和编译"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 进程、模块和编译</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-在-shell-里编译并运行-Hello-World"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.2.1 在 shell 里编译并运行 Hello World</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-在-Erlang-shell-外编译"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2.2 在 Erlang shell 外编译</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-你好，并发"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 你好，并发</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-文件服务器进程"><span class="toc-number">2.3.1.</span> <span class="toc-text">2.3.1 文件服务器进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-客户端代码"><span class="toc-number">2.3.2.</span> <span class="toc-text">2.3.2 客户端代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-3-改进文件服务器"><span class="toc-number">2.3.3.</span> <span class="toc-text">2.3.3 改进文件服务器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-练习"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 练习</span></a></li></ol></li></ol>
+  </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-3-计算机科学/1-理论计算机科学/4-编程语言和编译器/Erlang/Erlang 程序设计笔记-第一部分" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/3-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">3-计算机科学</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/3-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/1-%E7%90%86%E8%AE%BA%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">1-理论计算机科学</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/3-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/1-%E7%90%86%E8%AE%BA%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/4-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%92%8C%E7%BC%96%E8%AF%91%E5%99%A8/">4-编程语言和编译器</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/3-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/1-%E7%90%86%E8%AE%BA%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/4-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%92%8C%E7%BC%96%E8%AF%91%E5%99%A8/Erlang/">Erlang</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Erlang-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%AC%94%E8%AE%B0/" rel="tag">Erlang 程序设计笔记</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/archives/76405d8b.html">
+            <time datetime="2018-11-19T00:00:00.000Z" itemprop="datePublished">2018-11-19</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/raw/backups/source/_posts/3-计算机科学/1-理论计算机科学/4-编程语言和编译器/Erlang/Erlang 程序设计笔记-第一部分.md" target="_blank" rel="external nofollow noopener noreferrer"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/edit/backups/source/_posts/3-计算机科学/1-理论计算机科学/4-编程语言和编译器/Erlang/Erlang 程序设计笔记-第一部分.md" target="_blank" rel="external nofollow noopener noreferrer"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/commits/backups/source/_posts/3-计算机科学/1-理论计算机科学/4-编程语言和编译器/Erlang/Erlang 程序设计笔记-第一部分.md" target="_blank" rel="external nofollow noopener noreferrer"> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Erlang 程序设计笔记-第一部分
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+        
+            <!-- 内容失效提醒 -->
+            
+    <!-- 如果文章创建超过一年或最后一次更新时间超过一个月(默认)则提示文章过期 -->
+    
+        <div class="aging">
+            <i class="fa fa-exclamation-circle aging-icon" aria-hidden="true"></i>
+            <span class="aging-content">请注意：本文编写于 <span class="aging-content-date">2018-11-19</span>，其中某些信息可能已经失去时效性。</span>
+        </div>
+    
+
+            <h2 id="第一章：什么是并发"><a href="#第一章：什么是并发" class="headerlink" title="第一章：什么是并发"></a>第一章：什么是并发</h2><p>在本书中，我们讲学习如何将 并行 活动描述为相互通信的多组 并行 进程，并学习如何编写<strong>并发程序</strong>。</p>
+<p>在日常用语中，并发（concurrent）、同时（simultaneous）和并行（parallel）等词几乎表示同一个意思。但在编程语言中需要做更精确的区分。</p>
+<p>如果只有一台单核的计算机，是无法在上面运行并行程序的。因为只有一个 CPU，而它一次只能做一件事。然而，可以在单核计算机上运行并发程序。计算机在不同任务之间分享时间，使人产生这些任务是并行运行的错觉。</p>
+<h3 id="1-1-给并发建模"><a href="#1-1-给并发建模" class="headerlink" title="1.1 给并发建模"></a>1.1 给并发建模</h3><p>我们将从一个简单的例子入手，为一种日常情景构建并发模型。设想我看见四个人出去散步，另外还有两条狗和一大群兔子。这些人正在相互交谈，而狗则想要追逐兔子。要在Erlang里模拟这些，需要编写四个模块，名字分别是person（人）、dog（狗）、rabbit（兔子）和world（世界）。person的代码会放在名为person.erl的文件里，看起来就像是这样：</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">-module</span><span class="params">(person)</span>.</span><br><span class="line"><span class="keyword">-export</span><span class="params">([init/<span class="number">1</span>])</span></span><br><span class="line"></span><br><span class="line">init<span class="params">(Name)</span> -&gt; ...</span><br></pre></td></tr></table></figure>
+
+<p>第 1 行 <code>-module(person).</code> 的意思是此文件包含用于 person 模块的代码。它应该与文件名一致（除了 <code>.erl</code> 这个文件扩展名）。<strong>模块名必须以一个小写字母开头</strong>。从技术上说，模块名是一个原子（atom）（关于原子的详细介绍，可参见 3.5 节）。模块声明之后是一条导出声明。导出声明指明了模块里哪些函数可以从模块外部进行调用。它们类似于许多编程语言里的 public 声明。没有包括在导出声明里的函数是私有的，无法在模块外调用。<br><code>-export([init/1]).</code> 语法的意思是带有一个参数（<code>/1</code> 指的就是这个意思，而不是除以 1）的函数 <code>init</code> 可以在模块外调用。如果想要导出多个函数，就应该使用下面这种语法：方括号 <code>[ ... ]</code> 的意思是“列表”，因此这条声明的意思是我们想要从模块里导出一个函数列表。我们也会给 dog 和 rabbit 编写类似的代码。</p>
+<h4 id="1-1-1-开始模拟"><a href="#1-1-1-开始模拟" class="headerlink" title="1.1.1 开始模拟"></a>1.1.1 开始模拟</h4><p>要启动程序，可以调用 <code>world:start()</code> 。它定义在一个名为 world 的模块里，这个模块的开头部分就像这样：</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">-module</span><span class="params">(world)</span>.</span><br><span class="line"><span class="keyword">-export</span><span class="params">([start/<span class="number">0</span>])</span>.</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">start</span><span class="params">()</span> -&gt;</span></span><br><span class="line">	Joe        = spawn(person, init, [<span class="string">"Joe"</span>]),</span><br><span class="line">	Susannah   = spawn(person, init, [<span class="string">"Susannah"</span>]),</span><br><span class="line">	Dave       = spawn(person, init, [<span class="string">"Dave"</span>]),</span><br><span class="line">	Andy       = spawn(person, init, [<span class="string">"Andy"</span>]),</span><br><span class="line">	Rover      = spawn(dog,    init, [<span class="string">"Rover"</span>]),</span><br><span class="line">	...</span><br><span class="line">	Rabbitl    = spawn(rabbit, init, [<span class="string">"Flopsy"</span>]),</span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
+
+<p><code>spawn</code> 是一个 Erlang 基本函数，它会创建一个并发进程并返回一个进程标识符。<code>spawn</code> 可以这样调用：</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">spawn</span><span class="params">(ModName, FuncName, [Arg1, Arg2, ..., ArgN])</span></span></span><br></pre></td></tr></table></figure>
+
+<p>当 Erlang 运行时系统执行 <code>spawn</code> 时，它会创建一个新进程（不是操作系统的进程，而是一个由 Erlang 系统管理的轻量级进程）。当进程创建完毕后，它便开始执行参数所指定的代码。<code>ModName</code> 是包含想要执行代码的模块名。<code>FuncName</code> 是模块里的函数名，而 <code>[Arg1, Arg2, ...]</code> 是一个列表，包含了想要执行的函数参数。</p>
+<p><code>spawn</code> 的返回值是一个进程标识符（PID，Process IDentifier），可以用来与新创建的进程交互。</p>
+<blockquote>
+<p><strong>与对象类比</strong></p>
+</blockquote>
+<blockquote>
+<p>Erlang 里的模块类似于面向对象编程语言（OOPL，Object-Oriented Programming Language）里的类，进程则类似于 OOPL 里的对象（或者说类实例）。</p>
+</blockquote>
+<blockquote>
+<p>在 Erlang 里，<code>spawn</code> 通过运行某个模块里定义的函数创建一个新进程。而在 Java 里，new 通过运行某个类中定义的方法创建一个新对象。</p>
+</blockquote>
+<blockquote>
+<p>在 OOPL 里可以用一个类创建数千个类实例。类似地，在 Erlang 里我们可以用一个模块创建数千甚至数百万个执行模块代码的进程。所有 Erlang 进程都并发且独立执行，如果有一台百万核的计算机，甚至可以并行运行。</p>
+</blockquote>
+<h4 id="1-1-2-发送消息"><a href="#1-1-2-发送消息" class="headerlink" title="1.1.2 发送消息"></a>1.1.2 发送消息</h4><p>启动模拟之后，我们希望在程序的不同进程之间发送消息。<strong>在 Erlang 里，各个进程不共享内存，只能通过发送消息来与其他进程交互</strong>。这就是现实世界里的物体行为。</p>
+<p>假设 Joe 想要对 Susannah 说些什么。在程序里我们会编写这样一行代码：</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Susannah ! &#123;self(), <span class="string">"Hope the dogs don't chase the rabbits"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Pid ! Msg</code> 语法的意思是发送消息 <code>Msg</code> 到进程 <code>Pid</code>。大括号里的 <code>self()</code> 参数标明了发送消息的进程（在此处是Joe）。</p>
+<h4 id="1-1-3-接收消息"><a href="#1-1-3-接收消息" class="headerlink" title="1.1.3 接收消息"></a>1.1.3 接收消息</h4><p>为了让 Susannah 的进程接收来自 Joe 的消息，要这样写:</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">receive</span></span><br><span class="line">    &#123;From, Message&#125; -&gt;</span><br><span class="line">    ...</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>当 Susannah 的进程接收到一条消息时，变量 <code>From</code> 会绑定为 Joe，这样 Susannah 就知道消息来自何处，变量 <code>Message</code> 则会含此消息。</p>
+<p>这里应该记住的关键一点是:<strong>编程模型基于对现实世界的观察</strong></p>
+<h3 id="1-2-并发的益处"><a href="#1-2-并发的益处" class="headerlink" title="1.2 并发的益处"></a>1.2 并发的益处</h3><p>并发编程可以用来提升性能，创建可扩展和容错的系统，以及编写清晰和可理解的程序来控<br>制现实世界里的应用。</p>
+<ul>
+<li>性能</li>
+<li>可扩展性</li>
+<li>容错性</li>
+<li>清晰性</li>
+</ul>
+<h3 id="1-3-并发程序和并行计算机"><a href="#1-3-并发程序和并行计算机" class="headerlink" title="1.3 并发程序和并行计算机"></a>1.3 并发程序和并行计算机</h3><p>尝试给出并发和并行这类术语的准确含义。</p>
+<p>先来区分一下<strong>并发程序</strong>(也就是如果有并行计算机就可能会跑得更快的程序)和多核(或 CPU)的<strong>并行计算机</strong></p>
+<ul>
+<li><p><strong>并发程序</strong> 是一种用并发编程语言编写的程序。编写并发程序是为了提升性能、可扩展性和容错性。</p>
+</li>
+<li><p><strong>并发编程语言</strong> 拥有专门用于编写并发程序的语言结构。这些结构是编程语言的主要部分，在所有操作系统上都有着相同的表现。</p>
+</li>
+<li><p><strong>并行计算机</strong> 是一种有多个处理单元(CPU 或核心)同时运行的计算机。</p>
+</li>
+</ul>
+<p>Erlang 里的并发程序是由互相通信的多组顺序进程组成的。一个 Erlang 进程就是一个小小的虚拟机，可以执行单个 Erlang 函数。别把它和操作系统的进程相混淆。</p>
+<p>要用 Erlang 编写一个并发程序，必须确定一组用来解决问题的进程。这种确定进程的做法被称为<strong>并发建模</strong>。它类似于在编写面向对象程序时确定所需对象的技艺。</p>
+<p>现在我们了解了并发程序和并行计算机之间的区别。<strong>并发性与软件结构有关，而并行性与硬件有关</strong>。下面来看看顺序和并发编程语言之间的区别。</p>
+<h3 id="1-4-顺序和并发编程语言"><a href="#1-4-顺序和并发编程语言" class="headerlink" title="1.4 顺序和并发编程语言"></a>1.4 顺序和并发编程语言</h3><p><strong>编程语言有两种:顺序和并发。</strong>顺序语言被设计用于编写顺序程序，没有描述并发计算的语言结构。并发编程语言被设计用于编写并发程序，语言本身带有表达并发性的特殊结构。</p>
+<p>在 Erlang 里，并发性由 Erlang 虚拟机提供，而非操作系统或任何的外部库。在大多数顺序编程语言里，并发性都是以接口的形式提供，指向主机操作系统的内部并发函数。</p>
+<p>在 Erlang 里，<strong>进程和并发是我们可以用来定型和解决问题的工具</strong>。这让细粒度控制程序的并发结构成为可能，而用操作系统的进程是很难做到的。</p>
+<h2 id="第二章：Erlang-速览"><a href="#第二章：Erlang-速览" class="headerlink" title="第二章：Erlang 速览"></a>第二章：Erlang 速览</h2><p>在这一章里，我们会创建第一个并发程序。制作一个文件服务器，使其拥有两个并发进程:<br>一个进程代表服务器，另一个代表客户端。</p>
+<h3 id="2-1-Shell"><a href="#2-1-Shell" class="headerlink" title="2.1 Shell"></a>2.1 Shell</h3><p>请注意每一条表达式都必须以一个句号后接一个空白字符结尾。</p>
+<h4 id="2-1-1-操作符"><a href="#2-1-1-操作符" class="headerlink" title="2.1.1 = 操作符"></a>2.1.1 = 操作符</h4><p>可以用=操作符给变量赋值(严格来说是给变量绑定一个值)，就像这样:</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>&gt; X = <span class="number">123</span>.</span><br><span class="line"><span class="number">123</span></span><br><span class="line"><span class="number">2</span>&gt; X * <span class="number">2</span>.</span><br><span class="line"><span class="number">246</span></span><br></pre></td></tr></table></figure>
+
+<p>不能重新绑定变量。Erlang是一种函数式语言，所以一旦定义了 X = 123，那么X永远就是123，不允许改变!</p>
+<p>= 不是一个赋值操作符，它实际上是一个模式匹配操作符。(详情请参见3.3.2节)</p>
+<p>如果你习惯了命令式语言，可能会对这个概念感到不可思议。在命令式语言里，变量其实是伪装起来的内存地址。</p>
+<h4 id="2-1-2-变量和原子的语法"><a href="#2-1-2-变量和原子的语法" class="headerlink" title="2.1.2 变量和原子的语法"></a>2.1.2 变量和原子的语法</h4><p>请注意 Erlang 的变量以大写字母开头。所以 X、This 和 A_long_name 都是变量。</p>
+<p>以小写字母 开头的名称(比如 monday 或 friday )不是变量，而是符号常量，它们被称为原子(atom)。</p>
+<h3 id="2-2-进程、模块和编译"><a href="#2-2-进程、模块和编译" class="headerlink" title="2.2 进程、模块和编译"></a>2.2 进程、模块和编译</h3><p>Erlang 程序是由许多并行的进程构成的。</p>
+<p>进程负责执行模块里定义的函数。<br>模块则是扩展名为 <code>.erl</code> 的文件，运行前必须先编译它们。<br>编译某个模块之后，就可以在shell或者直接从操作系统环境的命令行里执行该模块中的函数了。</p>
+<p>下面几节将介绍如何在 shell 或操作系统命令行里编译模块和执行函数。</p>
+<h4 id="2-2-1-在-shell-里编译并运行-Hello-World"><a href="#2-2-1-在-shell-里编译并运行-Hello-World" class="headerlink" title="2.2.1 在 shell 里编译并运行 Hello World"></a>2.2.1 在 shell 里编译并运行 Hello World</h4><p>制作一个带有以下内容的hello.erl文件:</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% hello.erl</span></span><br><span class="line"><span class="keyword">-module</span><span class="params">(hello)</span>.</span><br><span class="line"><span class="keyword">-export</span><span class="params">([start/<span class="number">0</span>])</span>.</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">start</span><span class="params">()</span> -&gt;</span></span><br><span class="line">    io:format(<span class="string">"hello world~n"</span>).</span><br></pre></td></tr></table></figure>
+
+<p>为了编译并运行它，我们从保存 hello.erl 的目录里启动 Erlang shell，然后执行下面的操作：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> erl</span><br><span class="line"><span class="number">1</span>&gt; c(hello).</span><br><span class="line">&#123;ok,hello&#125;</span><br><span class="line"><span class="number">2</span>&gt; hello:start().</span><br><span class="line">hello world</span><br><span class="line">ok</span><br><span class="line"><span class="number">3</span>&gt; halt().</span><br><span class="line"><span class="variable">$</span></span><br></pre></td></tr></table></figure>
+
+<p><code>c(hello)</code> 命令编译了 hello.erl 文件里的代码。<br><code>{ok, hello}</code> 的意思是编译成功。现在代 码已准备好运行了。<br>第2行里执行了 <code>hello:start()</code> 函数。第3行里停止了 Erlang shell。</p>
+<p>在 shell 里进行操作的优点是只要平台为 Erlang 所支持，这种编译和运行程序的方法就一定可用。在操作系统的命令行里的操作可能会因平台的不同而有所差别。</p>
+<h4 id="2-2-2-在-Erlang-shell-外编译"><a href="#2-2-2-在-Erlang-shell-外编译" class="headerlink" title="2.2.2 在 Erlang shell 外编译"></a>2.2.2 在 Erlang shell 外编译</h4><p>也可以在操作系统的命令行里编译和运行前一个例子中的代码，就像下面这样:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> erlc hell.erl</span><br><span class="line"><span class="variable">$</span> erl <span class="literal">-noshell</span> <span class="literal">-s</span> hello start <span class="literal">-s</span> init shop</span><br><span class="line">hello world</span><br></pre></td></tr></table></figure>
+
+<p>erlc 从命令行启动了 Erlang 编译器。<br>编译器编译了 hello.erl 里的代码并生成一个名为 hello.beam 的目标代码文件。</p>
+<p><code>$erl -noshell ...</code> 命令加载了 hello 模块并执行 <code>hello:start()</code> 函数。<br>随后，它执行了 <code>init:stop()</code> ，这个表达式终止了Erlang会话。</p>
+<p><strong>在 Erlang shell 之外运行 Erlang 编译器(erlc)是编译 Erlang 代码的首选方式。</strong></p>
+<p>使用 erlc 的优点在于自动化。我们可以在 rakefile 或 makefile 内运行 erlc 来自动化构建过程。</p>
+<h3 id="2-3-你好，并发"><a href="#2-3-你好，并发" class="headerlink" title="2.3 你好，并发"></a>2.3 你好，并发</h3><p>如何编写并发程序呢?<br><strong>Erlang的基本并发单元是进程(process)。</strong><br>一个进程是一个轻量级的虚拟机，只能通过发送和接收消息来与其他进程通信。 </p>
+<p>将要编写的第一个并发程序是一个文件服务器。要在两台机器之间传输文件，需要客户端和服务器两个程序。为了实现这一点，我们将制作两个模块：<code>afile_client</code> 和 <code>afile_server</code>。</p>
+<h4 id="2-3-1-文件服务器进程"><a href="#2-3-1-文件服务器进程" class="headerlink" title="2.3.1 文件服务器进程"></a>2.3.1 文件服务器进程</h4><p>文件服务器由一个名为 <code>afile_server</code> 的模块实现。这里再提醒一下，进程和模块类似于对象和类。用于进程的代码包含在模块里，要创建一个进程，需要调用 <code>spawn(...)</code>，创建进程的实际操作由这个基本函数完成。</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% afile_server.erl</span></span><br><span class="line"><span class="keyword">-module</span><span class="params">(afile_server)</span>.</span><br><span class="line"><span class="keyword">-export</span><span class="params">([start/<span class="number">1</span>, loop/<span class="number">1</span>])</span>.</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">start</span><span class="params">(Dir)</span> -&gt;</span> spawn(afile_server, loop, [Dir]).</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">loop</span><span class="params">(Dir)</span> -&gt;</span></span><br><span class="line">    <span class="keyword">receive</span></span><br><span class="line">    &#123;Client, list_dir&#125; -&gt;</span><br><span class="line">        Client ! &#123;self(), file:list_dir(Dir)&#125;;</span><br><span class="line">    &#123;Client, &#123;get_file, File&#125;&#125; -&gt;</span><br><span class="line">        Full = filename:join(Dir, File),</span><br><span class="line">        Client ! &#123;self(), file:read_file(Full)&#125;</span><br><span class="line">    <span class="keyword">end</span>,</span><br><span class="line">    loop(Dir&#125;.</span><br></pre></td></tr></table></figure>
+
+<p>这段代码的结构非常简单。如果略去大部分细节，它看起来就会像这样:</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">loop</span><span class="params">(Dir)</span> -&gt;</span></span><br><span class="line">    <span class="comment">%% 等待指令</span></span><br><span class="line">    <span class="keyword">receive</span></span><br><span class="line">        Command -&gt;</span><br><span class="line">           ... 做点什么 ...</span><br><span class="line">    <span class="keyword">end</span>,</span><br><span class="line">    loop(Dir).</span><br></pre></td></tr></table></figure>
+
+<p>这就是用 Erlang 编写无限循环的方法。变量 Dir 包含了文件服务器当前的工作目录。我们在这个循环内等待指令，接收到指令时我们会遵从，然后再次调用自身来获取下一个指令。</p>
+<blockquote>
+<p>不用担心最后的自身调用，这不会耗尽栈空间。Erlang 对代码采用了一种所谓<strong>“尾部调用”</strong>的优化，意思是此函数的运行空间是固定的。这是用Erlang编写循环的标准 方式，只要在最后调用自身即可。</p>
+</blockquote>
+<p>另一点要注意的是，loop 函数永远不会返回。在顺序编程语言里，必须要极其小心避免无限循环，因为只有一条控制线，如果这条线卡在循环里就有麻烦了。Erlang则没有这个问题。服务器只是一个在无限循环里处理请求的程序，与我们想要执行的其他任务并行运行。</p>
+<p>现在仔细查看接收语句。回忆一下，它看起来就像这样:</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">receive</span></span><br><span class="line">    &#123;Client, list_dir&#125; -&gt;</span><br><span class="line">        Client ! &#123;self(), file:list_dir(Dir)&#125;;</span><br><span class="line">    &#123;Client, &#123;get_file, File&#125;&#125; -&gt;</span><br><span class="line">        Full = filename:join(Dir, File),</span><br><span class="line">        Client ! &#123;self(), file:read_file(Full)&#125;</span><br><span class="line"><span class="keyword">end</span>,</span><br></pre></td></tr></table></figure>
+
+<p>这段代码的意思是如果接收到 <code>{Client, list_dir}</code> 消息，就应该回复一个文件列表;<br>如果接收到的消息是 <code>{Client, {get_file, File}}</code>，则回复这个文件。<br>作为模式匹配过程的一部分，<code>Client</code> 变量在收到消息时会被绑定。</p>
+<p>这段代码非常紧凑，所以很容易忽略所发生的细节。这段代码里有三个要点需要加以注意。</p>
+<ul>
+<li><p>回复给谁<br>所有接收的消息都包含变量 <code>Client</code>，它是发送请求进程的进程标识符，也是应该回复的对象。如果想要得到一条消息的回复，最好说明一下回复应该发给谁。就像在信件里写明姓名 和地址，如果不说明信件来自何处，就永远得不到回复。</p>
+</li>
+<li><p><code>self()</code> 的用法<br>服务器发送的回复包含了参数 <code>self()</code>(在这个案例里 <code>self()</code> 是服务器的进程标识符)。这个标识符被附在消息中，使客户端可以检查收到的消息的确来自服务器，而不是其他 13 某个进程。</p>
+</li>
+<li><p>模式匹配被用于选择消息<br>接收语句内部有两个模式。可以这样编写:</p>
+</li>
+</ul>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">receive</span></span><br><span class="line">    Pattern1 -&gt;</span><br><span class="line">      Actions1;</span><br><span class="line">    Pattern2 -&gt;</span><br><span class="line">      Actions2 -&gt;</span><br><span class="line">    ...</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>Erlang 编译器和运行时系统会正确推断出如何在收到消息时运行适当的代码。不需要编写任何的 <code>if-then-else</code> 或 <code>switch</code> 语句来设定该做什么。这是模式匹配带来的乐趣之一，会为你节省大量工作。</p>
+<p>可以像下面这样在 shell 里编译和测试这段代码:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>&gt; c(afile_server).</span><br><span class="line">&#123;ok,afile_server&#125;</span><br><span class="line"><span class="number">2</span>&gt; FileServer = afile_server:start(<span class="string">"."</span>).</span><br><span class="line">&lt;<span class="number">0.47</span>.<span class="number">0</span>&gt;</span><br><span class="line"><span class="number">3</span>&gt; FileServer ! &#123;self(), list_dir&#125;.</span><br><span class="line">&#123;&lt;<span class="number">0.31</span>.<span class="number">0</span>&gt;,list_dir&#125;</span><br><span class="line"><span class="number">4</span>&gt; receive X -&gt; X end.</span><br><span class="line">&#123;&lt;<span class="number">0.47</span>.<span class="number">0</span>&gt;,</span><br><span class="line">  &#123;ok,[<span class="string">"afile_server.beam"</span>,<span class="string">"processes.erl"</span>,<span class="string">"attrs.erl"</span>,<span class="string">"lib_find.erl"</span>,<span class="string">"dist_demo.erl"</span>,<span class="string">"data1.dat"</span>,<span class="string">"scavenge_urls.erl"</span>,<span class="string">"test1.erl"</span>,<span class="type">...</span>]&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>来看看相关细节。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>&gt; c(afile_server).</span><br><span class="line">&#123;ok,afile_server&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译 <code>afile_server.erl</code> 文件所包含的 <code>afile_server</code> 模块。编译很成功，所以“编译”函数 <code>c</code> 的返回值是 <code>{ok, afile_server}</code>。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2</span>&gt; FileServer = afile_server:start(<span class="string">"."</span>).</span><br><span class="line">&lt;<span class="number">0.47</span>.<span class="number">0</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>afile_server:start(Dir)</code> 调用 <code>spawn(afile_server, loop, [Dir])</code>。这就创建出一个新的并行进程来执行函数 <code>afile_server:loop(Dir)</code> 并返回一个进程标识符，可以用它来与此进程通信。<br><code>&lt;0.47.0&gt;</code> 是文件服务器进程的进程标识符。它的显示方式是<strong>尖括号内由句号分隔的三个整数</strong>。</p>
+<blockquote>
+<p>每次运行这个程序时，进程标识符都会改变。因此，<code>&lt;0.47.0&gt;</code> 里的数字在不同的会话里<br>将会是不同的。</p>
+</blockquote>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span>&gt; FileServer ! &#123;self(), list_dir&#125;.</span><br><span class="line">&#123;&lt;<span class="number">0.31</span>.<span class="number">0</span>&gt;,list_dir&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里给文件服务器进程发送了一条 <code>{self(), list_dir}</code> 消息。<code>Pid ! Message</code> 的返回值被规定为 Message ， 因 此 shell 打印出 <code>{self(),list_dir}</code> 的值即 <code>{&lt;0.31.0&gt;, list_dir}</code>。<br><code>&lt;0.31.0&gt;</code> 是 Erlang shell 自身的进程标识符，它被包括在消息内，告知文件服务器应该回复给谁。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4</span>&gt; receive X -&gt; X end.</span><br><span class="line">&#123;&lt;<span class="number">0.47</span>.<span class="number">0</span>&gt;,</span><br><span class="line">  &#123;ok,[<span class="string">"afile_server.beam"</span>,<span class="string">"processes.erl"</span>,<span class="string">"attrs.erl"</span>,<span class="string">"lib_find.erl"</span>,<span class="string">"dist_demo.erl"</span>,<span class="string">"data1.dat"</span>,<span class="string">"scavenge_urls.erl"</span>,<span class="string">"test1.erl"</span>,<span class="type">...</span>]&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>receive X -&gt; X end</code> 接收文件服务器发送的回复。它返回元组 <code>{&lt;0.47.0&gt;, {ok, ...}</code>。 该元组的第一个元素 <code>&lt;0.47.0&gt;</code> 是文件服务器的进程标识符。第二个参数是 <code>file:list_dir(Dir)</code> 函数的返回值，它在文件服务器进程的接收循环里得出。</p>
+<h4 id="2-3-2-客户端代码"><a href="#2-3-2-客户端代码" class="headerlink" title="2.3.2 客户端代码"></a>2.3.2 客户端代码</h4><p>文件服务器通过一个名为 <code>afile_client</code> 的客户端模块进行访问。这个模块的主要目的是<strong>为了隐藏底层通信协议的细节</strong>。</p>
+<p>客户端代码的用户可以通过调用此客户端模块导出的 <code>ls</code> 和 <code>get_file</code> 函数来传输文件。这就<strong>能够自由改变底层的协议而不会影响到客户端代码API部分。</strong></p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%afile_cilent.erl</span></span><br><span class="line"><span class="keyword">-module</span><span class="params">(afile_client)</span>.</span><br><span class="line"><span class="keyword">-export</span><span class="params">([ls/<span class="number">1</span>, get_file/<span class="number">2</span>])</span></span><br><span class="line"></span><br><span class="line">ls<span class="params">(Server)</span> -&gt;</span><br><span class="line">    Server ! &#123;self<span class="params">()</span>, list_dir&#125;,</span><br><span class="line">    receive</span><br><span class="line">        &#123;Server, FileList&#125; -&gt;</span><br><span class="line">            FileList</span><br><span class="line">    end.</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">get_file</span><span class="params">(Server, File)</span> -&gt;</span></span><br><span class="line">    Server ! &#123;self(), &#123;get_file, File&#125;&#125;,</span><br><span class="line">    <span class="keyword">receive</span></span><br><span class="line">        &#123;Server, Content&#125; -&gt;</span><br><span class="line">            Content</span><br><span class="line">    <span class="keyword">end</span>.</span><br></pre></td></tr></table></figure>
+
+<p>如果对比 <code>afile_clien</code> 与 <code>afile_server</code> 的代码，就会发现一种美妙的对称性。只要客户端 里有 <code>Server ! ...</code> 这类 send 语句，服务器里就会有 receive 模式，反之亦然。</p>
+<p>现在要重启 shell 并重新编译所有代码，展示客户端和服务器如何共同工作。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>&gt; c(afile_server).</span><br><span class="line">&#123;ok,afile_server&#125;</span><br><span class="line"><span class="number">2</span>&gt; c(afile_client&#125;.</span><br><span class="line">&#123;ok,afile_client&#125;</span><br><span class="line"><span class="number">3</span>&gt; FileServer = afile_server:start(<span class="string">"."</span>).</span><br><span class="line">&lt;<span class="number">0.43</span>.<span class="number">0</span>&gt;</span><br><span class="line"><span class="number">4</span>&gt; afile_client:get_file(FileServer,<span class="string">"missing"</span>).</span><br><span class="line">&#123;error,enoent&#125;</span><br><span class="line"><span class="number">5</span>&gt; afile_client:get_file(FileServer,<span class="string">"afile_server.erl"</span>).</span><br><span class="line">&#123;ok,&lt;&lt;<span class="string">"%%%-------------------------------------------------------------------\n%%% @author ryoma\n%%% @copyright (C) "</span>...&gt;&gt;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在在 shell 里运行的代码和之前代码的唯一区别，是把接口程序抽象出来放入单独的模块里。我们隐藏了客户端和服务器之间消息传递的细节，因为没有其他程序对此感兴趣。</p>
+<p>到目前为止，你看到了一个完整文件服务器的基础部分，但它尚未完成。还有很多的细节问题，涉及<strong>启动和停止服务器、连接某个套接字(socket)等</strong>，在这里不会提及。</p>
+<p>从 Erlang 的角度看，如何启动和停止服务器，连接套接字，从错误中恢复等都是琐碎的细节。 问题的本质在于创建并行进程，以及发送和接收消息。</p>
+<p><strong>在 Erlang 里用进程来构建问题的解决方案。思考进程的结构(也就是说哪些进程间相互有联系)，思考进程间传递的消息以及消息包含何种信息是思考和编程方式的中心。</strong></p>
+<h4 id="2-3-3-改进文件服务器"><a href="#2-3-3-改进文件服务器" class="headerlink" title="2.3.3 改进文件服务器"></a>2.3.3 改进文件服务器</h4><p>我们开发的文件服务器包括了运行在同一台机器上的两个相互通信的进程，展示了编写并发程序所需的一些基本要素。对真正的服务器而言，客户端和服务器会运行在不同的机器上，所以 必须设法让<strong>进程间的消息不仅能在同一个Erlang节点的进程之间传递，也能在物理上隔开的机器上的Erlang进程之间进行。</strong></p>
+<p>在这一章里，我们了解了如何在shell里执行一些简单的操作，编译一个模块，以及用spawn、send和receive这三个基本函数创建一个简单的双进程并发程序。</p>
+<h3 id="2-4-练习"><a href="#2-4-练习" class="headerlink" title="2.4 练习"></a>2.4 练习</h3><p>现在也许是个好机会来检查一下你对目前所做的有几分了解。</p>
+<ol>
+<li>启动并停止 Erlang shell。</li>
+<li>在 Erlang shell 里输入一些命令。不要忘了以句号和空白结束命令。</li>
+<li>对 hello.erl 做一些小小的改动。在 shell 里编译并运行它们。如果有错，中止E rlang shell 并重启 shell。</li>
+<li>运行文件客户端和服务器代码。加入一个名为 put_file 的命令。你需要添加何种消息?学习如何查阅手册页。查阅手册页里的file模块。</li>
+</ol>
+<p>PS：Erlang 中文文档：<a href="https://erldoc.com/mod/file/?search=file:" target="_blank" rel="external nofollow noopener noreferrer">点击查看</a></p>
+
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</div></article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/archives/ef1e0835.html" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    MySQL 修改数据库名
+                
+            </div>
+        </a>
+    
+    
+        <a href="/archives/22a754d3.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">CentOS7 + Python3 + Django(rest_framework) + MariaDB + nginx + uwsgi 部署 API 开发环境</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+        <section id="comments"> <div id="vcomments"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'sz7ny95XiYWkxht3H3YDs2GX-gzGzoHsz',
+        appKey: 'T8JJugDkbqtFLONIIzcPWW76',
+        placeholder: '不要吝啬赞美的语句ヾﾉ≧∀≦)o!',
+        avatar: 'mp',
+        meta: ['nick','mail','link'],
+        pageSize: 10,
+        visitor: true,
+        notify: true,
+        verify: true
+    })
+    let info = document.querySelectorAll('#vcomments>.info')[0]
+    if (info) { info.style.display = 'none' }
+</script> </section>
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            ryomahan &copy; 2021 
+            <a rel="external nofollow noopener noreferrer" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png"></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>. Comment By <a href="https://valine.js.org/" target="_blank" rel="external nofollow noopener noreferrer">valine</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten" target="_blank" rel="external nofollow noopener noreferrer">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>

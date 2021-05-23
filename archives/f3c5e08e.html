@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    
+    <title>数据结构笔记1-概论 | 小白维基</title>
+    
+    
+        <meta name="keywords" content="数据结构">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="基本概念数据数据是信息的载体，是描述客观事物的数、字符以及所有能输入到计算机中并被计算机程序识别和处理的符合的集合。 数据大致可分为两类，一类是数值性数据，包括整数、浮点数、复数、双精度数等，主要用于工程和科学计算，以及商业事务处理；另一类是非数值性数据，主要包括字符和字符串，以及文字、图形、图像、语音等数据。 数据元素数据元素是数据的基本单位，通常作为一个整体进行考虑和处理。一个数据元素可以有若">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构笔记1-概论">
+<meta property="og:url" content="https://wiki.blanc.site/archives/f3c5e08e.html">
+<meta property="og:site_name" content="小白维基">
+<meta property="og:description" content="基本概念数据数据是信息的载体，是描述客观事物的数、字符以及所有能输入到计算机中并被计算机程序识别和处理的符合的集合。 数据大致可分为两类，一类是数值性数据，包括整数、浮点数、复数、双精度数等，主要用于工程和科学计算，以及商业事务处理；另一类是非数值性数据，主要包括字符和字符串，以及文字、图形、图像、语音等数据。 数据元素数据元素是数据的基本单位，通常作为一个整体进行考虑和处理。一个数据元素可以有若">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20201019000530.png">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20201106203719.jpg">
+<meta property="article:published_time" content="2020-10-08T00:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-23T12:08:45.163Z">
+<meta property="article:author" content="ryomahan">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.blanc.site//wiki/img/20201019000530.png">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="小白维基" type="application/atom+xml">
+    
+    
+        <link rel="icon" href="/favicon.ico">
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110100486-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-110100486-1');
+</script>
+    
+    
+        <meta name="google-site-verification" content="D9ld5oQABBxIwNpgD_WN61p51-ZcABZ6Olt4HKcxlWw">
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?fac7e69191f0847b886888aa7c794fa7";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- 字体引入 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 4.2.1"></head>
+</html>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">小白维基</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://www.gravatar.com/avatar/e30ee2d02a4632e35575fec3944497df">
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://www.gravatar.com/avatar/e30ee2d02a4632e35575fec3944497df?s=128">
+            <h2 id="name">Ryoma</h2>
+            <h3 id="title">毕己一生，依依东望。</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Jinan, China</span>
+            <a id="follow" target="_blank" href="https://github.com/ryomahan/" rel="external nofollow noopener noreferrer">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                105
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                65
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://blog.blanc.site" target="_blank" title="wordpress" class="tooltip">
+                            <i class="fa fa-wordpress"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/ryomahan1996" target="_blank" title="twitter" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/xiaobaidh" target="_blank" title="weibo" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://github.com/ryomahan" target="_blank" title="github" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class="tooltip">
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+
+    
+        <div class="widget-wrap widget-list">
+            <h3 class="widget-title"><span>链接</span></h3>
+            <div class="widget">
+                <ul>
+                    
+                        <li>
+                            <a href="https://www.blanc.site" target="_blank">依依东望</a>
+                        </li>
+                    
+                        <li>
+                            <a href="https://blog.blanc.site" target="_blank">一只小白</a>
+                        </li>
+                    
+                        <li>
+                            <a href="https://wiki.blanc.site" target="_blank">小白维基</a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    
+</aside>
+
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id="categories">
+        <h3 class="widget-title">
+            <span>分类</span>
+            &nbsp;
+            <a id="allExpand" href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            1-网络笔记
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8678286b.html">U盘安装 Linux distribution 提示 waring /dev/root does not exist</a></li>  <li class="file"><a href="/archives/ee66e659.html">适合 Linux 新手的 man page 使用手册</a></li>  <li class="file"><a href="/archives/3c798f3a.html">「转载」如何选择开源许可证？</a></li>  <li class="file"><a href="/archives/573af784.html">不翻墙下载 Chrome + 不用 VPN 上 Google</a></li>  <li class="file"><a href="/archives/50486745.html">Fatal error in launcher：Unable to create process using '"'</a></li>  <li class="file"><a href="/archives/7cd2d86d.html">Web 安全学习笔记</a></li>  <li class="file"><a href="/archives/7f71ea0e.html">影梭（Shadowsocks）服务端安装、配置及多用户</a></li>  <li class="file"><a href="/archives/6bfb5db9.html">Linux 下安装 Node.js</a></li>  <li class="file"><a href="/archives/3f439512.html">Nginx rtmp 模块配合 OBS 推流实现直播(监控)功能</a></li>  <li class="file"><a href="/archives/ff98c7a2.html">CentOS7 下配置 Nginx + PHP7 + MariaDB + ThinkPHP5.1</a></li>  <li class="file"><a href="/archives/71825b94.html">ThinkPHP5 的 Nginx 配置</a></li>  <li class="file"><a href="/archives/f63c0d8d.html">「转载」同步和异步的区别</a></li>  <li class="file"><a href="/archives/e94a0a36.html">新部署一台Linux云服务器时常用的命令</a></li>  <li class="file"><a href="/archives/22a754d3.html">CentOS7 + Python3 + Django(rest_framework) + MariaDB + nginx + uwsgi 部署 API 开发环境</a></li>  <li class="file"><a href="/archives/ab4a885.html">Python 虚拟环境：virtualenv 以及 virtualenvwrapper</a></li>  <li class="file"><a href="/archives/72d385fc.html">webpack 4 入门</a></li>  <li class="file"><a href="/archives/f1bf1c1a.html">单点问题</a></li>  <li class="file"><a href="/archives/a07e5380.html">注册中心</a></li>  <li class="file"><a href="/archives/cb0153ff.html">「未完成」正则中的贪婪模式与非贪婪模式</a></li>  <li class="file"><a href="/archives/7172d605.html">正则表达式中的回溯过程</a></li>  <li class="file"><a href="/archives/2c12e091.html">CentOS 7 安装 Java 环境</a></li>  <li class="file"><a href="/archives/9a031a35.html">Linux 下的压缩和解压缩</a></li>  <li class="file"><a href="/archives/4b35af27.html">「转载」水晶头接法</a></li>  <li class="file"><a href="/archives/c7ab70f8.html">软件版本号命名规则</a></li>  <li class="file"><a href="/archives/6f328d06.html">鸭子类型</a></li>  <li class="file"><a href="/archives/f2b92668.html">各个平台的包管理器</a></li>  <li class="file"><a href="/archives/42f2446d.html">写给小白的 ShadowSocks 全平台客户端使用说明</a></li>  <li class="file"><a href="/archives/4fcffd79.html">各种软件配置文件规范</a></li>  <li class="file"><a href="/archives/16f6299.html">MySQL8 Grant check the manual that corresponds to your MySQL server version for the right syntax to use.m</a></li>  <li class="file"><a href="/archives/37910dd2.html">计算机的启动</a></li>  <li class="file"><a href="/archives/4940711f.html">8086 处理器寻址方式</a></li>  <li class="file"><a href="/archives/ab9fcc5d.html">虚拟机常见的网络模式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            2-软件使用
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Chrome
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/decc86d5.html">「转载」解析谷歌 Chrome 各分支版本</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            CodeBlock
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/51f295ff.html">Code::Block 新手配置教程</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Django
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/953c2552.html">Django 笔记-1-从请求到响应</a></li>  <li class="file"><a href="/archives/55c5932a.html">Django 不同环境下使用不同设置文件</a></li>  <li class="file"><a href="/archives/dfb4f33e.html">Django 时间字段中 auto_now 和 auto_now_add 的区别</a></li>  <li class="file"><a href="/archives/8bf18292.html">Django admin 笔记</a></li>  <li class="file"><a href="/archives/44c1e81d.html">Django app 笔记</a></li>  <li class="file"><a href="/archives/5d9ebead.html">Django 中有趣又有用的代码设计</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Excel
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6cc2e3a0.html">Excel 利用函数获取行号、列号、当前行的上一行</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            JetBrains
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/e82cc623.html">JetBrains 系列软件如何在 macOS 下快速创建文件</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            PHPStrom
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/297592c5.html">PHPStrom 常用快捷键汇总</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            SublimeText
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/59657ebc.html">Sublime Text 3 安装 SVN 插件</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            ThinkPHP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/d9089534.html">ThinkPHP5 静态资源[CSS , JS , img]加载</a></li>  <li class="file"><a href="/archives/87acc549.html">解决 TP5 无法接收客户端 Post 传递的 Json 参数</a></li>  <li class="file"><a href="/archives/7d2dd65c.html">ThinkPHP5 下商城类微信小程序下单 + 支付开发流程图</a></li>  <li class="file"><a href="/archives/28f0dfb7.html">ThinkPHP5 + 梦网实现手机验证码登陆后台逻辑</a></li>  <li class="file"><a href="/archives/d2b8c7e4.html">Windows 下 ThinkPHP5 配置 redis 缓存</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VMware
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/4dedf7b2.html">VMware 安装 CentOS 后网络设置</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VOX
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/aeea741e.html">解决 macOS 下 VOX 中文乱码问题</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VSCode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/a29d84d8.html">VS Code + PHPStudy 断点调试 PHP</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Vue
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b4f7e05e.html">vue-cli 下配置 Element + axios + Mockjs</a></li>  <li class="file"><a href="/archives/793400e.html">解决 Vue CSS 样式重复载入，为 Vue 添加全局 less 或 sass 基础样式库</a></li>  <li class="file"><a href="/archives/341c107a.html">Vue Router 实现动态路由和常见问题解决方案</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            WordPress
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6ec97606.html">WordPress 配置七牛云 CDN 具体操作</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            ZooKeeper
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/f1db9330.html">ZooKeeper 入门简介</a></li>  <li class="file"><a href="/archives/2b7b1ffc.html">ZooKeeper 命令</a></li>  <li class="file"><a href="/archives/bb55e9ff.html">ZooKeeper 配置文件解析</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            zsh
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/2025325c.html">zsh 历史文件损坏</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            命令行工具
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Git
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/3c3cdb74.html">Git 学习笔记</a></li>  <li class="file"><a href="/archives/6c235203.html">「转载」Git 远程仓库 pull/push 操作详解</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            curl
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/41e09627.html">格式化 curl 输出的 json 内容</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            dmidecode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/89447a6c.html">dmidecode 解析</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            homebrew
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/819175d6.html">homebrew tap</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            pip
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b47b33aa.html">pip 自动生成或安装 requiremen 依赖</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            pyenv
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6005f6af.html">macOS 下利用 pyenv 管理 Python 版本和虚拟环境</a></li>  <li class="file"><a href="/archives/22859f2b.html">利用本地缓存解决 pyenv 下载缓慢问题</a></li>  <li class="file"><a href="/archives/911a03cb.html">通过 shell 文件激活 pyenv virtualenv 虚拟环境失败</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            tmux
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/9e40babb.html">tmux 入门 + 快捷键整理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            vim
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/211d6e8d.html">vim 创建文件时根据文件类型自动添加内容</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            3-计算机科学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            1-理论计算机科学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            1-数据结构和算法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file active"><a href="/archives/f3c5e08e.html">数据结构笔记1-概论</a></li>  <li class="file"><a href="/archives/e3cbe031.html">数据结构笔记2-线性表</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            4-编程语言和编译器
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            C&CPP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/154e48dc.html">cpp 中的声明和定义</a></li>  <li class="file"><a href="/archives/ca916e4c.html">对比 C 和 CPP 中 struct class 和 union</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Erlang
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/76405d8b.html">Erlang 程序设计笔记-第一部分</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            HTML
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/cd7f373a.html">如何用纯 HTML 区分一个 form 表单中的多个 submit</a></li>  <li class="file"><a href="/archives/8b008844.html">利用 position + rgba 将 HTML 背景灰化</a></li>  <li class="file"><a href="/archives/c0d98826.html">固定一个 div 在另一个 div 的底部</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            PHP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/60232ab3.html">「转载」PHP 常用缓存技术的总结</a></li>  <li class="file"><a href="/archives/e639e72a.html">「转载」PHP 静态方法和非静态方法简单对比</a></li>  <li class="file"><a href="/archives/44e28494.html">「转载」PHP 判断文件存在是用 file_exists 还是 is_file</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Python
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/19ed6e31.html">Python + OpenCV 图像处理-1</a></li>  <li class="file"><a href="/archives/4007339e.html">Python 中的内置异常</a></li>  <li class="file"><a href="/archives/e0455099.html">Python 中的异常处理</a></li>  <li class="file"><a href="/archives/7a294715.html">所谓 WSGI</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Shell
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8f9d5c85.html">Shell 获取当前脚本的绝对路径</a></li>  <li class="file"><a href="/archives/17043032.html">echo</a></li>  <li class="file"><a href="/archives/b422aa7d.html">Shell 区分不同 Unix 系统</a></li>  <li class="file"><a href="/archives/3beb222a.html">Shell 基础语法</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            TypeScript
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/e7cd2bef.html">TypeScript 名词理解</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            汇编语言
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/f3934733.html">x86汇编指令</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            2-计算机系统
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            2-操作系统
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            CiscoIOS
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/3bd55461.html">Cisco IOS 系列-0-概览</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Linux
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/1d036a8c.html">Linux 系统下不同类型文件默认的颜色</a></li>  <li class="file"><a href="/archives/d19e8f5d.html">Linux 学习笔记-1</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            macOS
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/607dec48.html">macOS 如何删除自带 ABC 输入法</a></li>  <li class="file"><a href="/archives/26aeca3.html">macOS 访达常用快捷键</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            5-计算机安全和密码学
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/a45966e2.html">块加密的工作模式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            6-数据库
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            MongoDB
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b880b012.html">自用 MongoDB 手册</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            MySQL
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/ef1e0835.html">MySQL 修改数据库名</a></li>  <li class="file"><a href="/archives/466aea21.html">MySQL GRANT 授权语句</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            3-计算机应用技术
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            4-人工智能
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8fbb5ea2.html">人工智能-0-概览</a></li>  <li class="file"><a href="/archives/61dc3b15.html">神经网络-1-概览</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            4-软件工程
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            RESTful
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/7e15b804.html">RESTful 笔记-1-接口设计规范</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/archives/f15c2f60.html">「转载」互联网产品研发流程概论</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+        
+  <div class="toc-flag"></div>
+  <div class="toc-wrap">
+      <h3>
+          <span>文章目录</span>
+      </h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本概念"><span class="toc-number">1.</span> <span class="toc-text">基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据"><span class="toc-number">1.1.</span> <span class="toc-text">数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据元素"><span class="toc-number">1.2.</span> <span class="toc-text">数据元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据对象"><span class="toc-number">1.3.</span> <span class="toc-text">数据对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据类型"><span class="toc-number">1.4.</span> <span class="toc-text">数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#抽象数据类型（ADT-Abstract-Data-Type）"><span class="toc-number">1.5.</span> <span class="toc-text">抽象数据类型（ADT: Abstract Data Type）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据结构"><span class="toc-number">1.6.</span> <span class="toc-text">数据结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据的逻辑结构"><span class="toc-number">1.7.</span> <span class="toc-text">数据的逻辑结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#逻辑结构的第一种分类方式"><span class="toc-number">1.7.1.</span> <span class="toc-text">逻辑结构的第一种分类方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#逻辑结构的第二种分类方式"><span class="toc-number">1.7.2.</span> <span class="toc-text">逻辑结构的第二种分类方式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据的存储结构"><span class="toc-number">1.8.</span> <span class="toc-text">数据的存储结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据的运算"><span class="toc-number">1.9.</span> <span class="toc-text">数据的运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法"><span class="toc-number">2.</span> <span class="toc-text">算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#算法的基本概念"><span class="toc-number">2.1.</span> <span class="toc-text">算法的基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#算法的特性"><span class="toc-number">2.2.</span> <span class="toc-text">算法的特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#算法的性能标准"><span class="toc-number">2.3.</span> <span class="toc-text">算法的性能标准</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#算法效率的度量"><span class="toc-number">2.4.</span> <span class="toc-text">算法效率的度量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#时间复杂度"><span class="toc-number">2.4.1.</span> <span class="toc-text">时间复杂度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#空间复杂度"><span class="toc-number">2.4.2.</span> <span class="toc-text">空间复杂度</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">3.</span> <span class="toc-text">参考</span></a></li></ol>
+  </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-3-计算机科学/1-理论计算机科学/1-数据结构和算法/数据结构笔记1-概论" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/3-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">3-计算机科学</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/3-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/1-%E7%90%86%E8%AE%BA%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">1-理论计算机科学</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/3-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/1-%E7%90%86%E8%AE%BA%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/1-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/">1-数据结构和算法</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/archives/f3c5e08e.html">
+            <time datetime="2020-10-08T00:00:00.000Z" itemprop="datePublished">2020-10-08</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/raw/backups/source/_posts/3-计算机科学/1-理论计算机科学/1-数据结构和算法/数据结构笔记1-概论.md" target="_blank" rel="external nofollow noopener noreferrer"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/edit/backups/source/_posts/3-计算机科学/1-理论计算机科学/1-数据结构和算法/数据结构笔记1-概论.md" target="_blank" rel="external nofollow noopener noreferrer"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/commits/backups/source/_posts/3-计算机科学/1-理论计算机科学/1-数据结构和算法/数据结构笔记1-概论.md" target="_blank" rel="external nofollow noopener noreferrer"> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            数据结构笔记1-概论
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+        
+            <!-- 内容失效提醒 -->
+            
+    <!-- 如果文章创建超过一年或最后一次更新时间超过一个月(默认)则提示文章过期 -->
+    
+        <div class="aging">
+            <i class="fa fa-exclamation-circle aging-icon" aria-hidden="true"></i>
+            <span class="aging-content">请注意：本文编写于 <span class="aging-content-date">2020-10-08</span>，其中某些信息可能已经失去时效性。</span>
+        </div>
+    
+
+            <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h3><p>数据是信息的载体，是<strong>描述客观事物的</strong>数、字符以及所有能输入到计算机中并被计算机程序识别和处理的符合的集合。</p>
+<p>数据大致可分为两类，一类是<strong>数值性数据</strong>，包括整数、浮点数、复数、双精度数等，主要用于工程和科学计算，以及商业事务处理；另一类是<strong>非数值性数据</strong>，主要包括字符和字符串，以及文字、图形、图像、语音等数据。</p>
+<h3 id="数据元素"><a href="#数据元素" class="headerlink" title="数据元素"></a>数据元素</h3><p>数据元素是数据的基本单位，通常作为一个整体进行考虑和处理。一个数据元素可以有若干个数据项组成，数据项是数据元素的不可分割的最小单位。例如：学生记录作为一个数据元素，它由学号、姓名、性别等数据项组成。</p>
+<h3 id="数据对象"><a href="#数据对象" class="headerlink" title="数据对象"></a>数据对象</h3><p>数据对象是具有相同性质的数据元素的集合，是数据的一个子集。</p>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>数据类型是一个值的集合和定义在此集合上一组操作的总称。</p>
+<ol>
+<li>原子类型：其值不可在分割的数据类型；</li>
+<li>结构类型：其值可以在分割成若干成分的数据类型；</li>
+<li>抽象数据类型：抽象数据组织和与之相关的操作。</li>
+</ol>
+<h3 id="抽象数据类型（ADT-Abstract-Data-Type）"><a href="#抽象数据类型（ADT-Abstract-Data-Type）" class="headerlink" title="抽象数据类型（ADT: Abstract Data Type）"></a>抽象数据类型（ADT: Abstract Data Type）</h3><p>一个数学模型以及定义在该模型上的一组操作。</p>
+<p>抽象数据类型的定义仅取决于它的一组逻辑特性，而与其在计算机内部如何表示和实现无关，即不论其内部结构如何变化，只要它的数学特性不变，都不影响其外部的使用。通常用数据对象（D)、 数据关系（S)、基本操作集（P)这样的三元组来表示抽象数据类型。</p>
+<h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><p>数据结构包括三方面的内容：逻辑结构、存储结构和数据的运算。数据的逻辑结构和存储结构是密不可分的两个方面，一个算法的设计取决于所选定的逻辑结构，而算法的实现依赖于所釆用的存储结构。</p>
+<p>数据结构是由某一数据元素的集合和该集合中数据元素之间的关系组成的。</p>
+<p><code>Data_Structure = {D, R}</code></p>
+<p>D 是某一数据元素的集合，R 是该集合中所有数据元素之间的关系的有限集合。</p>
+<p>有关数据结构的讨论主要涉及<strong>数据元素之间的关系，不涉及数据元素本身的内容</strong>。</p>
+<h3 id="数据的逻辑结构"><a href="#数据的逻辑结构" class="headerlink" title="数据的逻辑结构"></a>数据的逻辑结构</h3><p>数据的逻辑结构是指数据元素之间的逻辑关系，即从逻辑关系上描述数据，与数据的存储无关。</p>
+<h4 id="逻辑结构的第一种分类方式"><a href="#逻辑结构的第一种分类方式" class="headerlink" title="逻辑结构的第一种分类方式"></a>逻辑结构的第一种分类方式</h4><p>依据元素之间关系的不同，数据的逻辑结构分为两大类：线性结构和非线性结构。</p>
+<p><img src="https://img.blanc.site//wiki/img/20201019000530.png" alt="逻辑结构分类-1"></p>
+<h4 id="逻辑结构的第二种分类方式"><a href="#逻辑结构的第二种分类方式" class="headerlink" title="逻辑结构的第二种分类方式"></a>逻辑结构的第二种分类方式</h4><p>线性结构：数据元素之间存在一对一的关系<br>树形结构：数据元素之间存在一对多的关系<br>图形结构：数据元素之间存在多对多的关系<br>集合结构：数据元素属于同一个集合</p>
+<p><img src="https://img.blanc.site//wiki/img/20201106203719.jpg" alt="逻辑结构分类-2"></p>
+<h3 id="数据的存储结构"><a href="#数据的存储结构" class="headerlink" title="数据的存储结构"></a>数据的存储结构</h3><p>数据的存储结构是指数据结构在计算机中的具体表示（又称映像），也成物理结构。包括数据元素的表示和数据元素间关系的表示。数据的存储结构是数据的逻辑结构用计算机语言实现的。它依赖于计算机语言。主要有如下四种结构：</p>
+<ol>
+<li>顺序存储结构：把逻辑上相邻的元素存储在物理位置上也相邻的存储单元里，元素之间的关系由存储单元的邻接关系来体现。其优点是可以实现随机存取，每个元素占用最少的存储空间；缺点是只能使用相邻的一整块存储单元，因此可能产生较多的外部碎片。</li>
+<li>链式存储结构：不要求逻辑上相邻的元素在物理位置上也相邻，借助指示元素存储地址的指针表示元素之间的逻辑关系。其优点是不会出现碎片现象，充分利用所有存储单元；缺点是每个元素因存储指针而占用额外的存储空间，并且只能实现顺序存取。</li>
+<li>索引存储结构：在存储元素信息的同时，还建立附加的索引表。索引表中的每一项称为索引项，索引项的一般形式是：（关键字，地址）。其优点是检索速度快；缺点是增加了附加的索引表，会占用较多的存储空间。另外，在增加和删除数据时要修改索引表，因而会花费较多的时间。</li>
+<li>散列存储结构：根据元素的关键字直接计算出该元素的存储地址，又称为Hash存储。其优点是检索、增加和删除结点的操作都很快；缺点是如果散列函数不好可能出现元素存储单元的冲突，而解决冲突会增加时间和空间开销。</li>
+</ol>
+<h3 id="数据的运算"><a href="#数据的运算" class="headerlink" title="数据的运算"></a>数据的运算</h3><p>施加再数据上的运算包括运算的定义和实现。运算的定义时针对逻辑结构的，之处运算的功能；运算的实现是针对存储结构的，之处运算的具体操作步骤。</p>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><h3 id="算法的基本概念"><a href="#算法的基本概念" class="headerlink" title="算法的基本概念"></a>算法的基本概念</h3><p>算法（algorithm）是对特定问题求解步骤的一种描述，它是指令的有限序列，其中每一条指令表示一个或多个操作。</p>
+<h3 id="算法的特性"><a href="#算法的特性" class="headerlink" title="算法的特性"></a>算法的特性</h3><ol>
+<li>有穷性：总是（对任何合法的输入值）在执行又穷步之后结束，且每一步都可在有穷时间内完成</li>
+<li>确定性：每一条指令必须有确切的含义，读者理解时不会产生二义性。即对于相同的输入只能得出相同的输出（幂等性？）</li>
+<li>可行性：算法中描述的操作都是已经实现的基本操作执行有限次来实现的</li>
+<li>输入：有零个或多个输入</li>
+<li>输出：有一个或多个输出</li>
+</ol>
+<h3 id="算法的性能标准"><a href="#算法的性能标准" class="headerlink" title="算法的性能标准"></a>算法的性能标准</h3><ol>
+<li>正确性：正确的执行预定的功能和性能要求</li>
+<li>可读性</li>
+<li>健壮性：输入非法数据时也能适当的做出反应进行处理。</li>
+<li>效率和低存储量需求</li>
+</ol>
+<h3 id="算法效率的度量"><a href="#算法效率的度量" class="headerlink" title="算法效率的度量"></a>算法效率的度量</h3><p>算法效率的度量可分为事前估计和后期测试。</p>
+<h4 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h4><p>一个语句的频度是指该语句在算法中被重复执行的次数。算法中所有语句的频度之和记作 <code>T(n)</code>，它是该算法问题规模 <code>n</code> 的函数，时间复杂度主要分析 <code>T(n)</code> 的数量级。算法中的基本运算（最深层循环内的语句）的频度与 <code>T(n)</code> 同数量级，所以通常釆用算法中基本运算的频度  <code>f(n)</code> 来分析算法的时间复杂度。因此，算法的时间复杂度也记为：<br><code>T(n)=O(f(n))</code></p>
+<p>上式中 <code>O</code> 的含义是 <code>T(n)</code> 的数量级，其严格的数学定义是：若 <code>T(n)</code> 和 <code>f(n)</code> 是定义在正整数集合上的两个函数，则存在正常数 <code>C</code> 和 <code>n_0</code>，使得当 <code>n &gt;= n_0</code> 时，都满足 <code>0 &lt;= T(n) &lt;= C * f(n)</code>。</p>
+<p>注意：取 <code>f(n)</code> 中随 <code>n</code> 增长最快的项将其系数置为 1 作为时间复杂度的度量。例如，<code>fi(n) = a * n^3 + b * n^2 + c * n</code>，则其时间复杂度为 <code>O(n^3)</code>。</p>
+<p>算法的时间复杂度不仅依赖于问题的规模 <code>n</code>，也取决于待输入数据的性质（如输入数据元素的初始状态）。</p>
+<p>一般总是考虑在最坏情况下的时间复杂度，以保证算法的运行时间不会比它更长。</p>
+<p>在分析一个程序的时间复杂性时，有以下两条规则：</p>
+<ol>
+<li>加法规则：<code>T(n) = T1(n) + T2(n) = O(f(n)) + O(g(n)) = O(max(f(n), g(n)))</code></li>
+<li>乘法规则：<code>T(n) = T1(n) * T2(n) = O(f(n)) * O(g(n)) = O( f(n) * g(n) )</code></li>
+</ol>
+<p>常见的渐近时间复杂度有：<code>O(1)&lt;O(log2n)&lt;O(n)&lt;O(nlog2n)&lt;O(n^2)&lt;O(n^3)&lt;O(2^n)&lt;O(n!)&lt;O(n^n)</code></p>
+<h4 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h4><p>算法的空间复杂度 <code>S(n)</code>，定义为该算法所耗费的存储空间，它是问题规模 <code>n</code> 的函数。渐近空间复杂度也常简称为空间复杂度，记作 <code>S(n)=O(g(n))</code>。</p>
+<p>一个上机程序除了需要存储空间来存放本身所用指令、常数、变量和输入数据外，也需要一些对数据进行操作的工作单元和存储一些为实现计算所需信息的辅助空间，若输入数据所占空间只取决于问题本身，和算法无关，则只需分析除输入和程序之外的额外空间。</p>
+<p>算法原地工作是指算法所需辅助空间是常量，即 <code>O(1)</code>。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="http://c.biancheng.net/cpp/shujujiegou/" target="_blank" rel="external nofollow noopener noreferrer">数据结构C语言版：经典数据结构与算法分析教程</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/146430058" target="_blank" rel="external nofollow noopener noreferrer">知乎-码匠：数据结构与算法是什么？</a></li>
+</ol>
+
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</div></article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/archives/154e48dc.html" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    cpp 中的声明和定义
+                
+            </div>
+        </a>
+    
+    
+        <a href="/archives/5d9ebead.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Django 中有趣又有用的代码设计</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+        <section id="comments"> <div id="vcomments"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'sz7ny95XiYWkxht3H3YDs2GX-gzGzoHsz',
+        appKey: 'T8JJugDkbqtFLONIIzcPWW76',
+        placeholder: '不要吝啬赞美的语句ヾﾉ≧∀≦)o!',
+        avatar: 'mp',
+        meta: ['nick','mail','link'],
+        pageSize: 10,
+        visitor: true,
+        notify: true,
+        verify: true
+    })
+    let info = document.querySelectorAll('#vcomments>.info')[0]
+    if (info) { info.style.display = 'none' }
+</script> </section>
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            ryomahan &copy; 2021 
+            <a rel="external nofollow noopener noreferrer" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png"></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>. Comment By <a href="https://valine.js.org/" target="_blank" rel="external nofollow noopener noreferrer">valine</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten" target="_blank" rel="external nofollow noopener noreferrer">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>

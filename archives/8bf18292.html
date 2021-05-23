@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    
+    <title>Django admin 笔记 | 小白维基</title>
+    
+    
+        <meta name="keywords" content="Django,学习笔记">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="记一下内容是我阅读 Django 官方文档 admin 相关内容时随手翻译的，内容未经整理 Overviewadmin 的 requirements：  添加 dango.contrib.admin 和它依赖的 django.contrib.auth django.contrib.contenttypes django.contrib.messages django.contrib.session">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django admin 笔记">
+<meta property="og:url" content="https://wiki.blanc.site/archives/8bf18292.html">
+<meta property="og:site_name" content="小白维基">
+<meta property="og:description" content="记一下内容是我阅读 Django 官方文档 admin 相关内容时随手翻译的，内容未经整理 Overviewadmin 的 requirements：  添加 dango.contrib.admin 和它依赖的 django.contrib.auth django.contrib.contenttypes django.contrib.messages django.contrib.session">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-11T00:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-23T12:08:45.159Z">
+<meta property="article:author" content="ryomahan">
+<meta property="article:tag" content="Django">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="小白维基" type="application/atom+xml">
+    
+    
+        <link rel="icon" href="/favicon.ico">
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110100486-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-110100486-1');
+</script>
+    
+    
+        <meta name="google-site-verification" content="D9ld5oQABBxIwNpgD_WN61p51-ZcABZ6Olt4HKcxlWw">
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?fac7e69191f0847b886888aa7c794fa7";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- 字体引入 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 4.2.1"></head>
+</html>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">小白维基</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://www.gravatar.com/avatar/e30ee2d02a4632e35575fec3944497df">
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://www.gravatar.com/avatar/e30ee2d02a4632e35575fec3944497df?s=128">
+            <h2 id="name">Ryoma</h2>
+            <h3 id="title">毕己一生，依依东望。</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Jinan, China</span>
+            <a id="follow" target="_blank" href="https://github.com/ryomahan/" rel="external nofollow noopener noreferrer">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                105
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                65
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://blog.blanc.site" target="_blank" title="wordpress" class="tooltip">
+                            <i class="fa fa-wordpress"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/ryomahan1996" target="_blank" title="twitter" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/xiaobaidh" target="_blank" title="weibo" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://github.com/ryomahan" target="_blank" title="github" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class="tooltip">
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+
+    
+        <div class="widget-wrap widget-list">
+            <h3 class="widget-title"><span>链接</span></h3>
+            <div class="widget">
+                <ul>
+                    
+                        <li>
+                            <a href="https://www.blanc.site" target="_blank">依依东望</a>
+                        </li>
+                    
+                        <li>
+                            <a href="https://blog.blanc.site" target="_blank">一只小白</a>
+                        </li>
+                    
+                        <li>
+                            <a href="https://wiki.blanc.site" target="_blank">小白维基</a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    
+</aside>
+
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id="categories">
+        <h3 class="widget-title">
+            <span>分类</span>
+            &nbsp;
+            <a id="allExpand" href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            1-网络笔记
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8678286b.html">U盘安装 Linux distribution 提示 waring /dev/root does not exist</a></li>  <li class="file"><a href="/archives/ee66e659.html">适合 Linux 新手的 man page 使用手册</a></li>  <li class="file"><a href="/archives/3c798f3a.html">「转载」如何选择开源许可证？</a></li>  <li class="file"><a href="/archives/573af784.html">不翻墙下载 Chrome + 不用 VPN 上 Google</a></li>  <li class="file"><a href="/archives/50486745.html">Fatal error in launcher：Unable to create process using '"'</a></li>  <li class="file"><a href="/archives/7cd2d86d.html">Web 安全学习笔记</a></li>  <li class="file"><a href="/archives/7f71ea0e.html">影梭（Shadowsocks）服务端安装、配置及多用户</a></li>  <li class="file"><a href="/archives/6bfb5db9.html">Linux 下安装 Node.js</a></li>  <li class="file"><a href="/archives/3f439512.html">Nginx rtmp 模块配合 OBS 推流实现直播(监控)功能</a></li>  <li class="file"><a href="/archives/ff98c7a2.html">CentOS7 下配置 Nginx + PHP7 + MariaDB + ThinkPHP5.1</a></li>  <li class="file"><a href="/archives/71825b94.html">ThinkPHP5 的 Nginx 配置</a></li>  <li class="file"><a href="/archives/f63c0d8d.html">「转载」同步和异步的区别</a></li>  <li class="file"><a href="/archives/e94a0a36.html">新部署一台Linux云服务器时常用的命令</a></li>  <li class="file"><a href="/archives/22a754d3.html">CentOS7 + Python3 + Django(rest_framework) + MariaDB + nginx + uwsgi 部署 API 开发环境</a></li>  <li class="file"><a href="/archives/ab4a885.html">Python 虚拟环境：virtualenv 以及 virtualenvwrapper</a></li>  <li class="file"><a href="/archives/72d385fc.html">webpack 4 入门</a></li>  <li class="file"><a href="/archives/f1bf1c1a.html">单点问题</a></li>  <li class="file"><a href="/archives/a07e5380.html">注册中心</a></li>  <li class="file"><a href="/archives/cb0153ff.html">「未完成」正则中的贪婪模式与非贪婪模式</a></li>  <li class="file"><a href="/archives/7172d605.html">正则表达式中的回溯过程</a></li>  <li class="file"><a href="/archives/2c12e091.html">CentOS 7 安装 Java 环境</a></li>  <li class="file"><a href="/archives/9a031a35.html">Linux 下的压缩和解压缩</a></li>  <li class="file"><a href="/archives/4b35af27.html">「转载」水晶头接法</a></li>  <li class="file"><a href="/archives/c7ab70f8.html">软件版本号命名规则</a></li>  <li class="file"><a href="/archives/6f328d06.html">鸭子类型</a></li>  <li class="file"><a href="/archives/f2b92668.html">各个平台的包管理器</a></li>  <li class="file"><a href="/archives/42f2446d.html">写给小白的 ShadowSocks 全平台客户端使用说明</a></li>  <li class="file"><a href="/archives/4fcffd79.html">各种软件配置文件规范</a></li>  <li class="file"><a href="/archives/16f6299.html">MySQL8 Grant check the manual that corresponds to your MySQL server version for the right syntax to use.m</a></li>  <li class="file"><a href="/archives/37910dd2.html">计算机的启动</a></li>  <li class="file"><a href="/archives/4940711f.html">8086 处理器寻址方式</a></li>  <li class="file"><a href="/archives/ab9fcc5d.html">虚拟机常见的网络模式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            2-软件使用
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Chrome
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/decc86d5.html">「转载」解析谷歌 Chrome 各分支版本</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            CodeBlock
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/51f295ff.html">Code::Block 新手配置教程</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Django
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/953c2552.html">Django 笔记-1-从请求到响应</a></li>  <li class="file"><a href="/archives/55c5932a.html">Django 不同环境下使用不同设置文件</a></li>  <li class="file"><a href="/archives/dfb4f33e.html">Django 时间字段中 auto_now 和 auto_now_add 的区别</a></li>  <li class="file active"><a href="/archives/8bf18292.html">Django admin 笔记</a></li>  <li class="file"><a href="/archives/44c1e81d.html">Django app 笔记</a></li>  <li class="file"><a href="/archives/5d9ebead.html">Django 中有趣又有用的代码设计</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Excel
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6cc2e3a0.html">Excel 利用函数获取行号、列号、当前行的上一行</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            JetBrains
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/e82cc623.html">JetBrains 系列软件如何在 macOS 下快速创建文件</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            PHPStrom
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/297592c5.html">PHPStrom 常用快捷键汇总</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            SublimeText
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/59657ebc.html">Sublime Text 3 安装 SVN 插件</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            ThinkPHP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/d9089534.html">ThinkPHP5 静态资源[CSS , JS , img]加载</a></li>  <li class="file"><a href="/archives/87acc549.html">解决 TP5 无法接收客户端 Post 传递的 Json 参数</a></li>  <li class="file"><a href="/archives/7d2dd65c.html">ThinkPHP5 下商城类微信小程序下单 + 支付开发流程图</a></li>  <li class="file"><a href="/archives/28f0dfb7.html">ThinkPHP5 + 梦网实现手机验证码登陆后台逻辑</a></li>  <li class="file"><a href="/archives/d2b8c7e4.html">Windows 下 ThinkPHP5 配置 redis 缓存</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VMware
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/4dedf7b2.html">VMware 安装 CentOS 后网络设置</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VOX
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/aeea741e.html">解决 macOS 下 VOX 中文乱码问题</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VSCode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/a29d84d8.html">VS Code + PHPStudy 断点调试 PHP</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Vue
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b4f7e05e.html">vue-cli 下配置 Element + axios + Mockjs</a></li>  <li class="file"><a href="/archives/793400e.html">解决 Vue CSS 样式重复载入，为 Vue 添加全局 less 或 sass 基础样式库</a></li>  <li class="file"><a href="/archives/341c107a.html">Vue Router 实现动态路由和常见问题解决方案</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            WordPress
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6ec97606.html">WordPress 配置七牛云 CDN 具体操作</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            ZooKeeper
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/f1db9330.html">ZooKeeper 入门简介</a></li>  <li class="file"><a href="/archives/2b7b1ffc.html">ZooKeeper 命令</a></li>  <li class="file"><a href="/archives/bb55e9ff.html">ZooKeeper 配置文件解析</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            zsh
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/2025325c.html">zsh 历史文件损坏</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            命令行工具
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Git
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/3c3cdb74.html">Git 学习笔记</a></li>  <li class="file"><a href="/archives/6c235203.html">「转载」Git 远程仓库 pull/push 操作详解</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            curl
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/41e09627.html">格式化 curl 输出的 json 内容</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            dmidecode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/89447a6c.html">dmidecode 解析</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            homebrew
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/819175d6.html">homebrew tap</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            pip
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b47b33aa.html">pip 自动生成或安装 requiremen 依赖</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            pyenv
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6005f6af.html">macOS 下利用 pyenv 管理 Python 版本和虚拟环境</a></li>  <li class="file"><a href="/archives/22859f2b.html">利用本地缓存解决 pyenv 下载缓慢问题</a></li>  <li class="file"><a href="/archives/911a03cb.html">通过 shell 文件激活 pyenv virtualenv 虚拟环境失败</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            tmux
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/9e40babb.html">tmux 入门 + 快捷键整理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            vim
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/211d6e8d.html">vim 创建文件时根据文件类型自动添加内容</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            3-计算机科学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            1-理论计算机科学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            1-数据结构和算法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/f3c5e08e.html">数据结构笔记1-概论</a></li>  <li class="file"><a href="/archives/e3cbe031.html">数据结构笔记2-线性表</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            4-编程语言和编译器
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            C&CPP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/154e48dc.html">cpp 中的声明和定义</a></li>  <li class="file"><a href="/archives/ca916e4c.html">对比 C 和 CPP 中 struct class 和 union</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Erlang
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/76405d8b.html">Erlang 程序设计笔记-第一部分</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            HTML
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/cd7f373a.html">如何用纯 HTML 区分一个 form 表单中的多个 submit</a></li>  <li class="file"><a href="/archives/8b008844.html">利用 position + rgba 将 HTML 背景灰化</a></li>  <li class="file"><a href="/archives/c0d98826.html">固定一个 div 在另一个 div 的底部</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            PHP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/60232ab3.html">「转载」PHP 常用缓存技术的总结</a></li>  <li class="file"><a href="/archives/e639e72a.html">「转载」PHP 静态方法和非静态方法简单对比</a></li>  <li class="file"><a href="/archives/44e28494.html">「转载」PHP 判断文件存在是用 file_exists 还是 is_file</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Python
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/19ed6e31.html">Python + OpenCV 图像处理-1</a></li>  <li class="file"><a href="/archives/4007339e.html">Python 中的内置异常</a></li>  <li class="file"><a href="/archives/e0455099.html">Python 中的异常处理</a></li>  <li class="file"><a href="/archives/7a294715.html">所谓 WSGI</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Shell
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8f9d5c85.html">Shell 获取当前脚本的绝对路径</a></li>  <li class="file"><a href="/archives/17043032.html">echo</a></li>  <li class="file"><a href="/archives/b422aa7d.html">Shell 区分不同 Unix 系统</a></li>  <li class="file"><a href="/archives/3beb222a.html">Shell 基础语法</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            TypeScript
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/e7cd2bef.html">TypeScript 名词理解</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            汇编语言
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/f3934733.html">x86汇编指令</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            2-计算机系统
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            2-操作系统
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            CiscoIOS
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/3bd55461.html">Cisco IOS 系列-0-概览</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Linux
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/1d036a8c.html">Linux 系统下不同类型文件默认的颜色</a></li>  <li class="file"><a href="/archives/d19e8f5d.html">Linux 学习笔记-1</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            macOS
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/607dec48.html">macOS 如何删除自带 ABC 输入法</a></li>  <li class="file"><a href="/archives/26aeca3.html">macOS 访达常用快捷键</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            5-计算机安全和密码学
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/a45966e2.html">块加密的工作模式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            6-数据库
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            MongoDB
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b880b012.html">自用 MongoDB 手册</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            MySQL
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/ef1e0835.html">MySQL 修改数据库名</a></li>  <li class="file"><a href="/archives/466aea21.html">MySQL GRANT 授权语句</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            3-计算机应用技术
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            4-人工智能
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8fbb5ea2.html">人工智能-0-概览</a></li>  <li class="file"><a href="/archives/61dc3b15.html">神经网络-1-概览</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            4-软件工程
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            RESTful
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/7e15b804.html">RESTful 笔记-1-接口设计规范</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/archives/f15c2f60.html">「转载」互联网产品研发流程概论</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+        
+  <div class="toc-flag"></div>
+  <div class="toc-wrap">
+      <h3>
+          <span>文章目录</span>
+      </h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#记"><span class="toc-number">1.</span> <span class="toc-text">记</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Overview"><span class="toc-number">2.</span> <span class="toc-text">Overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ModelAdmin"><span class="toc-number">3.</span> <span class="toc-text">ModelAdmin</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Discovery（发现）-of-admin-files"><span class="toc-number">3.1.</span> <span class="toc-text">Discovery（发现） of admin files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ModelAdmin-options"><span class="toc-number">3.2.</span> <span class="toc-text">ModelAdmin options</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#custom-template-options"><span class="toc-number">3.2.1.</span> <span class="toc-text">custom template options</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ModelAdmin-methods"><span class="toc-number">3.3.</span> <span class="toc-text">ModelAdmin methods</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Other-methods"><span class="toc-number">3.3.1.</span> <span class="toc-text">Other methods</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ModelAdmin-asset-definitions"><span class="toc-number">3.4.</span> <span class="toc-text">ModelAdmin asset definitions</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#jQuery"><span class="toc-number">3.4.1.</span> <span class="toc-text">jQuery</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adding-custom-validation-to-the-admin"><span class="toc-number">3.5.</span> <span class="toc-text">Adding custom validation to the admin</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#InlineModelAdmin-objects"><span class="toc-number">4.</span> <span class="toc-text">InlineModelAdmin objects</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#InlineModelAdmin-options"><span class="toc-number">4.1.</span> <span class="toc-text">InlineModelAdmin options</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Working-with-a-model-with-two-or-more-foreign-keys-to-the-same-parent-model"><span class="toc-number">4.2.</span> <span class="toc-text">Working with a model with two or more foreign keys to the same parent model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Working-with-many-to-may-models"><span class="toc-number">4.3.</span> <span class="toc-text">Working with many-to-may models</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Working-with-many-to-many-intermediary-models"><span class="toc-number">4.4.</span> <span class="toc-text">Working with many-to-many intermediary models</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-generic-relation-as-an-inline"><span class="toc-number">4.5.</span> <span class="toc-text">Using generic relation as an inline</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Overrding-admin-templates"><span class="toc-number">5.</span> <span class="toc-text">Overrding admin templates</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Set-up-your-projects-admin-template-directories"><span class="toc-number">5.1.</span> <span class="toc-text">Set up your projects admin template directories</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Overriding-vs-replacing-an-admin-template"><span class="toc-number">5.2.</span> <span class="toc-text">Overriding vs replacing an admin template</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Templates-which-may-be-overridden-per-app-or-model"><span class="toc-number">5.3.</span> <span class="toc-text">Templates which may be overridden per app or model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Root-and-login-templates"><span class="toc-number">5.4.</span> <span class="toc-text">Root and login templates</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AdminSite-Object"><span class="toc-number">6.</span> <span class="toc-text">AdminSite Object</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AdminSite-attributes"><span class="toc-number">6.1.</span> <span class="toc-text">AdminSite attributes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AdminSite-methods"><span class="toc-number">6.2.</span> <span class="toc-text">AdminSite methods</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hocking-AdminSite-instances-into-your-URLconf"><span class="toc-number">6.3.</span> <span class="toc-text">Hocking AdminSite instances into your URLconf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Customizing-the-AdminSite-class"><span class="toc-number">6.4.</span> <span class="toc-text">Customizing the AdminSite class</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Overriding-the-default-admin-site"><span class="toc-number">6.5.</span> <span class="toc-text">Overriding the default admin site</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Multiple-admin-sites-in-the-same-URLconf"><span class="toc-number">6.6.</span> <span class="toc-text">Multiple admin sites in the same URLconf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adding-views-to-admin-sites"><span class="toc-number">6.7.</span> <span class="toc-text">Adding views to admin sites</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adding-a-password-reset-feature"><span class="toc-number">6.8.</span> <span class="toc-text">Adding a password reset feature</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LogEntry-objects"><span class="toc-number">7.</span> <span class="toc-text">LogEntry objects</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LogEntry-attributes"><span class="toc-number">7.1.</span> <span class="toc-text">LogEntry attributes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LogEntry-methods"><span class="toc-number">7.2.</span> <span class="toc-text">LogEntry methods</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reversing-admin-URLs"><span class="toc-number">8.</span> <span class="toc-text">Reversing admin URLs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-staff-member-required-decorator"><span class="toc-number">9.</span> <span class="toc-text">The staff_member_required decorator</span></a></li></ol>
+  </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-2-软件使用/Django/Django admin 笔记" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/2-%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/">2-软件使用</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/2-%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/Django/">Django</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Django/" rel="tag">Django</a>, <a class="tag-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/archives/8bf18292.html">
+            <time datetime="2020-08-11T00:00:00.000Z" itemprop="datePublished">2020-08-11</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/raw/backups/source/_posts/2-软件使用/Django/Django admin 笔记.md" target="_blank" rel="external nofollow noopener noreferrer"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/edit/backups/source/_posts/2-软件使用/Django/Django admin 笔记.md" target="_blank" rel="external nofollow noopener noreferrer"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/commits/backups/source/_posts/2-软件使用/Django/Django admin 笔记.md" target="_blank" rel="external nofollow noopener noreferrer"> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Django admin 笔记
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+        
+            <!-- 内容失效提醒 -->
+            
+    <!-- 如果文章创建超过一年或最后一次更新时间超过一个月(默认)则提示文章过期 -->
+    
+        <div class="aging">
+            <i class="fa fa-exclamation-circle aging-icon" aria-hidden="true"></i>
+            <span class="aging-content">请注意：本文编写于 <span class="aging-content-date">2020-08-11</span>，其中某些信息可能已经失去时效性。</span>
+        </div>
+    
+
+            <h2 id="记"><a href="#记" class="headerlink" title="记"></a>记</h2><p>一下内容是我阅读 Django 官方文档 admin 相关内容时随手翻译的，内容未经整理</p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>admin 的 requirements：</p>
+<ol>
+<li>添加 <code>dango.contrib.admin</code> 和它依赖的 <code>django.contrib.auth</code> <code>django.contrib.contenttypes</code> <code>django.contrib.messages</code> <code>django.contrib.sessions</code> 到 <code>INSTALLED_APPS</code></li>
+<li>通过在项目设置项 <code>TEMPLATES</code> 的选项 <code>OPTIONS</code> 的选项 <code>context_processors</code> 下添加  <code>django.contrib.auth.context_processors.auth</code> 和 <code>django.contrib.messages.contxet_processors.messages</code> 来配置  <code>DjangoTemplates</code></li>
+<li>如果是自定义的 MIDDLEWARE 设置项， <code>django.contrib.auth.middleware.AuthenticationMiddleware</code> 和 <code>django.contrib.messages.middleware.MessageMiddleware</code> 必须被包括在其中</li>
+<li>配置 admin URL 到项目 URLconf</li>
+</ol>
+<p>在进行这些配置后可以通过访问绑定的 url 访问 admin（默认是 <code>/admin/</code>）</p>
+<p>可以使用默认的 <code>createsuperuser</code> 命令来创建一个用来登录的用户。一般来说用户需要将 <code>is_superuser</code> 和 <code>is_staff</code> 属性都设置为 True 才能登录 admin。</p>
+<p>最后，确定应用程序的哪些模型可以在展示在 admin 中。按照 <code>ModelAdmin</code> 中的描述，在管理员处注册它们。</p>
+<h2 id="ModelAdmin"><a href="#ModelAdmin" class="headerlink" title="ModelAdmin"></a>ModelAdmin</h2><p><code>ModelAdmin</code> 类是 model 在 admin 接口中的表达方式。通常这些内容会存储在应用下的 <code>admin.py</code> 文件下。</p>
+<h3 id="Discovery（发现）-of-admin-files"><a href="#Discovery（发现）-of-admin-files" class="headerlink" title="Discovery（发现） of admin files"></a>Discovery（发现） of admin files</h3><p>当把 <code>django.contrib.admin</code> 加入到 <code>INSTALLED_APPS</code>，Django 会在 app 目录中自动查找 admin 模块并引用它</p>
+<ul>
+<li><p>class apps.AdminConfig<br>这是 admin 的默认的 AppConfig 类。它会在 Django 启动时调用 autodiscover() 方法</p>
+</li>
+<li><p>class apps.SimpleAdminConfig<br>和上面的类似，但是不调用 autodiscover</p>
+</li>
+<li><p>default_site<br>一个点状的导入路径，用于导入默认的管理站点的类或返回站点实例的可调用类</p>
+</li>
+</ul>
+<p>默认为’django.contrib.admin.sites.AdminSite’</p>
+<ul>
+<li>autodiscove()</li>
+</ul>
+<p>该功能试图<strong>在每个安装的应用程序中导入一个 admin 模块</strong>，这样的模块被期望向 admin 注册模型。</p>
+<p>通常情况下，你不需要直接调用这个函数，因为当Django启动时，AdminConfig会调用它。</p>
+<p>如果你使用的是自定义的 AdminSite，通常会将所有的 ModelAdmin 子类导入到你的代码中，并将它们注册到自定义的AdminSite中。</p>
+<p>在这种情况下，为了禁用自动发现，</p>
+<p>你应该在INSTALLED_APPS设置中加入’django.contrib.admin.apps.SimpleAdminConfig’而不是’django.contrib.admin’。</p>
+<h3 id="ModelAdmin-options"><a href="#ModelAdmin-options" class="headerlink" title="ModelAdmin options"></a>ModelAdmin options</h3><p>ModelAdmin 非常灵活。它有几个选项来处理自定义界面。所有选项都定义在 ModelAdmin 子类上。</p>
+<ul>
+<li><p>ModelAdmin.action | 展示页<br>在 change list page 提供的操作列表</p>
+</li>
+<li><p>ModelAdmin.actions_on_top | 展示页</p>
+</li>
+<li><p>ModelAdmin.actions_on_botton | 展示页<br>控制动作栏在哪个位置出现，默认 top</p>
+</li>
+<li><p>ModelAdmin.actions_selection_counter | 展示页<br>是否在 action dropdwon 下显示计数器（默认显示）</p>
+</li>
+<li><p>ModelAdmin.date_hierarchy | 展示页<br>将此选项设置为 Modle 中某一个 DateField 或 DateTimeFile 字段，在 List 页面的顶部会显示一个时间选择条</p>
+</li>
+<li><p>ModelAdmin.emty_value_display | 展示页<br>当某个值为空的时候填充什么</p>
+</li>
+<li><p>ModelAdmin.exclued | 详情页（新增，更改）<br>给定一个字段名称的列表或元组，将其中的字段从详情页中排除</p>
+</li>
+<li><p>ModelAdmin.fields | 详情页（新增，更改）<br>fields 能够接受与 list_display 同类型的值，只是不能接受可调用项</p>
+</li>
+</ul>
+<p>model 和 model admin methods 只能在 readonly_fields 字段上可用</p>
+<p>如果要将多项内容放在一行，需要将所需选项放入一个元组中（不知道列表行不行）</p>
+<p>如果 fields 和 fieldsets 选项都不存在，Django 将默认在单个 fieldset 中显示每一个不是 AutoField 且 editable = True 的字段，顺序与在 model 中顺序相同</p>
+<ul>
+<li>ModelAdmin.fieldsets | 详情页（新增，更改）<br>field set =》 字段 集合，管理字段集合的一个选项</li>
+</ul>
+<p>一个二元元组的元组（列表应该也行吧），其中每个二元元祖代表页面上的一组字段</p>
+<p>二元元祖格式：(name, field_options)<br>name 表示字段集标题的字符串<br>field_options 关于字符集信息的字典，包括要在其中显示的字段列表</p>
+<p>field_options 字段可配置的键：<br>    * fields：字段名称的元组，与 fields 参数相同，必须<br>        * classes 一个包含额外应用到此 fieldset 上的 CSS 类的元组或列表，有两个默认的选项 coolapse 和 wide<br>        * description：描述内容，现实在字段集合顶部标题下，可以直接写HTML</p>
+<ul>
+<li>ModelAdmin.filter_horizontal | 新增或更改页面<br>为 ManyToManyFields 添加选择框</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># person admin.py</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@register(Person)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PersonAdmin</span><span class="params">(admin.ModelAdmin)</span>:</span></span><br><span class="line">	filter_horizontal = (<span class="string">"task"</span>,)</span><br></pre></td></tr></table></figure>
+
+<p>TODO 插入图片</p>
+<ul>
+<li>ModelAdmin.filter_vertical | 展示页</li>
+</ul>
+<p>和 filter_horizontal 类似，只是 从横向变成纵向</p>
+<ul>
+<li>ModelAdmin.form | 新增或修改页面<br>默认情况下会为 Model 动态创建一个 ModelForm。用于创建在新增或修改页面展示。</li>
+</ul>
+<p>可以通过这个属性提供一个自己的表单来覆盖表单行为，或者可以使用自定义默认表单而不是自动生成（请看 Adding custom validation to the admin）</p>
+<p>如果 ModelForm 和 ModelAdmin 都定义了 excude ModelAdmin 优先</p>
+<ul>
+<li><p>ModelAdmin.formfield_overrides | 每太看懂不过感觉用不上<br>This provides a quick-and-dirty way to override some of the Field options for use in the admin</p>
+</li>
+<li><p>ModelAdmin.inlines<br>略</p>
+</li>
+<li><p>ModelAdmin.list_display | 展示页<br>一个字段名元组（列表也行），选择需要在 List 页面展示哪些字段</p>
+</li>
+</ul>
+<p>可以自定义一些 callable 对象然后赋值给它用来展示</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">upper_case_name</span><span class="params">(obj)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> (<span class="string">"%s %s"</span> % (obj.first_name, obj.last_name)).upper()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过这个属性来设置展示名称</span></span><br><span class="line">upper_case_name.short_description = <span class="string">'Name'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PersonAdmin</span><span class="params">(admin.ModelAdmin)</span>:</span></span><br><span class="line">    list_display = (upper_case_name,)</span><br><span class="line"></span><br><span class="line"><span class="comment">#-----------</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PersonAdmin</span><span class="params">(admin.ModelAdmin)</span>:</span></span><br><span class="line">    list_display = (<span class="string">'upper_case_name'</span>,)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">upper_case_name</span><span class="params">(self, obj)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="string">"%s %s"</span> % (obj.first_name, obj.last_name)).upper()</span><br><span class="line">    upper_case_name.short_description = <span class="string">'Name'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#----------------</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">50</span>)</span><br><span class="line">    birthday = models.DateField()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decade_born_in</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.birthday.strftime(<span class="string">'%Y'</span>)[:<span class="number">3</span>] + <span class="string">"0's"</span></span><br><span class="line">    decade_born_in.short_description = <span class="string">'Birth decade'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PersonAdmin</span><span class="params">(admin.ModelAdmin)</span>:</span></span><br><span class="line">    list_display = (<span class="string">'name'</span>, <span class="string">'decade_born_in'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>关于 list_dispaly 的一些特殊情况：</p>
+<ol>
+<li>如果字段是 ForeignKey，Django 会显示该字段的 <strong>str</strong></li>
+<li>ManyToManyField 不能被写在这里面，因为这需要对表中的每一个执行一个单独的 SQL 语句。如果你确实想这么做，可以提供一个 model 自定义方法，并且将这个方法名写在 list_display 中</li>
+<li>如果是布尔值，Django将显示一个 on 或 off 的图标</li>
+<li>如果是给定 model ModelAdmin 或callable，Django会对输出进行 HTML转义</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> django.utils.html <span class="keyword">import</span> format_html</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    first_name = models.CharField(max_length=<span class="number">50</span>)</span><br><span class="line">    last_name = models.CharField(max_length=<span class="number">50</span>)</span><br><span class="line">    color_code = models.CharField(max_length=<span class="number">6</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">colored_name</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> format_html(</span><br><span class="line">            <span class="string">'&lt;span style="color: #&#123;&#125;;"&gt;&#123;&#125; &#123;&#125;&lt;/span&gt;'</span>,</span><br><span class="line">            self.color_code,</span><br><span class="line">            self.first_name,</span><br><span class="line">            self.last_name,</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PersonAdmin</span><span class="params">(admin.ModelAdmin)</span>:</span></span><br><span class="line">    list_display = (<span class="string">'first_name'</span>, <span class="string">'last_name'</span>, <span class="string">'colored_name'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>通常，list_display 中不是实际数据库字段的元素不能用于排序，但如果 list_display 的元素表示某个数据库字段，则可以通过设置项的 admin_order_field 属性来表明。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> django.utils.html <span class="keyword">import</span> format_html</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    first_name = models.CharField(max_length=<span class="number">50</span>)</span><br><span class="line">    color_code = models.CharField(max_length=<span class="number">6</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">colored_first_name</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> format_html(</span><br><span class="line">            <span class="string">'&lt;span style="color: #&#123;&#125;;"&gt;&#123;&#125;&lt;/span&gt;'</span>,</span><br><span class="line">            self.color_code,</span><br><span class="line">            self.first_name,</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    colored_first_name.admin_order_field = <span class="string">'first_name'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PersonAdmin</span><span class="params">(admin.ModelAdmin)</span>:</span></span><br><span class="line">    list_display = (<span class="string">'first_name'</span>, <span class="string">'colored_first_name'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>list_display 中的字段名将作为 css class 出现在 HTML 中</p>
+<p>Django 将按照以下顺序 interpret 每一个 list_display 上的元素：</p>
+<ol>
+<li>model 的字段</li>
+<li>callable</li>
+<li>ModelAdmin 属性字符串</li>
+<li>model 属性字符串</li>
+</ol>
+<ul>
+<li>ModelAdmin.list_display_links | 展示页<br>规定 list_display 中哪个字段链接到对应对象的更改页面，默认是列表的第一列</li>
+</ul>
+<p>可以设置多个，但必须在 list_display 中，也可以置空</p>
+<ul>
+<li>ModelAdmin.list_editable | 展示页</li>
+</ul>
+<p>元组（列表），必须包含在 list_display 中不能喝 list_display_links 重合</p>
+<p>允许在展示页直接对某些元素进行修改</p>
+<ul>
+<li>ModelAdmin.list_filter | 展示页<br>元组（列表），必须包含在 list_display 中</li>
+</ul>
+<p>在展示页右侧新增一个通过规定内容进行过滤的过滤器</p>
+<p>允许是以下类型之一：</p>
+<ol>
+<li>字段名，可以通过双下划线进行跨关系查找</li>
+<li>继承自 django.contrib.admin.SimplateFilter 的类，需要提供 title 和 parameter_name 属性重写 lookups 和 queryset 方法</li>
+<li>元组，第一个元素是字段名，第二个是 django.contrib.admin.SimplateFilter 类的子类</li>
+</ol>
+<ul>
+<li>ModelAdmin.list_max_show_all | 展示页</li>
+</ul>
+<p>管理 show all admin change list page 可以显示多少项，默认200<br>只有当总数少于设置项时才会显示 show all 按钮</p>
+<ul>
+<li>ModelAdmin.list_per_page | 展示页</li>
+</ul>
+<p>展示页每页显示数目，默认100</p>
+<ul>
+<li>ModelAdmin.list_select_related | 展示页？</li>
+</ul>
+<blockquote>
+<p>select_related主要针一对一和多对一关系进行优化。<br>select_related使用SQL的JOIN语句进行优化，通过减少SQL查询的次数来进行优化、提高性能。</p>
+</blockquote>
+<p>设置 list_select_related 告诉 Django 使用 select_related() 在更改页面检索对象列表时</p>
+<p>布尔值，列表或元组，默认为 False<br>当时 True 时，始终调用 select_related；False时，查看 list_display 在存在 ForeignKey 时调用 select_related</p>
+<p>使用元组（或列表）进行更细粒度的控制，空元组会阻止 Django 使用 select_related，任何其他的元组都会直接传递给 select_related 作为参数</p>
+<p>如果需要根据请求指定一个动态值，可以实现一个get_list_select_related（）方法。</p>
+<ul>
+<li>ModelAdmin.ordering | 展示页</li>
+</ul>
+<p>设置排序，列表或元组<br>如果需要指定动态顺序（例如根据用户或语言），可以实现get_ordering（）方法。</p>
+<ul>
+<li>ModelAdmin.paginator | 展示页</li>
+</ul>
+<p>规定要用于分页的 paginator 类 默认 <code>django.core.paginator.Paginator</code></p>
+<p>自定义分页类需要继承 <code>django.core.paginator.Paginator</code> 而却需要提供 <code>ModelAdmin.get_paginator()</code></p>
+<ul>
+<li>ModelAdmin.prepopulated_fielads</li>
+</ul>
+<p>将预填充字段设置为字典，将字段名称映射到应预填充的字段</p>
+<ul>
+<li>ModelAdmin.preserve_filters | 展示页面</li>
+</ul>
+<p>站点会在创建、编辑或删除对象后在列表视图中保留过滤器。</p>
+<ul>
+<li>ModelAdmin.radio_fields | 创建或修改</li>
+</ul>
+<p>默认情况下，Django的管理员对 ForeignKey 或设置了选项的字段使用选择框界面（<select>）。如果一个字段出现在 radio_fields 中，Django 将使用一个单选按钮接口。</select></p>
+<p>字典形式，有HORIZONTAL 和 VERTICAL 两个选项</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">radio_fields = &#123;<span class="string">"field_name"</span>: admin.VERTICAL&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>ModelAdmin.autocomplete_fields | 新增，修改</li>
+</ul>
+<p>元组或列表，里面放入一对多或多对多字段，在新增或修改的时候可以通过异步搜索查找需要的选项</p>
+<ul>
+<li>ModelAdmin.raw_id_fields | 新增，修改</li>
+</ul>
+<p>元组或列表，里面放入一对多或多对多字段，默认情况下一对多或多对多会使用下拉菜单，但如果将他们放入这个选项中将取消他们的下拉菜单直接给出一个输入框供用户手动输入，并且给出一个查找图标，点击图标后可以通过一个弹出页面查看全部选项并进行选择</p>
+<ul>
+<li>ModelAdmin.readonly_fields | 新增，修改</li>
+</ul>
+<p>元组或列表，放置在此选项的字段会从新增或修改页面消失</p>
+<ul>
+<li>ModelAdmin.save_as | 修改页面</li>
+</ul>
+<p>默认为 False</p>
+<p>默认情况下修改页面会显示：保存并增加另一个、保存并继续编辑、保存三个按钮，如果为True会将保存并新增另一个修改为保存为新对象</p>
+<ul>
+<li>ModelAdmin.save_as_continue | 修改页面</li>
+</ul>
+<p>默认为 True</p>
+<p>如果为 False 在修改对象之后重定向到 changelist view</p>
+<ul>
+<li>ModelAdmin.save_on_top | 新增 | 修改</li>
+</ul>
+<p>一般来说保存按钮在底部，如果设为 True 底部和顶部都有</p>
+<p>默认为 False</p>
+<ul>
+<li>ModelAdmin.search_fields | 展示页</li>
+</ul>
+<p>元组或列表</p>
+<p>设置此选择项后会在展示页显示一个搜索栏</p>
+<p>被填入的字段应该是文本字段，也可以使用双下划线来查找 ForeignKey 或 ManyToManyField 的内容</p>
+<p>using the icontains lookup</p>
+<p>example, if search_fields is set to [‘first_name’, ‘last_name’] and a user searches for john lennon, Django will do the equivalent of this SQL WHERE clause:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">WHERE (first_name ILIKE &#39;%john%&#39; OR last_name ILIKE &#39;%john%&#39;)</span><br><span class="line">AND (first_name ILIKE &#39;%lennon%&#39; OR last_name ILIKE &#39;%lennon%&#39;)</span><br></pre></td></tr></table></figure>
+
+<p>如果不想使用icontains作为查找，可以通过将其附加到字段来使用任何查找。例如，您可以通过将search_fields设置为 <code>[&#39;first_name_uuexact&#39;]</code> 来使用 <code>exact</code>。</p>
+<ul>
+<li>ModelAdmin.show_full_result_count | 展示页</li>
+</ul>
+<p>是否在展示页显示全部的结果数，默认为 True，默认情况下会产生一个额外的查询，而且如果数据量特别大的话这个查询会很消耗资源</p>
+<ul>
+<li>ModelAdmin.sortable_by | 展示页</li>
+</ul>
+<p>如果要对某些列禁用排序，请将sortable_by设置为要排序的list_display子集的集合（例如list、tuple或set）。空集合将禁用所有列的排序。</p>
+<p>如果需要动态指定此列表，请改为实现get_sortable_by（）方法。</p>
+<ul>
+<li>ModelAdmin.view_on_site | 新增，修改</li>
+</ul>
+<p>此属性用来控制是否显示 View on stie 连接，这个链接会把你带到一个可以显示保存对象的URL</p>
+<h4 id="custom-template-options"><a href="#custom-template-options" class="headerlink" title="custom template options"></a>custom template options</h4><p>使用以下选项覆盖ModelAdmin视图使用的默认模板：</p>
+<ul>
+<li>ModelAdmin.add_form_template</li>
+</ul>
+<p>Path to a custom template, used by add_view().</p>
+<ul>
+<li>ModelAdmin.change_form_template</li>
+</ul>
+<p>Path to a custom template, used by change_view().</p>
+<ul>
+<li>ModelAdmin.change_list_teimplate</li>
+</ul>
+<p>Path to a custom template, used by changelist_view().</p>
+<ul>
+<li>ModelAdmin.delete_confirmation_template</li>
+</ul>
+<p>Path to a custom template, used by delete_view() for displaying a confirmation page when deleting one or more objects.</p>
+<ul>
+<li>ModelAdmin.delete_selected_confirmaton_template</li>
+</ul>
+<p>Path to a custom template, used by the delete_selected action method for displaying a confirmation page when deleting one or more objects. See the actions documentation.</p>
+<ul>
+<li>ModelAdmin.object_history_template</li>
+</ul>
+<p>Path to a custom template, used by history_view().</p>
+<ul>
+<li>ModelAdmin.popup_response_template</li>
+</ul>
+<p>Path to a custom template, used by response_add(), response_change(), and response_delete().</p>
+<h3 id="ModelAdmin-methods"><a href="#ModelAdmin-methods" class="headerlink" title="ModelAdmin methods"></a>ModelAdmin methods</h3><ul>
+<li>ModelAdmin.save_model(request, obj, form, change)</li>
+</ul>
+<p>此方法需要传入一个 HttpRequest 一个 model 实例 一个 ModelForm 实例 一个决定此操作是新增还是修改的布尔值</p>
+<p>重写这个方法允许做一些前置或者后置保存操作，调用 super().save_model() 使用 Model.save() 来保存对象</p>
+<ul>
+<li>ModelAdmin.delete_model(request, obj)</li>
+</ul>
+<p>此方法需要传入一个 HttpRequest 对象和一个 model 实例</p>
+<p>重写此方法允许做一些前置或后置操作</p>
+<p>调用 super().delete_model() 使用 Model.delete() 来删除对象</p>
+<ul>
+<li>ModelAdmin.delete_queryset(request, queryset)</li>
+</ul>
+<p>重写此方法以自定义 删除选定对象 操作的删除过程</p>
+<ul>
+<li>ModelAdmin.save_formset(request, form, formset, change)</li>
+</ul>
+<p>此方法需要传入一个 HttpRequest 一个 父类 ModelForm 实例 和一个决定是执行新增操作还是执行修改操作的布尔值</p>
+<ul>
+<li>ModelAdmin.get_ordering(request)</li>
+</ul>
+<p>返回一个类似 ordering 参数的列表或元组</p>
+<ul>
+<li>ModelAdmin.get_search_results(request, queryset, search_term)</li>
+</ul>
+<p>此方法提供使用 search 组件的搜索结果。接受一个 request和一个queryset使用当前filter和用户提供的搜索内容。还接受一个布尔值用来规定结果中是否允许重复值</p>
+<ul>
+<li>ModelAdmin.save_related(request, form, formsets, change)</li>
+</ul>
+<p>Here you can do any pre- or post-save operations for objects related to the parent. Note that at this point the parent object and its form have already been saved.</p>
+<ul>
+<li>ModelAdmin.get_autocomplete_fields(request)</li>
+</ul>
+<p>return a list or tuple of field names that will be displayed with an autocomplete widget as described above in the ModelAdmin.autocomplete_fields section.</p>
+<ul>
+<li><p>ModelAdmin.get_readonly_fields(request, obj=None)</p>
+</li>
+<li><p>ModelAdmin.get_prepopulated_fields(request, obj=None)</p>
+</li>
+<li><p>ModelAdmin.get_list_display(request)</p>
+</li>
+<li><p>ModelAdmin.get_list_display_links(request, list_display)</p>
+</li>
+<li><p>ModelAdmin.get_exclued(reqquest, obj=None)</p>
+</li>
+<li><p>ModelAdmin.get_fields(request, obj=None)</p>
+</li>
+<li><p>ModelAdmin.fields(request, obj=None)</p>
+</li>
+<li><p>ModelAdmin.getfieldsets(request, obj=None)</p>
+</li>
+<li><p>ModelAdmin.get_list_filter(request)</p>
+</li>
+<li><p>ModelAdmin.get_list_select_related(request)</p>
+</li>
+<li><p>ModelAdmin.get_search_fields(request)</p>
+</li>
+<li><p>ModelAdmin.get_sortable_by(request)</p>
+</li>
+<li><p>ModelAdmin.get_inline_instances(request, obj=None)</p>
+</li>
+<li><p>ModelAdmin.get_urls()</p>
+</li>
+</ul>
+<p>The get_urls method on a ModelAdmin returns the URLs to be used for that ModelAdmin in the same way as a URLconf. </p>
+<ul>
+<li>ModelAdmin.get_form(reqeust, obj=None, **kwargs)</li>
+</ul>
+<p>Returns a ModelForm class for use in the admin add and change views, see add_view() and change_view().</p>
+<ul>
+<li><p>ModelAdmin.get_formsets_with_lines(request, obj=None)</p>
+</li>
+<li><p>ModelAdmin.formfield_for_foreignkey(db_field, request, **kwargs)</p>
+</li>
+<li><p>ModelAdmin.formfield_for_manytomant(db_field, request, **kwargs)</p>
+</li>
+<li><p>ModelAdmin.fromfield_for_choice_field(db_field, request, **kwargs)</p>
+</li>
+<li><p>ModelAdmin.get_changelist(request, **kwargs)</p>
+</li>
+<li><p>ModelAdmin.get_changelist_form(request, **kwargs)</p>
+</li>
+<li><p>ModelAdmin.get_changelist_formset(request, **kwargs)</p>
+</li>
+<li><p>ModelAdmin.lookup_allowed(lookup, value)</p>
+</li>
+<li><p>ModelAdmin.has_view_permission(request, obj=None)</p>
+</li>
+<li><p>ModelAdmin.has_add_permission(request)</p>
+</li>
+<li><p>ModelAdmin.has_change_permission(request, obj=None)</p>
+</li>
+<li><p>ModelAdmin.has_delete_permission(request, obj=None)</p>
+</li>
+<li><p>ModelAdmin.han_module_permission(request)</p>
+</li>
+<li><p>ModelAdmin.get_queryset(request)</p>
+</li>
+<li><p>ModelAdmin.message_user(request, message, level=meeesages.INFO, extra_tags=”, fail_silently=False)</p>
+</li>
+<li><p>ModelAdmin.get_paginator(request, queryset, per_page, orphans=0, allwo_empty_first_page=True)</p>
+</li>
+<li><p>ModelAdmin.response_add(request, obj, post_url_continu=None)</p>
+</li>
+<li><p>ModelAdmin.response_change(request, obj)</p>
+</li>
+<li><p>ModelAdmin.request_delete(request, obj)</p>
+</li>
+<li><p>ModelAdmin.get_changeform_inital_data(request)</p>
+</li>
+<li><p>ModelAdmin.get_deleted_objects(objs, request)</p>
+</li>
+</ul>
+<h4 id="Other-methods"><a href="#Other-methods" class="headerlink" title="Other methods"></a>Other methods</h4><ul>
+<li><p>ModelAdmin.add_view(request, form_url=””, extra_context=None)</p>
+</li>
+<li><p>ModelAdmin.change_view)request, object_id, form_url=””, extra_context=None)</p>
+</li>
+<li><p>ModelAdmin.changelist_view(request, extra_context=None)</p>
+</li>
+<li><p>ModelAdmin.delete_view(request, object_id, extra_context=None)</p>
+</li>
+<li><p>ModelAdmin.history_view(request, object_id, extra_context=None)</p>
+</li>
+</ul>
+<h3 id="ModelAdmin-asset-definitions"><a href="#ModelAdmin-asset-definitions" class="headerlink" title="ModelAdmin asset definitions"></a>ModelAdmin asset definitions</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ArticleAdmin</span><span class="params">(admin.ModelAdmin)</span>:</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Media</span>:</span></span><br><span class="line">        css = &#123;</span><br><span class="line">            <span class="string">"all"</span>: (<span class="string">"my_styles.css"</span>,)</span><br><span class="line">        &#125;</span><br><span class="line">        js = (<span class="string">"my_code.js"</span>,)</span><br></pre></td></tr></table></figure>
+
+<h4 id="jQuery"><a href="#jQuery" class="headerlink" title="jQuery"></a>jQuery</h4><h3 id="Adding-custom-validation-to-the-admin"><a href="#Adding-custom-validation-to-the-admin" class="headerlink" title="Adding custom validation to the admin"></a>Adding custom validation to the admin</h3><h2 id="InlineModelAdmin-objects"><a href="#InlineModelAdmin-objects" class="headerlink" title="InlineModelAdmin objects"></a>InlineModelAdmin objects</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InlineModelAdmin</span></span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">TabularInline</span></span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">StackedInline</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BookInline</span><span class="params">(admin.TabularInline)</span>:</span></span><br><span class="line">    model = Book</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AuthorAdmin</span><span class="params">(admin.ModelAdmin)</span>:</span></span><br><span class="line">    inlines = [</span><br><span class="line">        BookInline,</span><br><span class="line">    ]</span><br></pre></td></tr></table></figure>
+
+<h3 id="InlineModelAdmin-options"><a href="#InlineModelAdmin-options" class="headerlink" title="InlineModelAdmin options"></a>InlineModelAdmin options</h3><p>略</p>
+<h3 id="Working-with-a-model-with-two-or-more-foreign-keys-to-the-same-parent-model"><a href="#Working-with-a-model-with-two-or-more-foreign-keys-to-the-same-parent-model" class="headerlink" title="Working with a model with two or more foreign keys to the same parent model"></a>Working with a model with two or more foreign keys to the same parent model</h3><p>略</p>
+<h3 id="Working-with-many-to-may-models"><a href="#Working-with-many-to-may-models" class="headerlink" title="Working with many-to-may models"></a>Working with many-to-may models</h3><p>略</p>
+<h3 id="Working-with-many-to-many-intermediary-models"><a href="#Working-with-many-to-many-intermediary-models" class="headerlink" title="Working with many-to-many intermediary models"></a>Working with many-to-many intermediary models</h3><p>略</p>
+<h3 id="Using-generic-relation-as-an-inline"><a href="#Using-generic-relation-as-an-inline" class="headerlink" title="Using generic relation as an inline"></a>Using generic relation as an inline</h3><p>略</p>
+<h2 id="Overrding-admin-templates"><a href="#Overrding-admin-templates" class="headerlink" title="Overrding admin templates"></a>Overrding admin templates</h2><p>覆盖管理模块用于生成管理站点的各种页面的许多模板相对容易。您甚至可以为特定的应用程序或特定模式覆盖其中的一些模板</p>
+<p> If you have customized the ‘loaders’ option, be sure ‘django.template.loaders.filesystem.Loader’ appears before ‘django.template.loaders.app_directories.Loader’ so that your custom templates will be found by the template loading system before those that are included with django.contrib.admin.</p>
+<p>如果要修改 my_app 目录下全部 model  视图列表可以复制文件到 <code>templates/admin/my_app</code></p>
+<p>如果想要添加一个 tool 在 change list 视图仅仅为一个叫 Page 的 model。可以赋值相同文件到 <code>templates/admin/my_app/page</code> 中</p>
+<h3 id="Set-up-your-projects-admin-template-directories"><a href="#Set-up-your-projects-admin-template-directories" class="headerlink" title="Set up your projects admin template directories"></a>Set up your projects admin template directories</h3><p>first create an admin directory in your project’s templates directory. </p>
+<h3 id="Overriding-vs-replacing-an-admin-template"><a href="#Overriding-vs-replacing-an-admin-template" class="headerlink" title="Overriding vs replacing an admin template"></a>Overriding vs replacing an admin template</h3><p>通常不建议替换整个模板，最好只覆盖需要更改的模板部分</p>
+<h3 id="Templates-which-may-be-overridden-per-app-or-model"><a href="#Templates-which-may-be-overridden-per-app-or-model" class="headerlink" title="Templates which may be overridden per app or model"></a>Templates which may be overridden per app or model</h3><p>略</p>
+<h3 id="Root-and-login-templates"><a href="#Root-and-login-templates" class="headerlink" title="Root and login templates"></a>Root and login templates</h3><p>略</p>
+<h2 id="AdminSite-Object"><a href="#AdminSite-Object" class="headerlink" title="AdminSite Object"></a>AdminSite Object</h2><p>一个 Django 管理站点由 <code>django.contrib.admin.sites.AdminSite</code> 的实例来表示，默认情况下，这个类的实例被创建为 <code>django.contrib.admin.site</code>，你可以用它来注册你的模型和 ModelAdmin 实例。</p>
+<p>可以通过覆盖它来自定义默认的管理站点。</p>
+<p>当构造 AdminSite 实例时，可以使用构造函数的 name  参数提供一个唯一的实例名。这个实例名是用来识别实例的，特别是在 reversing admin URLs。如果没有提供，将使用名人的 admin</p>
+<h3 id="AdminSite-attributes"><a href="#AdminSite-attributes" class="headerlink" title="AdminSite attributes"></a>AdminSite attributes</h3><ul>
+<li><p>site_header<br>放在页面顶部的文字作为 H1 内的内容，默认：Django 管理</p>
+</li>
+<li><p>site_title<br>页面 title 结尾处放置的文字，默认：Django 站点管理员</p>
+</li>
+<li><p>site_url<br>管理页面顶部 查看站点 链接的 URL，默认：/，设为 None 可以删除该链接</p>
+</li>
+<li><p>index_title<br>管理站点首页顶部展示的文字，默认：网站管理</p>
+</li>
+<li><p>index_template<br>will be used by the admin site main index view.</p>
+</li>
+<li><p>app_index_template<br>will be used by the admin site app index view.</p>
+</li>
+<li><p>empty_value_display<br>用于在 change list 显示空值，默认为破折号。也可以被 ModelAdmin.empty_value_display 覆盖</p>
+</li>
+<li><p>login_template<br>will be used by the admin site login view.</p>
+</li>
+<li><p>login_form<br>will be used by the admin site login view.</p>
+</li>
+<li><p>logout_template<br>Path to a custom template that will be used by the admin site logout view.</p>
+</li>
+<li><p>password_change_template<br>will be used by the admin site password change view.</p>
+</li>
+<li><p>password_change_done_template<br>will be used by the admin site password change done view.</p>
+</li>
+</ul>
+<h3 id="AdminSite-methods"><a href="#AdminSite-methods" class="headerlink" title="AdminSite methods"></a>AdminSite methods</h3><ul>
+<li>AdminSite.each_context(request)<br>返回变量字典，用来放在 admin site 中每个页面的模板上下文中</li>
+</ul>
+<p>默认情况下包括以下变量和值：</p>
+<ul>
+<li><p>site_header:Adminsite.site_header</p>
+</li>
+<li><p>site_title:AdminSIte.site_title</p>
+</li>
+<li><p>site_url:AdminSite.site_url</p>
+</li>
+<li><p>has_permission:Admin.has_permission()</p>
+</li>
+<li><p>available_apps: 当前用户可以使用的应用程序注册表中的应用程序列表。列表中的每个条目都是一个代表 application 的字典，其键如下：</p>
+<ul>
+<li>app_label: 应用的 label</li>
+<li>app_url：应用在 admin 中的 index URL</li>
+<li>has_module_perms：表示是否允许当前用户显示和访问模块 index 页面的布尔值</li>
+<li>models：应用程序中可用模型列表，每个 model 都是一个字典，包含以下几个键<ul>
+<li>object_name：model 的类名</li>
+<li>name：复数名</li>
+<li>perms：一个跟踪添加、更改、删除和查看权限的字典</li>
+<li>admin_url：admin changelist URL for the model</li>
+<li>add_url：admin URL to add a new model instance</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>AdminSite.has_permission(request)<br>如果 HttpRequest 提供的用户邮权限查看管理员站点中至少一个页面，返回 True。默认要求 User.is_active 和 User.is_staff 为 True。</p>
+</li>
+<li><p>AdminSite.register(model_or_iterable, admin_class=None, **options)<br>admin_class 默认是 ModelAdmin。如果给定关键字参数，会作为选项应用到 admin 类</p>
+</li>
+</ul>
+<p>如果一个模型是抽象的，会引发 ImproperlyConfigured</p>
+<p>如果模型已经注册，会引发 django.contrib.admin.sites.AlreadyRegistered</p>
+<h3 id="Hocking-AdminSite-instances-into-your-URLconf"><a href="#Hocking-AdminSite-instances-into-your-URLconf" class="headerlink" title="Hocking AdminSite instances into your URLconf"></a>Hocking AdminSite instances into your URLconf</h3><p>略</p>
+<h3 id="Customizing-the-AdminSite-class"><a href="#Customizing-the-AdminSite-class" class="headerlink" title="Customizing the AdminSite class"></a>Customizing the AdminSite class</h3><p>略</p>
+<h3 id="Overriding-the-default-admin-site"><a href="#Overriding-the-default-admin-site" class="headerlink" title="Overriding the default admin site"></a>Overriding the default admin site</h3><p>略</p>
+<h3 id="Multiple-admin-sites-in-the-same-URLconf"><a href="#Multiple-admin-sites-in-the-same-URLconf" class="headerlink" title="Multiple admin sites in the same URLconf"></a>Multiple admin sites in the same URLconf</h3><p>略</p>
+<h3 id="Adding-views-to-admin-sites"><a href="#Adding-views-to-admin-sites" class="headerlink" title="Adding views to admin sites"></a>Adding views to admin sites</h3><p>略</p>
+<h3 id="Adding-a-password-reset-feature"><a href="#Adding-a-password-reset-feature" class="headerlink" title="Adding a password reset feature"></a>Adding a password reset feature</h3><p>略</p>
+<h2 id="LogEntry-objects"><a href="#LogEntry-objects" class="headerlink" title="LogEntry objects"></a>LogEntry objects</h2><p>LogEntry类跟踪通过管理接口完成的对象的添加、更改和删除。</p>
+<h3 id="LogEntry-attributes"><a href="#LogEntry-attributes" class="headerlink" title="LogEntry attributes"></a>LogEntry attributes</h3><ul>
+<li>LogEntry.action_time</li>
+</ul>
+<p>The date and time of the action.</p>
+<ul>
+<li>LogEntry.user</li>
+</ul>
+<p>The user (an AUTH_USER_MODEL instance) who performed the action.</p>
+<ul>
+<li>LogEntry.content_type</li>
+</ul>
+<p>The ContentType of the modified object</p>
+<ul>
+<li>LogEntry.object_id</li>
+</ul>
+<p>The textual representation of the modified object’s primary key.</p>
+<ul>
+<li>LogEntry.object_repr</li>
+</ul>
+<p>The object`s repr() after the modification.</p>
+<ul>
+<li>LogEntry.ation_flag</li>
+</ul>
+<p>The type of action logged: ADDITION, CHANGE, DELETION.</p>
+<ul>
+<li>LogEntry.change_message</li>
+</ul>
+<p>The detailed description of the modification. </p>
+<h3 id="LogEntry-methods"><a href="#LogEntry-methods" class="headerlink" title="LogEntry methods"></a>LogEntry methods</h3><ul>
+<li>LogEntry.get_edited_object()</li>
+</ul>
+<p>A shortcut that returns the referenced object.</p>
+<ul>
+<li>LogEntry.get_change_message()</li>
+</ul>
+<h2 id="Reversing-admin-URLs"><a href="#Reversing-admin-URLs" class="headerlink" title="Reversing admin URLs"></a>Reversing admin URLs</h2><p>AdminSite</p>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>URL name</th>
+<th>Parameters</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Index</td>
+<td>index</td>
+<td></td>
+</tr>
+<tr>
+<td>Login</td>
+<td>login</td>
+<td></td>
+</tr>
+<tr>
+<td>Logout</td>
+<td>logout</td>
+<td></td>
+</tr>
+<tr>
+<td>Password change</td>
+<td>password_change</td>
+<td></td>
+</tr>
+<tr>
+<td>Password change done</td>
+<td>password_change_done</td>
+<td></td>
+</tr>
+<tr>
+<td>i18n JavaScript</td>
+<td>jsi18n</td>
+<td></td>
+</tr>
+<tr>
+<td>Application index page</td>
+<td>app_list</td>
+<td>app_label</td>
+</tr>
+<tr>
+<td>Redirect to object’s page</td>
+<td>view_on_site</td>
+<td>content_type_id, object_id</td>
+</tr>
+</tbody></table>
+<p>ModelAdmin</p>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>URL name</th>
+<th>Parameters</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Changelist</td>
+<td><code>__changelist</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Add</td>
+<td><code>-_add</code></td>
+<td></td>
+</tr>
+<tr>
+<td>History</td>
+<td><code>-_history</code></td>
+<td>object_id</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td><code>-_delete</code></td>
+<td>object_id</td>
+</tr>
+<tr>
+<td>Change</td>
+<td><code>-_change</code></td>
+<td>object_id</td>
+</tr>
+</tbody></table>
+<p>UserAdmin</p>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>URL name</th>
+<th>Parameters</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Password change</td>
+<td>auth_user_password_change</td>
+<td>user_id</td>
+</tr>
+</tbody></table>
+<h2 id="The-staff-member-required-decorator"><a href="#The-staff-member-required-decorator" class="headerlink" title="The staff_member_required decorator"></a>The staff_member_required decorator</h2>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</div></article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/archives/16f6299.html" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    MySQL8 Grant check the manual that corresponds to your MySQL server version for the right syntax to use.m
+                
+            </div>
+        </a>
+    
+    
+        <a href="/archives/44c1e81d.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Django app 笔记</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+        <section id="comments"> <div id="vcomments"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'sz7ny95XiYWkxht3H3YDs2GX-gzGzoHsz',
+        appKey: 'T8JJugDkbqtFLONIIzcPWW76',
+        placeholder: '不要吝啬赞美的语句ヾﾉ≧∀≦)o!',
+        avatar: 'mp',
+        meta: ['nick','mail','link'],
+        pageSize: 10,
+        visitor: true,
+        notify: true,
+        verify: true
+    })
+    let info = document.querySelectorAll('#vcomments>.info')[0]
+    if (info) { info.style.display = 'none' }
+</script> </section>
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            ryomahan &copy; 2021 
+            <a rel="external nofollow noopener noreferrer" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png"></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>. Comment By <a href="https://valine.js.org/" target="_blank" rel="external nofollow noopener noreferrer">valine</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten" target="_blank" rel="external nofollow noopener noreferrer">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>

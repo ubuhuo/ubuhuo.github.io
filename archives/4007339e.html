@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    
+    <title>Python 中的内置异常 | 小白维基</title>
+    
+    
+        <meta name="keywords" content="内置异常">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="基于 Python 3.7.4 中文文档-内置异常 在 Python 中，所有异常必须为一个派生自 BaseException 的类的实例。 基类 以下异常主要被用作其他异常的基类  BaseException所有内置异常的基类。 它不应该被用户自定义类直接继承 (Python 官方鼓励程序员从 Exception 类或它的某个子类而不是从 BaseException 来派生新的异常)。 如果在此">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 中的内置异常">
+<meta property="og:url" content="https://wiki.blanc.site/archives/4007339e.html">
+<meta property="og:site_name" content="小白维基">
+<meta property="og:description" content="基于 Python 3.7.4 中文文档-内置异常 在 Python 中，所有异常必须为一个派生自 BaseException 的类的实例。 基类 以下异常主要被用作其他异常的基类  BaseException所有内置异常的基类。 它不应该被用户自定义类直接继承 (Python 官方鼓励程序员从 Exception 类或它的某个子类而不是从 BaseException 来派生新的异常)。 如果在此">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-07-22T00:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-23T12:08:45.163Z">
+<meta property="article:author" content="ryomahan">
+<meta property="article:tag" content="内置异常">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="小白维基" type="application/atom+xml">
+    
+    
+        <link rel="icon" href="/favicon.ico">
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110100486-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-110100486-1');
+</script>
+    
+    
+        <meta name="google-site-verification" content="D9ld5oQABBxIwNpgD_WN61p51-ZcABZ6Olt4HKcxlWw">
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?fac7e69191f0847b886888aa7c794fa7";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- 字体引入 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 4.2.1"></head>
+</html>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">小白维基</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://www.gravatar.com/avatar/e30ee2d02a4632e35575fec3944497df">
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://www.gravatar.com/avatar/e30ee2d02a4632e35575fec3944497df?s=128">
+            <h2 id="name">Ryoma</h2>
+            <h3 id="title">毕己一生，依依东望。</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Jinan, China</span>
+            <a id="follow" target="_blank" href="https://github.com/ryomahan/" rel="external nofollow noopener noreferrer">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                105
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                65
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://blog.blanc.site" target="_blank" title="wordpress" class="tooltip">
+                            <i class="fa fa-wordpress"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/ryomahan1996" target="_blank" title="twitter" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/xiaobaidh" target="_blank" title="weibo" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://github.com/ryomahan" target="_blank" title="github" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class="tooltip">
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+
+    
+        <div class="widget-wrap widget-list">
+            <h3 class="widget-title"><span>链接</span></h3>
+            <div class="widget">
+                <ul>
+                    
+                        <li>
+                            <a href="https://www.blanc.site" target="_blank">依依东望</a>
+                        </li>
+                    
+                        <li>
+                            <a href="https://blog.blanc.site" target="_blank">一只小白</a>
+                        </li>
+                    
+                        <li>
+                            <a href="https://wiki.blanc.site" target="_blank">小白维基</a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    
+</aside>
+
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id="categories">
+        <h3 class="widget-title">
+            <span>分类</span>
+            &nbsp;
+            <a id="allExpand" href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            1-网络笔记
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8678286b.html">U盘安装 Linux distribution 提示 waring /dev/root does not exist</a></li>  <li class="file"><a href="/archives/ee66e659.html">适合 Linux 新手的 man page 使用手册</a></li>  <li class="file"><a href="/archives/3c798f3a.html">「转载」如何选择开源许可证？</a></li>  <li class="file"><a href="/archives/573af784.html">不翻墙下载 Chrome + 不用 VPN 上 Google</a></li>  <li class="file"><a href="/archives/50486745.html">Fatal error in launcher：Unable to create process using '"'</a></li>  <li class="file"><a href="/archives/7cd2d86d.html">Web 安全学习笔记</a></li>  <li class="file"><a href="/archives/7f71ea0e.html">影梭（Shadowsocks）服务端安装、配置及多用户</a></li>  <li class="file"><a href="/archives/6bfb5db9.html">Linux 下安装 Node.js</a></li>  <li class="file"><a href="/archives/3f439512.html">Nginx rtmp 模块配合 OBS 推流实现直播(监控)功能</a></li>  <li class="file"><a href="/archives/ff98c7a2.html">CentOS7 下配置 Nginx + PHP7 + MariaDB + ThinkPHP5.1</a></li>  <li class="file"><a href="/archives/71825b94.html">ThinkPHP5 的 Nginx 配置</a></li>  <li class="file"><a href="/archives/f63c0d8d.html">「转载」同步和异步的区别</a></li>  <li class="file"><a href="/archives/e94a0a36.html">新部署一台Linux云服务器时常用的命令</a></li>  <li class="file"><a href="/archives/22a754d3.html">CentOS7 + Python3 + Django(rest_framework) + MariaDB + nginx + uwsgi 部署 API 开发环境</a></li>  <li class="file"><a href="/archives/ab4a885.html">Python 虚拟环境：virtualenv 以及 virtualenvwrapper</a></li>  <li class="file"><a href="/archives/72d385fc.html">webpack 4 入门</a></li>  <li class="file"><a href="/archives/f1bf1c1a.html">单点问题</a></li>  <li class="file"><a href="/archives/a07e5380.html">注册中心</a></li>  <li class="file"><a href="/archives/cb0153ff.html">「未完成」正则中的贪婪模式与非贪婪模式</a></li>  <li class="file"><a href="/archives/7172d605.html">正则表达式中的回溯过程</a></li>  <li class="file"><a href="/archives/2c12e091.html">CentOS 7 安装 Java 环境</a></li>  <li class="file"><a href="/archives/9a031a35.html">Linux 下的压缩和解压缩</a></li>  <li class="file"><a href="/archives/4b35af27.html">「转载」水晶头接法</a></li>  <li class="file"><a href="/archives/c7ab70f8.html">软件版本号命名规则</a></li>  <li class="file"><a href="/archives/6f328d06.html">鸭子类型</a></li>  <li class="file"><a href="/archives/f2b92668.html">各个平台的包管理器</a></li>  <li class="file"><a href="/archives/42f2446d.html">写给小白的 ShadowSocks 全平台客户端使用说明</a></li>  <li class="file"><a href="/archives/4fcffd79.html">各种软件配置文件规范</a></li>  <li class="file"><a href="/archives/16f6299.html">MySQL8 Grant check the manual that corresponds to your MySQL server version for the right syntax to use.m</a></li>  <li class="file"><a href="/archives/37910dd2.html">计算机的启动</a></li>  <li class="file"><a href="/archives/4940711f.html">8086 处理器寻址方式</a></li>  <li class="file"><a href="/archives/ab9fcc5d.html">虚拟机常见的网络模式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            2-软件使用
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Chrome
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/decc86d5.html">「转载」解析谷歌 Chrome 各分支版本</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            CodeBlock
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/51f295ff.html">Code::Block 新手配置教程</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Django
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/953c2552.html">Django 笔记-1-从请求到响应</a></li>  <li class="file"><a href="/archives/55c5932a.html">Django 不同环境下使用不同设置文件</a></li>  <li class="file"><a href="/archives/dfb4f33e.html">Django 时间字段中 auto_now 和 auto_now_add 的区别</a></li>  <li class="file"><a href="/archives/8bf18292.html">Django admin 笔记</a></li>  <li class="file"><a href="/archives/44c1e81d.html">Django app 笔记</a></li>  <li class="file"><a href="/archives/5d9ebead.html">Django 中有趣又有用的代码设计</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Excel
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6cc2e3a0.html">Excel 利用函数获取行号、列号、当前行的上一行</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            JetBrains
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/e82cc623.html">JetBrains 系列软件如何在 macOS 下快速创建文件</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            PHPStrom
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/297592c5.html">PHPStrom 常用快捷键汇总</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            SublimeText
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/59657ebc.html">Sublime Text 3 安装 SVN 插件</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            ThinkPHP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/d9089534.html">ThinkPHP5 静态资源[CSS , JS , img]加载</a></li>  <li class="file"><a href="/archives/87acc549.html">解决 TP5 无法接收客户端 Post 传递的 Json 参数</a></li>  <li class="file"><a href="/archives/7d2dd65c.html">ThinkPHP5 下商城类微信小程序下单 + 支付开发流程图</a></li>  <li class="file"><a href="/archives/28f0dfb7.html">ThinkPHP5 + 梦网实现手机验证码登陆后台逻辑</a></li>  <li class="file"><a href="/archives/d2b8c7e4.html">Windows 下 ThinkPHP5 配置 redis 缓存</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VMware
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/4dedf7b2.html">VMware 安装 CentOS 后网络设置</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VOX
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/aeea741e.html">解决 macOS 下 VOX 中文乱码问题</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VSCode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/a29d84d8.html">VS Code + PHPStudy 断点调试 PHP</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Vue
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b4f7e05e.html">vue-cli 下配置 Element + axios + Mockjs</a></li>  <li class="file"><a href="/archives/793400e.html">解决 Vue CSS 样式重复载入，为 Vue 添加全局 less 或 sass 基础样式库</a></li>  <li class="file"><a href="/archives/341c107a.html">Vue Router 实现动态路由和常见问题解决方案</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            WordPress
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6ec97606.html">WordPress 配置七牛云 CDN 具体操作</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            ZooKeeper
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/f1db9330.html">ZooKeeper 入门简介</a></li>  <li class="file"><a href="/archives/2b7b1ffc.html">ZooKeeper 命令</a></li>  <li class="file"><a href="/archives/bb55e9ff.html">ZooKeeper 配置文件解析</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            zsh
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/2025325c.html">zsh 历史文件损坏</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            命令行工具
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Git
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/3c3cdb74.html">Git 学习笔记</a></li>  <li class="file"><a href="/archives/6c235203.html">「转载」Git 远程仓库 pull/push 操作详解</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            curl
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/41e09627.html">格式化 curl 输出的 json 内容</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            dmidecode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/89447a6c.html">dmidecode 解析</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            homebrew
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/819175d6.html">homebrew tap</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            pip
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b47b33aa.html">pip 自动生成或安装 requiremen 依赖</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            pyenv
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6005f6af.html">macOS 下利用 pyenv 管理 Python 版本和虚拟环境</a></li>  <li class="file"><a href="/archives/22859f2b.html">利用本地缓存解决 pyenv 下载缓慢问题</a></li>  <li class="file"><a href="/archives/911a03cb.html">通过 shell 文件激活 pyenv virtualenv 虚拟环境失败</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            tmux
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/9e40babb.html">tmux 入门 + 快捷键整理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            vim
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/211d6e8d.html">vim 创建文件时根据文件类型自动添加内容</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            3-计算机科学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            1-理论计算机科学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            1-数据结构和算法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/f3c5e08e.html">数据结构笔记1-概论</a></li>  <li class="file"><a href="/archives/e3cbe031.html">数据结构笔记2-线性表</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            4-编程语言和编译器
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            C&CPP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/154e48dc.html">cpp 中的声明和定义</a></li>  <li class="file"><a href="/archives/ca916e4c.html">对比 C 和 CPP 中 struct class 和 union</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Erlang
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/76405d8b.html">Erlang 程序设计笔记-第一部分</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            HTML
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/cd7f373a.html">如何用纯 HTML 区分一个 form 表单中的多个 submit</a></li>  <li class="file"><a href="/archives/8b008844.html">利用 position + rgba 将 HTML 背景灰化</a></li>  <li class="file"><a href="/archives/c0d98826.html">固定一个 div 在另一个 div 的底部</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            PHP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/60232ab3.html">「转载」PHP 常用缓存技术的总结</a></li>  <li class="file"><a href="/archives/e639e72a.html">「转载」PHP 静态方法和非静态方法简单对比</a></li>  <li class="file"><a href="/archives/44e28494.html">「转载」PHP 判断文件存在是用 file_exists 还是 is_file</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Python
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/19ed6e31.html">Python + OpenCV 图像处理-1</a></li>  <li class="file active"><a href="/archives/4007339e.html">Python 中的内置异常</a></li>  <li class="file"><a href="/archives/e0455099.html">Python 中的异常处理</a></li>  <li class="file"><a href="/archives/7a294715.html">所谓 WSGI</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Shell
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8f9d5c85.html">Shell 获取当前脚本的绝对路径</a></li>  <li class="file"><a href="/archives/17043032.html">echo</a></li>  <li class="file"><a href="/archives/b422aa7d.html">Shell 区分不同 Unix 系统</a></li>  <li class="file"><a href="/archives/3beb222a.html">Shell 基础语法</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            TypeScript
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/e7cd2bef.html">TypeScript 名词理解</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            汇编语言
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/f3934733.html">x86汇编指令</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            2-计算机系统
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            2-操作系统
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            CiscoIOS
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/3bd55461.html">Cisco IOS 系列-0-概览</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Linux
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/1d036a8c.html">Linux 系统下不同类型文件默认的颜色</a></li>  <li class="file"><a href="/archives/d19e8f5d.html">Linux 学习笔记-1</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            macOS
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/607dec48.html">macOS 如何删除自带 ABC 输入法</a></li>  <li class="file"><a href="/archives/26aeca3.html">macOS 访达常用快捷键</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            5-计算机安全和密码学
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/a45966e2.html">块加密的工作模式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            6-数据库
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            MongoDB
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b880b012.html">自用 MongoDB 手册</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            MySQL
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/ef1e0835.html">MySQL 修改数据库名</a></li>  <li class="file"><a href="/archives/466aea21.html">MySQL GRANT 授权语句</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            3-计算机应用技术
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            4-人工智能
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8fbb5ea2.html">人工智能-0-概览</a></li>  <li class="file"><a href="/archives/61dc3b15.html">神经网络-1-概览</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            4-软件工程
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            RESTful
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/7e15b804.html">RESTful 笔记-1-接口设计规范</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/archives/f15c2f60.html">「转载」互联网产品研发流程概论</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+        
+  <div class="toc-flag"></div>
+  <div class="toc-wrap">
+      <h3>
+          <span>文章目录</span>
+      </h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基类"><span class="toc-number">1.</span> <span class="toc-text">基类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#BaseException"><span class="toc-number">1.1.</span> <span class="toc-text">BaseException</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exception"><span class="toc-number">1.2.</span> <span class="toc-text">Exception</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ArithmeticError"><span class="toc-number">1.3.</span> <span class="toc-text">ArithmeticError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BufferError"><span class="toc-number">1.4.</span> <span class="toc-text">BufferError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LookupError"><span class="toc-number">1.5.</span> <span class="toc-text">LookupError</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具体异常"><span class="toc-number">2.</span> <span class="toc-text">具体异常</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AssertionError"><span class="toc-number">2.1.</span> <span class="toc-text">AssertionError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AttributeError"><span class="toc-number">2.2.</span> <span class="toc-text">AttributeError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EOFError"><span class="toc-number">2.3.</span> <span class="toc-text">EOFError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FloatingPointError"><span class="toc-number">2.4.</span> <span class="toc-text">FloatingPointError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GeneratorExit"><span class="toc-number">2.5.</span> <span class="toc-text">GeneratorExit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ImportError"><span class="toc-number">2.6.</span> <span class="toc-text">ImportError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ModuleNotFoundError"><span class="toc-number">2.7.</span> <span class="toc-text">ModuleNotFoundError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IndexError"><span class="toc-number">2.8.</span> <span class="toc-text">IndexError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#KeyError"><span class="toc-number">2.9.</span> <span class="toc-text">KeyError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#KeyboardInterrupt"><span class="toc-number">2.10.</span> <span class="toc-text">KeyboardInterrupt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MemoryError"><span class="toc-number">2.11.</span> <span class="toc-text">MemoryError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NameError"><span class="toc-number">2.12.</span> <span class="toc-text">NameError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NotImplementedError"><span class="toc-number">2.13.</span> <span class="toc-text">NotImplementedError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OSError"><span class="toc-number">2.14.</span> <span class="toc-text">OSError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OverflowError"><span class="toc-number">2.15.</span> <span class="toc-text">OverflowError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RecursionError"><span class="toc-number">2.16.</span> <span class="toc-text">RecursionError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ReferenceError"><span class="toc-number">2.17.</span> <span class="toc-text">ReferenceError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RuntimeError"><span class="toc-number">2.18.</span> <span class="toc-text">RuntimeError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#StopIteration"><span class="toc-number">2.19.</span> <span class="toc-text">StopIteration</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#StopAsyncIteration"><span class="toc-number">2.20.</span> <span class="toc-text">StopAsyncIteration</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SyntaxError"><span class="toc-number">2.21.</span> <span class="toc-text">SyntaxError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IndentationError"><span class="toc-number">2.22.</span> <span class="toc-text">IndentationError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TabError"><span class="toc-number">2.23.</span> <span class="toc-text">TabError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SystemError"><span class="toc-number">2.24.</span> <span class="toc-text">SystemError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SystemExit"><span class="toc-number">2.25.</span> <span class="toc-text">SystemExit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TypeError"><span class="toc-number">2.26.</span> <span class="toc-text">TypeError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnboundLocalError"><span class="toc-number">2.27.</span> <span class="toc-text">UnboundLocalError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnicodeError"><span class="toc-number">2.28.</span> <span class="toc-text">UnicodeError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnicodeEncodeError"><span class="toc-number">2.29.</span> <span class="toc-text">UnicodeEncodeError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnicodeDecodeError"><span class="toc-number">2.30.</span> <span class="toc-text">UnicodeDecodeError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnicodeTranslateError"><span class="toc-number">2.31.</span> <span class="toc-text">UnicodeTranslateError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ValueError"><span class="toc-number">2.32.</span> <span class="toc-text">ValueError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ZeroDivisionError"><span class="toc-number">2.33.</span> <span class="toc-text">ZeroDivisionError</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#版本兼容"><span class="toc-number">3.</span> <span class="toc-text">版本兼容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#EnvironmentError¶"><span class="toc-number">3.1.</span> <span class="toc-text">EnvironmentError¶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IOError"><span class="toc-number">3.2.</span> <span class="toc-text">IOError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WindowsError"><span class="toc-number">3.3.</span> <span class="toc-text">WindowsError</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OS-异常"><span class="toc-number">4.</span> <span class="toc-text">OS 异常</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#BlockingIOError"><span class="toc-number">4.1.</span> <span class="toc-text">BlockingIOError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ChildProcessError"><span class="toc-number">4.2.</span> <span class="toc-text">ChildProcessError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConnectionError"><span class="toc-number">4.3.</span> <span class="toc-text">ConnectionError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BrokenPipeError"><span class="toc-number">4.4.</span> <span class="toc-text">BrokenPipeError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConnectionAbortedError"><span class="toc-number">4.5.</span> <span class="toc-text">ConnectionAbortedError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConnectionRefusedError"><span class="toc-number">4.6.</span> <span class="toc-text">ConnectionRefusedError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConnectionResetError"><span class="toc-number">4.7.</span> <span class="toc-text">ConnectionResetError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FileExistsError"><span class="toc-number">4.8.</span> <span class="toc-text">FileExistsError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FileNotFoundError"><span class="toc-number">4.9.</span> <span class="toc-text">FileNotFoundError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#InterruptedError"><span class="toc-number">4.10.</span> <span class="toc-text">InterruptedError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IsADirectoryError"><span class="toc-number">4.11.</span> <span class="toc-text">IsADirectoryError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NotADirectoryError"><span class="toc-number">4.12.</span> <span class="toc-text">NotADirectoryError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PermissionError"><span class="toc-number">4.13.</span> <span class="toc-text">PermissionError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ProcessLookupError"><span class="toc-number">4.14.</span> <span class="toc-text">ProcessLookupError</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TimeoutError"><span class="toc-number">4.15.</span> <span class="toc-text">TimeoutError</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#警告"><span class="toc-number">5.</span> <span class="toc-text">警告</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Warning"><span class="toc-number">5.1.</span> <span class="toc-text">Warning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DeprecationWarning"><span class="toc-number">5.2.</span> <span class="toc-text">DeprecationWarning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PendingDeprecationWarning"><span class="toc-number">5.3.</span> <span class="toc-text">PendingDeprecationWarning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SyntaxWarning"><span class="toc-number">5.4.</span> <span class="toc-text">SyntaxWarning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RuntimeWarning"><span class="toc-number">5.5.</span> <span class="toc-text">RuntimeWarning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FutureWarning"><span class="toc-number">5.6.</span> <span class="toc-text">FutureWarning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ImportWarning"><span class="toc-number">5.7.</span> <span class="toc-text">ImportWarning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnicodeWarning"><span class="toc-number">5.8.</span> <span class="toc-text">UnicodeWarning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BytesWarning"><span class="toc-number">5.9.</span> <span class="toc-text">BytesWarning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ResourceWarning"><span class="toc-number">5.10.</span> <span class="toc-text">ResourceWarning</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常层次结构"><span class="toc-number">6.</span> <span class="toc-text">异常层次结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">7.</span> <span class="toc-text">参考</span></a></li></ol>
+  </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-3-计算机科学/1-理论计算机科学/4-编程语言和编译器/Python/Python 中的内置异常" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/3-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">3-计算机科学</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/3-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/1-%E7%90%86%E8%AE%BA%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">1-理论计算机科学</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/3-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/1-%E7%90%86%E8%AE%BA%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/4-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%92%8C%E7%BC%96%E8%AF%91%E5%99%A8/">4-编程语言和编译器</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/3-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/1-%E7%90%86%E8%AE%BA%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/4-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%92%8C%E7%BC%96%E8%AF%91%E5%99%A8/Python/">Python</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/%E5%86%85%E7%BD%AE%E5%BC%82%E5%B8%B8/" rel="tag">内置异常</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/archives/4007339e.html">
+            <time datetime="2019-07-22T00:00:00.000Z" itemprop="datePublished">2019-07-22</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/raw/backups/source/_posts/3-计算机科学/1-理论计算机科学/4-编程语言和编译器/Python/Python 中的内置异常.md" target="_blank" rel="external nofollow noopener noreferrer"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/edit/backups/source/_posts/3-计算机科学/1-理论计算机科学/4-编程语言和编译器/Python/Python 中的内置异常.md" target="_blank" rel="external nofollow noopener noreferrer"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/commits/backups/source/_posts/3-计算机科学/1-理论计算机科学/4-编程语言和编译器/Python/Python 中的内置异常.md" target="_blank" rel="external nofollow noopener noreferrer"> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Python 中的内置异常
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+        
+            <!-- 内容失效提醒 -->
+            
+    <!-- 如果文章创建超过一年或最后一次更新时间超过一个月(默认)则提示文章过期 -->
+    
+        <div class="aging">
+            <i class="fa fa-exclamation-circle aging-icon" aria-hidden="true"></i>
+            <span class="aging-content">请注意：本文编写于 <span class="aging-content-date">2019-07-22</span>，其中某些信息可能已经失去时效性。</span>
+        </div>
+    
+
+            <p>基于 <a href="https://docs.python.org/zh-cn/3/library/exceptions.html" target="_blank" rel="external nofollow noopener noreferrer">Python 3.7.4 中文文档-内置异常</a></p>
+<p>在 <code>Python</code> 中，所有异常必须为一个派生自 <code>BaseException</code> 的类的实例。</p>
+<h2 id="基类"><a href="#基类" class="headerlink" title="基类"></a>基类</h2><ul>
+<li>以下异常主要被用作其他异常的基类</li>
+</ul>
+<h3 id="BaseException"><a href="#BaseException" class="headerlink" title="BaseException"></a>BaseException</h3><p>所有内置异常的基类。 它不应该被用户自定义类直接继承 (<code>Python</code> 官方鼓励程序员从 <code>Exception</code> 类或它的某个子类而不是从 <code>BaseException</code> 来派生新的异常)。 如果在此类的实例上调用 <code>str()</code>，则会返回实例的参数表示，或者当没有参数时返回空字符串。</p>
+<h3 id="Exception"><a href="#Exception" class="headerlink" title="Exception"></a>Exception</h3><p>所有内置的<strong>非系统退出类异常</strong>都派生自此类。 所有用户自定义异常也应当派生自此类。</p>
+<h3 id="ArithmeticError"><a href="#ArithmeticError" class="headerlink" title="ArithmeticError"></a>ArithmeticError</h3><p>用于派生针对各种算术类错误而引发的内置异常: <code>OverflowError, ZeroDivisionError, FloatingPointError</code>。</p>
+<h3 id="BufferError"><a href="#BufferError" class="headerlink" title="BufferError"></a>BufferError</h3><p>与<strong>缓冲区</strong>相关的操作无法执行时将被引发。</p>
+<h3 id="LookupError"><a href="#LookupError" class="headerlink" title="LookupError"></a>LookupError</h3><p>用于派生<strong>映射或序列所使用的键或索引无效时引发的异常</strong>: <code>IndexError, KeyError</code>。 </p>
+<p>可以通过 <code>codecs.lookup()</code> 来直接引发。</p>
+<h2 id="具体异常"><a href="#具体异常" class="headerlink" title="具体异常"></a>具体异常</h2><ul>
+<li>以下异常属于经常被引发的异常</li>
+</ul>
+<h3 id="AssertionError"><a href="#AssertionError" class="headerlink" title="AssertionError"></a>AssertionError</h3><p><code>assert</code> 语句失败时将被引发。</p>
+<h3 id="AttributeError"><a href="#AttributeError" class="headerlink" title="AttributeError"></a>AttributeError</h3><p><strong>属性引用</strong>或<strong>赋值</strong>失败时将被引发。</p>
+<p>一个对象根本不支持属性引用或属性赋值时则将引发 <code>TypeError</code>。</p>
+<h3 id="EOFError"><a href="#EOFError" class="headerlink" title="EOFError"></a>EOFError</h3><p><code>input()</code> 函数未读取任何数据即达到文件结束条件 (<code>EOF</code>) 时将被引发。 </p>
+<p>另外，<code>io.IOBase.read()</code> 和 <code>io.IOBase.readline()</code> 方法在遇到 <code>EOF</code> 返回一个空字符串。</p>
+<h3 id="FloatingPointError"><a href="#FloatingPointError" class="headerlink" title="FloatingPointError"></a>FloatingPointError</h3><p>目前未被使用。</p>
+<h3 id="GeneratorExit"><a href="#GeneratorExit" class="headerlink" title="GeneratorExit"></a>GeneratorExit</h3><p>当一个 <code>generator</code> 或 <code>coroutine</code> 被关闭时将被引发。</p>
+<p>它直接继承自 <code>BaseException</code> 而不是 <code>Exception</code>，因为从技术上来说它并不是一个错误。</p>
+<h3 id="ImportError"><a href="#ImportError" class="headerlink" title="ImportError"></a>ImportError</h3><p><code>import</code> 语句尝试加载模块遇到麻烦时将被引发。 </p>
+<p><code>from ... import</code> 中的 <code>from list</code> 存在无法找到的名称时也会被引发。</p>
+<h3 id="ModuleNotFoundError"><a href="#ModuleNotFoundError" class="headerlink" title="ModuleNotFoundError"></a>ModuleNotFoundError</h3><p><code>ImportError</code> 的子类，当一个模块无法被定位时将由 <code>import</code> 引发。 </p>
+<p>在 <code>sys.modules</code> 中找到 <code>None</code> 时也会被引发。</p>
+<h3 id="IndexError"><a href="#IndexError" class="headerlink" title="IndexError"></a>IndexError</h3><p>序列抽取超出范围时将被引发。</p>
+<p><strong>切片索引会被静默截短到允许的范围</strong>；如果指定索引不是整数则 <code>TypeError</code> 会被引发。</p>
+<h3 id="KeyError"><a href="#KeyError" class="headerlink" title="KeyError"></a>KeyError</h3><p>在现有键集合中找不到指定的映射（字典）键时将被引发。</p>
+<h3 id="KeyboardInterrupt"><a href="#KeyboardInterrupt" class="headerlink" title="KeyboardInterrupt"></a>KeyboardInterrupt</h3><p>用户按下中断键 (通常为 <code>Control-C</code> 或 <code>Delete</code>) 时将被引发。 在执行期间，会定期检测中断信号。 该异常继承自 <code>BaseException</code> 以确保不会被处理 <code>Exception</code> 的代码意外捕获，这样可以<strong>避免退出解释器</strong>。</p>
+<h3 id="MemoryError"><a href="#MemoryError" class="headerlink" title="MemoryError"></a>MemoryError</h3><p>一个操作耗尽内存但情况仍可（通过删除一些对象）进行挽救时将被引发。 关联的值是一个字符串，指明是哪种（内部）操作耗尽了内存。 请注意由于底层的内存管理架构（<code>C</code> 的 <code>malloc()</code> 函数），解释器也许并不总是能够从这种情况下完全恢复；但它毕竟可以引发一个异常，这样就能打印出栈回溯信息，以便找出导致问题的失控程序。</p>
+<h3 id="NameError"><a href="#NameError" class="headerlink" title="NameError"></a>NameError</h3><p>某个局部或全局名称未找到时将被引发。 此异常仅用于<strong>非限定名称</strong>。 关联的值是一条错误信息，其中包含未找到的名称。</p>
+<h3 id="NotImplementedError"><a href="#NotImplementedError" class="headerlink" title="NotImplementedError"></a>NotImplementedError</h3><p>此异常派生自 <code>RuntimeError</code>。 在用户自定义的基类中，抽象方法应当在其要求所派生类重载该方法，或是在其要求所开发的类提示具体实现尚待添加时引发此异常。</p>
+<h3 id="OSError"><a href="#OSError" class="headerlink" title="OSError"></a>OSError</h3><p><strong>一个系统函数返回系统相关的错误</strong>时将被引发，此类错误包括 <code>I/O</code> 操作失败例如「文件未找到」或「磁盘已满」等（不包括非法参数类型或其他偶然性错误）。</p>
+<h3 id="OverflowError"><a href="#OverflowError" class="headerlink" title="OverflowError"></a>OverflowError</h3><p>算术运算的结果大到无法表示时将被引发。 这对整数来说不可能发生（宁可引发 <code>MemoryError</code> 也不会放弃尝试）。 但是出于历史原因，有时也会在整数超出要求范围的情况下引发 <code>OverflowError</code>。 因为在 <code>C</code> 中缺少对浮点异常处理的标准化，大多数浮点运算都不会做检查。</p>
+<h3 id="RecursionError"><a href="#RecursionError" class="headerlink" title="RecursionError"></a>RecursionError</h3><p>此异常派生自 <code>RuntimeError</code>。 它会在<strong>解释器检测发现超过最大递归深度</strong>时被引发。</p>
+<h3 id="ReferenceError"><a href="#ReferenceError" class="headerlink" title="ReferenceError"></a>ReferenceError</h3><p>此异常将在使用 <code>weakref.proxy()</code> 函数所创建的弱引用来访问该引用的某个已被作为垃圾回收的属性时被引发。 </p>
+<h3 id="RuntimeError"><a href="#RuntimeError" class="headerlink" title="RuntimeError"></a>RuntimeError</h3><p>检测到一个不归属于任何其他类别的错误时将被引发。关联的值是一个指明究竟发生了什么问题的字符串。</p>
+<h3 id="StopIteration"><a href="#StopIteration" class="headerlink" title="StopIteration"></a>StopIteration</h3><p>由内置函数 <code>next()</code> 和 <code>iterator</code> 的 <code>__next__()</code> 方法所引发，用来表示该迭代器不能产生下一项。</p>
+<p>该异常对象只有一个属性 <code>value</code>，它在构造该异常时作为参数给出，默认值为 <code>None</code>。</p>
+<p>当一个 <code>generator</code> 或 <code>coroutine</code> 函数返回时，将引发一个新的 <code>StopIteration</code> 实例，函数返回的值将被用作异常构造器的 <code>value</code> 形参。</p>
+<p>如果某个生成器代码直接或间接地引发了 <code>StopIteration</code>，它会被转换为 <code>RuntimeError</code>(并将 <code>StopIteration</code> 保留为导致新异常的原因)。</p>
+<h3 id="StopAsyncIteration"><a href="#StopAsyncIteration" class="headerlink" title="StopAsyncIteration"></a>StopAsyncIteration</h3><p>必须由一个 <code>asynchronous iterator</code> 对象的 <code>__anext__()</code> 方法来引发以停止迭代操作。</p>
+<h3 id="SyntaxError"><a href="#SyntaxError" class="headerlink" title="SyntaxError"></a>SyntaxError</h3><p><strong>解析器遇到语法错误时</strong>将被引发。 可以发生在 <code>import</code> 语句，对内置函数 <code>exec()</code> 或 <code>eval()</code> 的调用，或者读取原始脚本或标准输入（也包括交互模式）的时候。</p>
+<h3 id="IndentationError"><a href="#IndentationError" class="headerlink" title="IndentationError"></a>IndentationError</h3><p>与不正确的缩进相关的语法错误的基类。 是 <code>SyntaxError</code> 的一个子类。</p>
+<h3 id="TabError"><a href="#TabError" class="headerlink" title="TabError"></a>TabError</h3><p>缩进包含对制表符和空格符不一致的使用时将被引发。 是 <code>IndentationError</code> 的一个子类。</p>
+<h3 id="SystemError"><a href="#SystemError" class="headerlink" title="SystemError"></a>SystemError</h3><p>解释器发现内部错误，但情况看起来尚未严重到要放弃所有希望时将被引发。关联的值是一个指明发生了什么问题的字符串（表示为低层级的符号）。</p>
+<h3 id="SystemExit"><a href="#SystemExit" class="headerlink" title="SystemExit"></a>SystemExit</h3><p>此异常由 <code>sys.exit()</code> 函数引发。 它继承自 <code>BaseException</code> 而不是 <code>Exception</code> 以确保不会被处理 <code>Exception</code> 的代码意外捕获。 这允许此异常正确地向上传播并导致解释器退出。 如果它未被处理，则 <code>Python</code> 解释器就将退出；不会打印任何栈回溯信息。构造器接受的可选参数与传递给 <code>sys.exit()</code> 的相同。 如果该值为一个整数，则它指明系统退出状态码（会传递给 <code>C</code> 的 <code>exit()</code> 函数）；如果该值为 <code>None</code>，则退出状态码为零；如果该值为其他类型（例如字符串），则会打印对象的值并将退出状态码设为一。</p>
+<h3 id="TypeError"><a href="#TypeError" class="headerlink" title="TypeError"></a>TypeError</h3><p>一个操作或函数被应用于类型不适当的对象时将被引发。 关联的值是一个字符串，给出有关类型不匹配的详情。</p>
+<h3 id="UnboundLocalError"><a href="#UnboundLocalError" class="headerlink" title="UnboundLocalError"></a>UnboundLocalError</h3><p>在函数或方法中对某个局部变量进行引用，但该变量并未绑定任何值时将被引发。此异常是 <code>NameError</code> 的一个子类。</p>
+<h3 id="UnicodeError"><a href="#UnicodeError" class="headerlink" title="UnicodeError"></a>UnicodeError</h3><p>当发生与 <code>Unicode</code> 相关的编码或解码错误时将被引发。 此异常是 <code>ValueError</code> 的一个子类。</p>
+<h3 id="UnicodeEncodeError"><a href="#UnicodeEncodeError" class="headerlink" title="UnicodeEncodeError"></a>UnicodeEncodeError</h3><p>在编码过程中发生与 <code>Unicode</code> 相关的错误时将被引发。 此异常是 <code>UnicodeError</code> 的一个子类。</p>
+<h3 id="UnicodeDecodeError"><a href="#UnicodeDecodeError" class="headerlink" title="UnicodeDecodeError"></a>UnicodeDecodeError</h3><p>当在解码过程中发生与 <code>Unicode</code> 相关的错误时将被引发。 此异常是 <code>UnicodeError</code> 的一个子类。</p>
+<h3 id="UnicodeTranslateError"><a href="#UnicodeTranslateError" class="headerlink" title="UnicodeTranslateError"></a>UnicodeTranslateError</h3><p>在转写过程中发生与 <code>Unicode</code> 相关的错误时将被引发。 此异常是 <code>UnicodeError</code> 的一个子类。</p>
+<h3 id="ValueError"><a href="#ValueError" class="headerlink" title="ValueError"></a>ValueError</h3><p>操作或函数接收到具有正确类型但值不适合的参数，并且情况不能用更精确的异常例如 <code>IndexError</code> 来描述时将被引发。</p>
+<h3 id="ZeroDivisionError"><a href="#ZeroDivisionError" class="headerlink" title="ZeroDivisionError"></a>ZeroDivisionError</h3><p>除法或取余运算的第二个参数为零时将被引发。 关联的值是一个字符串，指明操作数和运算的类型。</p>
+<h2 id="版本兼容"><a href="#版本兼容" class="headerlink" title="版本兼容"></a>版本兼容</h2><ul>
+<li>下列异常被保留以与之前的版本相兼容；从 <code>Python 3.3</code> 开始，它们都是 <code>OSError</code> 的别名。</li>
+</ul>
+<h3 id="EnvironmentError¶"><a href="#EnvironmentError¶" class="headerlink" title="EnvironmentError¶"></a>EnvironmentError¶</h3><h3 id="IOError"><a href="#IOError" class="headerlink" title="IOError"></a>IOError</h3><h3 id="WindowsError"><a href="#WindowsError" class="headerlink" title="WindowsError"></a>WindowsError</h3><p>限在 <code>Windows</code> 中可用。</p>
+<h2 id="OS-异常"><a href="#OS-异常" class="headerlink" title="OS 异常"></a>OS 异常</h2><ul>
+<li>下列异常均为 ·OSError· 的子类，它们将根据系统错误代码被引发。</li>
+</ul>
+<h3 id="BlockingIOError"><a href="#BlockingIOError" class="headerlink" title="BlockingIOError"></a>BlockingIOError</h3><p>一个操作会被某个设置为非阻塞操作的对象（例如套接字）所阻塞时将被引发。 对应于 <code>errno EAGAIN, EALREADY, EWOULDBLOCK, EINPROGRESS</code>。</p>
+<h3 id="ChildProcessError"><a href="#ChildProcessError" class="headerlink" title="ChildProcessError"></a>ChildProcessError</h3><p>当一个子进程上的操作失败时将被引发。 对应于 <code>errno ECHILD</code>。</p>
+<h3 id="ConnectionError"><a href="#ConnectionError" class="headerlink" title="ConnectionError"></a>ConnectionError</h3><p>与连接相关问题的基类。</p>
+<p>其子类有 <code>BrokenPipeError, ConnectionAbortedError, ConnectionRefusedError, ConnectionResetError</code>。</p>
+<h3 id="BrokenPipeError"><a href="#BrokenPipeError" class="headerlink" title="BrokenPipeError"></a>BrokenPipeError</h3><p>试图写入另一端已被关闭的管道，或是试图写入已关闭写入的套接字时将被引发。 对应于 <code>errno EPIPE, ESHUTDOWN</code>。</p>
+<h3 id="ConnectionAbortedError"><a href="#ConnectionAbortedError" class="headerlink" title="ConnectionAbortedError"></a>ConnectionAbortedError</h3><p>连接尝试被对端中止时将被引发。 对应于 <code>errno ECONNABORTED</code>。</p>
+<h3 id="ConnectionRefusedError"><a href="#ConnectionRefusedError" class="headerlink" title="ConnectionRefusedError"></a>ConnectionRefusedError</h3><p>连接尝试被对端拒绝时将被引发。 对应于 <code>errno ECONNREFUSED</code>。</p>
+<h3 id="ConnectionResetError"><a href="#ConnectionResetError" class="headerlink" title="ConnectionResetError"></a>ConnectionResetError</h3><p>连接被对端重置时将被引发。 对应于 <code>errno ECONNRESET</code>。</p>
+<h3 id="FileExistsError"><a href="#FileExistsError" class="headerlink" title="FileExistsError"></a>FileExistsError</h3><p>试图创建一个已存在的文件或目录时将被引发。 对应于 <code>errno EEXIST</code>。</p>
+<h3 id="FileNotFoundError"><a href="#FileNotFoundError" class="headerlink" title="FileNotFoundError"></a>FileNotFoundError</h3><p>所请求的文件或目录不存在时将被引发。 对应于 <code>errno ENOENT</code>。</p>
+<h3 id="InterruptedError"><a href="#InterruptedError" class="headerlink" title="InterruptedError"></a>InterruptedError</h3><p>系统调用被输入信号中断时将被引发。 对应于 <code>errno EINTR</code>。</p>
+<h3 id="IsADirectoryError"><a href="#IsADirectoryError" class="headerlink" title="IsADirectoryError"></a>IsADirectoryError</h3><p>请求对一个目录执行文件操作 (例如 <code>os.remove()</code>) 将被引发。 对应于 <code>errno EISDIR</code>。</p>
+<h3 id="NotADirectoryError"><a href="#NotADirectoryError" class="headerlink" title="NotADirectoryError"></a>NotADirectoryError</h3><p>请求对一个非目录对象执行目录操作 (例如 <code>os.listdir()</code>) 时将被引发。 对应于 <code>errno ENOTDIR</code>。</p>
+<h3 id="PermissionError"><a href="#PermissionError" class="headerlink" title="PermissionError"></a>PermissionError</h3><p>在没有足够操作权限的情况下试图执行某个操作时将被引发 —— 例如缺少文件系统权限。 对应于 <code>errno EACCES, EPERM</code>。</p>
+<h3 id="ProcessLookupError"><a href="#ProcessLookupError" class="headerlink" title="ProcessLookupError"></a>ProcessLookupError</h3><p>给定的进程不存在时将被引发。 对应于 <code>errno ESRCH</code>。</p>
+<h3 id="TimeoutError"><a href="#TimeoutError" class="headerlink" title="TimeoutError"></a>TimeoutError</h3><p>一个系统函数发生系统级超时的情况下将被引发。 对应于 <code>errno ETIMEDOUT</code>。</p>
+<h2 id="警告"><a href="#警告" class="headerlink" title="警告"></a>警告</h2><ul>
+<li>以下异常被用作警告类别。</li>
+</ul>
+<h3 id="Warning"><a href="#Warning" class="headerlink" title="Warning"></a>Warning</h3><p>警告类别的基类。</p>
+<p>###　UserWarning</p>
+<p>用户代码所产生警告的基类。</p>
+<h3 id="DeprecationWarning"><a href="#DeprecationWarning" class="headerlink" title="DeprecationWarning"></a>DeprecationWarning</h3><p>如果所发出的警告是针对其他 <code>Python</code> 开发者的，则以此作为与已弃用特性相关警告的基类。</p>
+<h3 id="PendingDeprecationWarning"><a href="#PendingDeprecationWarning" class="headerlink" title="PendingDeprecationWarning"></a>PendingDeprecationWarning</h3><p>对于已过时并预计在未来弃用，但目前尚未弃用的特性相关警告的基类。</p>
+<h3 id="SyntaxWarning"><a href="#SyntaxWarning" class="headerlink" title="SyntaxWarning"></a>SyntaxWarning</h3><p>与模糊的语法相关的警告的基类。</p>
+<h3 id="RuntimeWarning"><a href="#RuntimeWarning" class="headerlink" title="RuntimeWarning"></a>RuntimeWarning</h3><p>与模糊的运行时行为相关的警告的基类。</p>
+<h3 id="FutureWarning"><a href="#FutureWarning" class="headerlink" title="FutureWarning"></a>FutureWarning</h3><p>如果所发出的警告是针对以 <code>Python</code> 所编写应用的最终用户的，则以此作为与已弃用特性相关警告的基类。</p>
+<h3 id="ImportWarning"><a href="#ImportWarning" class="headerlink" title="ImportWarning"></a>ImportWarning</h3><p>与在模块导入中可能的错误相关的警告的基类。</p>
+<h3 id="UnicodeWarning"><a href="#UnicodeWarning" class="headerlink" title="UnicodeWarning"></a>UnicodeWarning</h3><p>与 <code>Unicode</code> 相关的警告的基类。</p>
+<h3 id="BytesWarning"><a href="#BytesWarning" class="headerlink" title="BytesWarning"></a>BytesWarning</h3><p>与 <code>bytes</code> 和 <code>bytearray</code> 相关的警告的基类。</p>
+<h3 id="ResourceWarning"><a href="#ResourceWarning" class="headerlink" title="ResourceWarning"></a>ResourceWarning</h3><p>与资源使用相关的警告的基类。 会被默认的警告过滤器忽略。</p>
+<h2 id="异常层次结构"><a href="#异常层次结构" class="headerlink" title="异常层次结构"></a>异常层次结构</h2><p>内置异常的类层级结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">BaseException</span><br><span class="line"> +-- SystemExit</span><br><span class="line"> +-- KeyboardInterrupt</span><br><span class="line"> +-- GeneratorExit</span><br><span class="line"> +-- Exception</span><br><span class="line">      +-- StopIteration</span><br><span class="line">      +-- StopAsyncIteration</span><br><span class="line">      +-- ArithmeticError</span><br><span class="line">      |    +-- FloatingPointError</span><br><span class="line">      |    +-- OverflowError</span><br><span class="line">      |    +-- ZeroDivisionError</span><br><span class="line">      +-- AssertionError</span><br><span class="line">      +-- AttributeError</span><br><span class="line">      +-- BufferError</span><br><span class="line">      +-- EOFError</span><br><span class="line">      +-- ImportError</span><br><span class="line">      |    +-- ModuleNotFoundError</span><br><span class="line">      +-- LookupError</span><br><span class="line">      |    +-- IndexError</span><br><span class="line">      |    +-- KeyError</span><br><span class="line">      +-- MemoryError</span><br><span class="line">      +-- NameError</span><br><span class="line">      |    +-- UnboundLocalError</span><br><span class="line">      +-- OSError</span><br><span class="line">      |    +-- BlockingIOError</span><br><span class="line">      |    +-- ChildProcessError</span><br><span class="line">      |    +-- ConnectionError</span><br><span class="line">      |    |    +-- BrokenPipeError</span><br><span class="line">      |    |    +-- ConnectionAbortedError</span><br><span class="line">      |    |    +-- ConnectionRefusedError</span><br><span class="line">      |    |    +-- ConnectionResetError</span><br><span class="line">      |    +-- FileExistsError</span><br><span class="line">      |    +-- FileNotFoundError</span><br><span class="line">      |    +-- InterruptedError</span><br><span class="line">      |    +-- IsADirectoryError</span><br><span class="line">      |    +-- NotADirectoryError</span><br><span class="line">      |    +-- PermissionError</span><br><span class="line">      |    +-- ProcessLookupError</span><br><span class="line">      |    +-- TimeoutError</span><br><span class="line">      +-- ReferenceError</span><br><span class="line">      +-- RuntimeError</span><br><span class="line">      |    +-- NotImplementedError</span><br><span class="line">      |    +-- RecursionError</span><br><span class="line">      +-- SyntaxError</span><br><span class="line">      |    +-- IndentationError</span><br><span class="line">      |         +-- TabError</span><br><span class="line">      +-- SystemError</span><br><span class="line">      +-- TypeError</span><br><span class="line">      +-- ValueError</span><br><span class="line">      |    +-- UnicodeError</span><br><span class="line">      |         +-- UnicodeDecodeError</span><br><span class="line">      |         +-- UnicodeEncodeError</span><br><span class="line">      |         +-- UnicodeTranslateError</span><br><span class="line">      +-- Warning</span><br><span class="line">           +-- DeprecationWarning</span><br><span class="line">           +-- PendingDeprecationWarning</span><br><span class="line">           +-- RuntimeWarning</span><br><span class="line">           +-- SyntaxWarning</span><br><span class="line">           +-- UserWarning</span><br><span class="line">           +-- FutureWarning</span><br><span class="line">           +-- ImportWarning</span><br><span class="line">           +-- UnicodeWarning</span><br><span class="line">           +-- BytesWarning</span><br><span class="line">           +-- ResourceWarning</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://docs.python.org/zh-cn/3/library/exceptions.html" target="_blank" rel="external nofollow noopener noreferrer">Python 3.7.4 中文文档-内置异常</a></p>
+
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</div></article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/archives/4b35af27.html" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    「转载」水晶头接法
+                
+            </div>
+        </a>
+    
+    
+        <a href="/archives/e0455099.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Python 中的异常处理</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+        <section id="comments"> <div id="vcomments"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'sz7ny95XiYWkxht3H3YDs2GX-gzGzoHsz',
+        appKey: 'T8JJugDkbqtFLONIIzcPWW76',
+        placeholder: '不要吝啬赞美的语句ヾﾉ≧∀≦)o!',
+        avatar: 'mp',
+        meta: ['nick','mail','link'],
+        pageSize: 10,
+        visitor: true,
+        notify: true,
+        verify: true
+    })
+    let info = document.querySelectorAll('#vcomments>.info')[0]
+    if (info) { info.style.display = 'none' }
+</script> </section>
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            ryomahan &copy; 2021 
+            <a rel="external nofollow noopener noreferrer" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png"></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>. Comment By <a href="https://valine.js.org/" target="_blank" rel="external nofollow noopener noreferrer">valine</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten" target="_blank" rel="external nofollow noopener noreferrer">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>

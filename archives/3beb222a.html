@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    
+    <title>Shell 基础语法 | 小白维基</title>
+    
+    
+        <meta name="keywords" content="Shell">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文只是对 shell 脚本语言中一些常用的基础语法进行汇总整理，如果你真的想系统的学习 shell 脚本编程，这里推荐两本电子读物：  The Linux Command Line-中文版 Advanced Bash-Scripting Guide-中文版  第一本相对来说更加平滑，适合零基础的人进行自学；第二本相对来说更加全面，适合有一点基础的人进行自学； 另外，强烈建议你在学习了一定 s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shell 基础语法">
+<meta property="og:url" content="https://wiki.blanc.site/archives/3beb222a.html">
+<meta property="og:site_name" content="小白维基">
+<meta property="og:description" content="前言本文只是对 shell 脚本语言中一些常用的基础语法进行汇总整理，如果你真的想系统的学习 shell 脚本编程，这里推荐两本电子读物：  The Linux Command Line-中文版 Advanced Bash-Scripting Guide-中文版  第一本相对来说更加平滑，适合零基础的人进行自学；第二本相对来说更加全面，适合有一点基础的人进行自学； 另外，强烈建议你在学习了一定 s">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20210514012900.jpg">
+<meta property="article:published_time" content="2021-05-09T00:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-23T12:08:45.163Z">
+<meta property="article:author" content="ryomahan">
+<meta property="article:tag" content="Shell">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.blanc.site//wiki/img/20210514012900.jpg">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="小白维基" type="application/atom+xml">
+    
+    
+        <link rel="icon" href="/favicon.ico">
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110100486-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-110100486-1');
+</script>
+    
+    
+        <meta name="google-site-verification" content="D9ld5oQABBxIwNpgD_WN61p51-ZcABZ6Olt4HKcxlWw">
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?fac7e69191f0847b886888aa7c794fa7";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- 字体引入 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 4.2.1"></head>
+</html>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">小白维基</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://www.gravatar.com/avatar/e30ee2d02a4632e35575fec3944497df">
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://www.gravatar.com/avatar/e30ee2d02a4632e35575fec3944497df?s=128">
+            <h2 id="name">Ryoma</h2>
+            <h3 id="title">毕己一生，依依东望。</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Jinan, China</span>
+            <a id="follow" target="_blank" href="https://github.com/ryomahan/" rel="external nofollow noopener noreferrer">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                105
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                65
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://blog.blanc.site" target="_blank" title="wordpress" class="tooltip">
+                            <i class="fa fa-wordpress"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/ryomahan1996" target="_blank" title="twitter" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/xiaobaidh" target="_blank" title="weibo" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://github.com/ryomahan" target="_blank" title="github" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class="tooltip">
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+
+    
+        <div class="widget-wrap widget-list">
+            <h3 class="widget-title"><span>链接</span></h3>
+            <div class="widget">
+                <ul>
+                    
+                        <li>
+                            <a href="https://www.blanc.site" target="_blank">依依东望</a>
+                        </li>
+                    
+                        <li>
+                            <a href="https://blog.blanc.site" target="_blank">一只小白</a>
+                        </li>
+                    
+                        <li>
+                            <a href="https://wiki.blanc.site" target="_blank">小白维基</a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    
+</aside>
+
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id="categories">
+        <h3 class="widget-title">
+            <span>分类</span>
+            &nbsp;
+            <a id="allExpand" href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            1-网络笔记
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8678286b.html">U盘安装 Linux distribution 提示 waring /dev/root does not exist</a></li>  <li class="file"><a href="/archives/ee66e659.html">适合 Linux 新手的 man page 使用手册</a></li>  <li class="file"><a href="/archives/3c798f3a.html">「转载」如何选择开源许可证？</a></li>  <li class="file"><a href="/archives/573af784.html">不翻墙下载 Chrome + 不用 VPN 上 Google</a></li>  <li class="file"><a href="/archives/50486745.html">Fatal error in launcher：Unable to create process using '"'</a></li>  <li class="file"><a href="/archives/7cd2d86d.html">Web 安全学习笔记</a></li>  <li class="file"><a href="/archives/7f71ea0e.html">影梭（Shadowsocks）服务端安装、配置及多用户</a></li>  <li class="file"><a href="/archives/6bfb5db9.html">Linux 下安装 Node.js</a></li>  <li class="file"><a href="/archives/3f439512.html">Nginx rtmp 模块配合 OBS 推流实现直播(监控)功能</a></li>  <li class="file"><a href="/archives/ff98c7a2.html">CentOS7 下配置 Nginx + PHP7 + MariaDB + ThinkPHP5.1</a></li>  <li class="file"><a href="/archives/71825b94.html">ThinkPHP5 的 Nginx 配置</a></li>  <li class="file"><a href="/archives/f63c0d8d.html">「转载」同步和异步的区别</a></li>  <li class="file"><a href="/archives/e94a0a36.html">新部署一台Linux云服务器时常用的命令</a></li>  <li class="file"><a href="/archives/22a754d3.html">CentOS7 + Python3 + Django(rest_framework) + MariaDB + nginx + uwsgi 部署 API 开发环境</a></li>  <li class="file"><a href="/archives/ab4a885.html">Python 虚拟环境：virtualenv 以及 virtualenvwrapper</a></li>  <li class="file"><a href="/archives/72d385fc.html">webpack 4 入门</a></li>  <li class="file"><a href="/archives/f1bf1c1a.html">单点问题</a></li>  <li class="file"><a href="/archives/a07e5380.html">注册中心</a></li>  <li class="file"><a href="/archives/cb0153ff.html">「未完成」正则中的贪婪模式与非贪婪模式</a></li>  <li class="file"><a href="/archives/7172d605.html">正则表达式中的回溯过程</a></li>  <li class="file"><a href="/archives/2c12e091.html">CentOS 7 安装 Java 环境</a></li>  <li class="file"><a href="/archives/9a031a35.html">Linux 下的压缩和解压缩</a></li>  <li class="file"><a href="/archives/4b35af27.html">「转载」水晶头接法</a></li>  <li class="file"><a href="/archives/c7ab70f8.html">软件版本号命名规则</a></li>  <li class="file"><a href="/archives/6f328d06.html">鸭子类型</a></li>  <li class="file"><a href="/archives/f2b92668.html">各个平台的包管理器</a></li>  <li class="file"><a href="/archives/42f2446d.html">写给小白的 ShadowSocks 全平台客户端使用说明</a></li>  <li class="file"><a href="/archives/4fcffd79.html">各种软件配置文件规范</a></li>  <li class="file"><a href="/archives/16f6299.html">MySQL8 Grant check the manual that corresponds to your MySQL server version for the right syntax to use.m</a></li>  <li class="file"><a href="/archives/37910dd2.html">计算机的启动</a></li>  <li class="file"><a href="/archives/4940711f.html">8086 处理器寻址方式</a></li>  <li class="file"><a href="/archives/ab9fcc5d.html">虚拟机常见的网络模式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            2-软件使用
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Chrome
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/decc86d5.html">「转载」解析谷歌 Chrome 各分支版本</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            CodeBlock
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/51f295ff.html">Code::Block 新手配置教程</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Django
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/953c2552.html">Django 笔记-1-从请求到响应</a></li>  <li class="file"><a href="/archives/55c5932a.html">Django 不同环境下使用不同设置文件</a></li>  <li class="file"><a href="/archives/dfb4f33e.html">Django 时间字段中 auto_now 和 auto_now_add 的区别</a></li>  <li class="file"><a href="/archives/8bf18292.html">Django admin 笔记</a></li>  <li class="file"><a href="/archives/44c1e81d.html">Django app 笔记</a></li>  <li class="file"><a href="/archives/5d9ebead.html">Django 中有趣又有用的代码设计</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Excel
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6cc2e3a0.html">Excel 利用函数获取行号、列号、当前行的上一行</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            JetBrains
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/e82cc623.html">JetBrains 系列软件如何在 macOS 下快速创建文件</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            PHPStrom
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/297592c5.html">PHPStrom 常用快捷键汇总</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            SublimeText
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/59657ebc.html">Sublime Text 3 安装 SVN 插件</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            ThinkPHP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/d9089534.html">ThinkPHP5 静态资源[CSS , JS , img]加载</a></li>  <li class="file"><a href="/archives/87acc549.html">解决 TP5 无法接收客户端 Post 传递的 Json 参数</a></li>  <li class="file"><a href="/archives/7d2dd65c.html">ThinkPHP5 下商城类微信小程序下单 + 支付开发流程图</a></li>  <li class="file"><a href="/archives/28f0dfb7.html">ThinkPHP5 + 梦网实现手机验证码登陆后台逻辑</a></li>  <li class="file"><a href="/archives/d2b8c7e4.html">Windows 下 ThinkPHP5 配置 redis 缓存</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VMware
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/4dedf7b2.html">VMware 安装 CentOS 后网络设置</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VOX
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/aeea741e.html">解决 macOS 下 VOX 中文乱码问题</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VSCode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/a29d84d8.html">VS Code + PHPStudy 断点调试 PHP</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Vue
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b4f7e05e.html">vue-cli 下配置 Element + axios + Mockjs</a></li>  <li class="file"><a href="/archives/793400e.html">解决 Vue CSS 样式重复载入，为 Vue 添加全局 less 或 sass 基础样式库</a></li>  <li class="file"><a href="/archives/341c107a.html">Vue Router 实现动态路由和常见问题解决方案</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            WordPress
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6ec97606.html">WordPress 配置七牛云 CDN 具体操作</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            ZooKeeper
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/f1db9330.html">ZooKeeper 入门简介</a></li>  <li class="file"><a href="/archives/2b7b1ffc.html">ZooKeeper 命令</a></li>  <li class="file"><a href="/archives/bb55e9ff.html">ZooKeeper 配置文件解析</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            zsh
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/2025325c.html">zsh 历史文件损坏</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            命令行工具
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Git
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/3c3cdb74.html">Git 学习笔记</a></li>  <li class="file"><a href="/archives/6c235203.html">「转载」Git 远程仓库 pull/push 操作详解</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            curl
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/41e09627.html">格式化 curl 输出的 json 内容</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            dmidecode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/89447a6c.html">dmidecode 解析</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            homebrew
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/819175d6.html">homebrew tap</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            pip
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b47b33aa.html">pip 自动生成或安装 requiremen 依赖</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            pyenv
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6005f6af.html">macOS 下利用 pyenv 管理 Python 版本和虚拟环境</a></li>  <li class="file"><a href="/archives/22859f2b.html">利用本地缓存解决 pyenv 下载缓慢问题</a></li>  <li class="file"><a href="/archives/911a03cb.html">通过 shell 文件激活 pyenv virtualenv 虚拟环境失败</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            tmux
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/9e40babb.html">tmux 入门 + 快捷键整理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            vim
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/211d6e8d.html">vim 创建文件时根据文件类型自动添加内容</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            3-计算机科学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            1-理论计算机科学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            1-数据结构和算法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/f3c5e08e.html">数据结构笔记1-概论</a></li>  <li class="file"><a href="/archives/e3cbe031.html">数据结构笔记2-线性表</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            4-编程语言和编译器
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            C&CPP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/154e48dc.html">cpp 中的声明和定义</a></li>  <li class="file"><a href="/archives/ca916e4c.html">对比 C 和 CPP 中 struct class 和 union</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Erlang
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/76405d8b.html">Erlang 程序设计笔记-第一部分</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            HTML
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/cd7f373a.html">如何用纯 HTML 区分一个 form 表单中的多个 submit</a></li>  <li class="file"><a href="/archives/8b008844.html">利用 position + rgba 将 HTML 背景灰化</a></li>  <li class="file"><a href="/archives/c0d98826.html">固定一个 div 在另一个 div 的底部</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            PHP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/60232ab3.html">「转载」PHP 常用缓存技术的总结</a></li>  <li class="file"><a href="/archives/e639e72a.html">「转载」PHP 静态方法和非静态方法简单对比</a></li>  <li class="file"><a href="/archives/44e28494.html">「转载」PHP 判断文件存在是用 file_exists 还是 is_file</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Python
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/19ed6e31.html">Python + OpenCV 图像处理-1</a></li>  <li class="file"><a href="/archives/4007339e.html">Python 中的内置异常</a></li>  <li class="file"><a href="/archives/e0455099.html">Python 中的异常处理</a></li>  <li class="file"><a href="/archives/7a294715.html">所谓 WSGI</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Shell
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8f9d5c85.html">Shell 获取当前脚本的绝对路径</a></li>  <li class="file"><a href="/archives/17043032.html">echo</a></li>  <li class="file"><a href="/archives/b422aa7d.html">Shell 区分不同 Unix 系统</a></li>  <li class="file active"><a href="/archives/3beb222a.html">Shell 基础语法</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            TypeScript
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/e7cd2bef.html">TypeScript 名词理解</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            汇编语言
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/f3934733.html">x86汇编指令</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            2-计算机系统
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            2-操作系统
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            CiscoIOS
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/3bd55461.html">Cisco IOS 系列-0-概览</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Linux
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/1d036a8c.html">Linux 系统下不同类型文件默认的颜色</a></li>  <li class="file"><a href="/archives/d19e8f5d.html">Linux 学习笔记-1</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            macOS
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/607dec48.html">macOS 如何删除自带 ABC 输入法</a></li>  <li class="file"><a href="/archives/26aeca3.html">macOS 访达常用快捷键</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            5-计算机安全和密码学
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/a45966e2.html">块加密的工作模式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            6-数据库
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            MongoDB
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b880b012.html">自用 MongoDB 手册</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            MySQL
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/ef1e0835.html">MySQL 修改数据库名</a></li>  <li class="file"><a href="/archives/466aea21.html">MySQL GRANT 授权语句</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            3-计算机应用技术
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            4-人工智能
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8fbb5ea2.html">人工智能-0-概览</a></li>  <li class="file"><a href="/archives/61dc3b15.html">神经网络-1-概览</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            4-软件工程
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            RESTful
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/7e15b804.html">RESTful 笔记-1-接口设计规范</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/archives/f15c2f60.html">「转载」互联网产品研发流程概论</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+        
+  <div class="toc-flag"></div>
+  <div class="toc-wrap">
+      <h3>
+          <span>文章目录</span>
+      </h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变量相关"><span class="toc-number">2.</span> <span class="toc-text">变量相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#变量命名"><span class="toc-number">2.1.</span> <span class="toc-text">变量命名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用变量"><span class="toc-number">2.2.</span> <span class="toc-text">使用变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#只读变量"><span class="toc-number">2.3.</span> <span class="toc-text">只读变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除变量"><span class="toc-number">2.4.</span> <span class="toc-text">删除变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#变量类型"><span class="toc-number">2.5.</span> <span class="toc-text">变量类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组相关"><span class="toc-number">3.</span> <span class="toc-text">数组相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字典相关"><span class="toc-number">4.</span> <span class="toc-text">字典相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串相关"><span class="toc-number">5.</span> <span class="toc-text">字符串相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串变量定义时的单引号和双引号"><span class="toc-number">5.1.</span> <span class="toc-text">字符串变量定义时的单引号和双引号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串拼接"><span class="toc-number">5.2.</span> <span class="toc-text">字符串拼接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串操作"><span class="toc-number">5.3.</span> <span class="toc-text">字符串操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础语法相关"><span class="toc-number">6.</span> <span class="toc-text">基础语法相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#特殊变量"><span class="toc-number">6.1.</span> <span class="toc-text">特殊变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特殊字符"><span class="toc-number">6.2.</span> <span class="toc-text">特殊字符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#井号"><span class="toc-number">6.2.1.</span> <span class="toc-text"># | 井号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分号"><span class="toc-number">6.2.2.</span> <span class="toc-text">; | 分号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#冒号"><span class="toc-number">6.2.3.</span> <span class="toc-text">: | 冒号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#单组小括号"><span class="toc-number">6.2.4.</span> <span class="toc-text">() | 单组小括号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#花括号"><span class="toc-number">6.2.5.</span> <span class="toc-text">{} | 花括号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#和-双组小括号"><span class="toc-number">6.2.6.</span> <span class="toc-text">(()) 和 $(()) | 双组小括号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#单组中括号"><span class="toc-number">6.2.7.</span> <span class="toc-text">[] | 单组中括号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#双组中括号"><span class="toc-number">6.2.8.</span> <span class="toc-text">[[]] | 双组中括号</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用户输入"><span class="toc-number">6.3.</span> <span class="toc-text">用户输入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本读取"><span class="toc-number">6.3.1.</span> <span class="toc-text">基本读取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#read-参数"><span class="toc-number">6.3.2.</span> <span class="toc-text">read 参数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数语法相关"><span class="toc-number">7.</span> <span class="toc-text">函数语法相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#流程控制相关"><span class="toc-number">8.</span> <span class="toc-text">流程控制相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#if-语句"><span class="toc-number">8.1.</span> <span class="toc-text">if 语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#case-语句"><span class="toc-number">8.2.</span> <span class="toc-text">case 语句</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#循环语法相关"><span class="toc-number">9.</span> <span class="toc-text">循环语法相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#for-循环"><span class="toc-number">9.1.</span> <span class="toc-text">for 循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#while-循环"><span class="toc-number">9.2.</span> <span class="toc-text">while 循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#util-循环"><span class="toc-number">9.3.</span> <span class="toc-text">util 循环</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小结"><span class="toc-number">10.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">11.</span> <span class="toc-text">参考</span></a></li></ol>
+  </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-3-计算机科学/1-理论计算机科学/4-编程语言和编译器/Shell/Shell 基础语法" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/3-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">3-计算机科学</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/3-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/1-%E7%90%86%E8%AE%BA%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">1-理论计算机科学</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/3-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/1-%E7%90%86%E8%AE%BA%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/4-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%92%8C%E7%BC%96%E8%AF%91%E5%99%A8/">4-编程语言和编译器</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/3-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/1-%E7%90%86%E8%AE%BA%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/4-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%92%8C%E7%BC%96%E8%AF%91%E5%99%A8/Shell/">Shell</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Shell/" rel="tag">Shell</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/archives/3beb222a.html">
+            <time datetime="2021-05-09T00:00:00.000Z" itemprop="datePublished">2021-05-09</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/raw/backups/source/_posts/3-计算机科学/1-理论计算机科学/4-编程语言和编译器/Shell/Shell 基础语法.md" target="_blank" rel="external nofollow noopener noreferrer"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/edit/backups/source/_posts/3-计算机科学/1-理论计算机科学/4-编程语言和编译器/Shell/Shell 基础语法.md" target="_blank" rel="external nofollow noopener noreferrer"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/commits/backups/source/_posts/3-计算机科学/1-理论计算机科学/4-编程语言和编译器/Shell/Shell 基础语法.md" target="_blank" rel="external nofollow noopener noreferrer"> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Shell 基础语法
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+        
+            <!-- 内容失效提醒 -->
+            
+    <!-- 如果文章创建超过一年或最后一次更新时间超过一个月(默认)则提示文章过期 -->
+    
+
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文只是对 shell 脚本语言中一些常用的基础语法进行汇总整理，如果你真的想系统的学习 shell 脚本编程，这里推荐两本电子读物：</p>
+<ol>
+<li><a href="http://billie66.github.io/TLCL/index.html" target="_blank" rel="external nofollow noopener noreferrer">The Linux Command Line-中文版</a></li>
+<li><a href="https://linuxstory.gitbook.io/advanced-bash-scripting-guide-in-chinese/" target="_blank" rel="external nofollow noopener noreferrer">Advanced Bash-Scripting Guide-中文版</a></li>
+</ol>
+<p>第一本相对来说更加平滑，适合零基础的人进行自学；<br>第二本相对来说更加全面，适合有一点基础的人进行自学；</p>
+<p>另外，强烈建议你在学习了一定 shell 语法基础之后去找一个比较完善的编码规范进行阅读并严格按照规范进行脚本编辑，这里我个人推荐 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-shell-styleguide/contents/" target="_blank" rel="external nofollow noopener noreferrer">Google Shell 风格指南</a>。</p>
+<p>无论是大的项目脚本还是小的工具脚本，严格的按照一个成熟的编码规范进行编辑能够帮助我们（在前期）更好的规划脚本以及（在后期）更快的 DEBUG。</p>
+<p><strong>注：本文中所有测试代码均为 zsh 输出结果</strong><br><strong>注2：本文中所有测试代码均以 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-shell-styleguide/contents/" target="_blank" rel="external nofollow noopener noreferrer">Google Shell 风格指南</a> 作为编码规范</strong></p>
+<h2 id="变量相关"><a href="#变量相关" class="headerlink" title="变量相关"></a>变量相关</h2><h3 id="变量命名"><a href="#变量命名" class="headerlink" title="变量命名"></a>变量命名</h3><ol>
+<li>定义变量时不需要加美元符号（$）；</li>
+<li>变量名和等号之间不能有空格（分隔符）；</li>
+<li>命名只能使用英文、数字和下划线且首个字符不能是数字；</li>
+<li>不能使用关键字，可以使用 <code>bash -c help</code> 命令查看关键字；</li>
+</ol>
+<h3 id="使用变量"><a href="#使用变量" class="headerlink" title="使用变量"></a>使用变量</h3><p>使用一个已经定义的变量只需要在变量名前加美元符号（$）即可，变量名两边的花括号（{}）可加可不加。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">test_name="test"</span><br><span class="line">echo $test_name</span><br><span class="line">echo $&#123;test_name&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意无论您是否选择在变量名两边加入花括号请保持上下文编码规范的一致性。</p>
+<h3 id="只读变量"><a href="#只读变量" class="headerlink" title="只读变量"></a>只读变量</h3><p>使用 readonly 命令可以将变量定义为只读变量，只读变量的值不能被改变。</p>
+<h3 id="删除变量"><a href="#删除变量" class="headerlink" title="删除变量"></a>删除变量</h3><p>可以使用 unset 命令删除变量，被删除的变量不能再次使用，unset 不能删除只读变量。</p>
+<h3 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h3><p>shell 中存在三类变量：</p>
+<ol>
+<li>局部变量：在脚本或命令中定义的变量，仅在当前 shell 实例中有效，其他 shell 启动的程序不能访问局部变量；</li>
+<li>环境变量：所有程序（包括 shell 启动的程序）都能访问的变量，有些程序需要环境变量来保证正常运行；</li>
+<li>shell 变量：由 shell 程序设定的特殊变量，有一部分是环境变量、一部分是局部变量，这些变量保证了 shell 程序的正常运行；</li>
+</ol>
+<p><img src="https://img.blanc.site//wiki/img/20210514012900.jpg" alt="shell 环境变量-引用自知乎@小晶"></p>
+<h2 id="数组相关"><a href="#数组相关" class="headerlink" title="数组相关"></a>数组相关</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 定义格式：array_name=(value1 value2 ... valuen)</span></span><br><span class="line">a=1</span><br><span class="line">my_array=("test" 2 "abc" $&#123;a&#125;)</span><br><span class="line">echo $&#123;my_array[0]&#125; # test</span><br><span class="line">echo $&#123;my_array[1]&#125; # 2</span><br><span class="line">echo $&#123;my_array[2]&#125; # abc</span><br><span class="line">echo $&#123;my_array[3]&#125; # 1</span><br><span class="line">echo $&#123;my_array[*]&#125; # test 2 abc 1 输出数组全部元素</span><br><span class="line">echo $&#123;my_array[@]&#125; # test 2 abc 1 输出数组全部元素</span><br><span class="line">echo $&#123;#my_array&#125;   # 4 输出数组长度</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 遍历数组</span></span><br><span class="line">for i in $&#123;my_array[*]&#125;; do</span><br><span class="line">  echo $&#123;i&#125;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for i in $&#123;my_array[@]&#125;; do</span><br><span class="line">  echo $&#123;i&#125;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for (( i = 0; i &lt; $&#123;#my_array&#125;; i++ )) do</span><br><span class="line">  echo $&#123;my_array[i]&#125;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<p><strong>注：这里仅罗列了集中常见用法，如果想要了解更多数组操作可以查看 <a href="https://note.yuchaoshui.com/blog/post/yuziyue/shell%E6%95%B0%E7%BB%84%E6%80%BB%E7%BB%93" target="_blank" rel="external nofollow noopener noreferrer">余子越：shell数组与字典总结</a>；</strong><br><strong>注2：该博文给出的特性本人并未全部测试，请先测试确定有效后再使用；</strong></p>
+<h2 id="字典相关"><a href="#字典相关" class="headerlink" title="字典相关"></a>字典相关</h2><p><strong>本地测试失败，暂不整理。</strong></p>
+<h2 id="字符串相关"><a href="#字符串相关" class="headerlink" title="字符串相关"></a>字符串相关</h2><h3 id="字符串变量定义时的单引号和双引号"><a href="#字符串变量定义时的单引号和双引号" class="headerlink" title="字符串变量定义时的单引号和双引号"></a>字符串变量定义时的单引号和双引号</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">first_name="test"</span><br><span class="line">last_name1="test1 $&#123;first_name&#125;"</span><br><span class="line">last_name2='test1 $&#123;first_name&#125;'</span><br><span class="line"></span><br><span class="line">echo $&#123;last_name1&#125;  # test1 test</span><br><span class="line">echo $&#123;last_name2&#125;  # test1 $&#123;first_name&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在定义 shell 字符串变量时如果使用单引号包裹变量内容，则被包裹的部分会原样输出，如果使用双引号包裹变量内容，则在输出变量内容时会先解析变量内的变量、命令和转义字符。</p>
+<h3 id="字符串拼接"><a href="#字符串拼接" class="headerlink" title="字符串拼接"></a>字符串拼接</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">your_name="test"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 单引号拼接</span></span><br><span class="line">welcome1='hello, $&#123;your_name&#125; !'</span><br><span class="line">welcome2='hello, '$&#123;your_name&#125;' !'</span><br><span class="line">echo $&#123;welcome1&#125; # hello, $&#123;your_name&#125; !</span><br><span class="line">echo $&#123;welcome2&#125; # hello, test !</span><br><span class="line"><span class="meta">#</span><span class="bash"> 双引号拼接</span></span><br><span class="line">welcome3="hello, $&#123;your_name&#125; !"</span><br><span class="line">welcome4="hello, "$&#123;your_name&#125;" !"</span><br><span class="line">echo $&#123;welcome3&#125; # hello, test !</span><br><span class="line">echo $&#123;welcome4&#125; # hello, test !</span><br></pre></td></tr></table></figure>
+
+<p>以上句式中：<br>welcome1 属于单引号字符串无法解析变量，<br>welcome2 属于字符串拼接，<br>welcome3 属于双引号解析字符串变量，<br>welcome4 属于字符串拼接。</p>
+<h3 id="字符串操作"><a href="#字符串操作" class="headerlink" title="字符串操作"></a>字符串操作</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">string="abcdefghijklmn"</span><br><span class="line">string2="这是一段中文字符串"</span><br><span class="line"><span class="meta">#</span><span class="bash"> 输出字符串长度</span></span><br><span class="line">echo $&#123;#string&#125;     # 14</span><br><span class="line">echo $&#123;#string1&#125;    # 0</span><br><span class="line"><span class="meta">#</span><span class="bash"> 截取字符串，从下表 1 截取到下表 4</span></span><br><span class="line">echo $&#123;string:1:4&#125;  # bcde</span><br><span class="line">echo $&#123;string1:1:4&#125; # 无输出</span><br><span class="line">echo $&#123;string1&#125;     # 无输出</span><br><span class="line"><span class="meta">#</span><span class="bash"> 在我的测试系统环境下无法对中文字符串进行操作</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 中文字符串操作具体逻辑我没有详细查询，感兴趣可以自己查询一下，估计是字符集的问题</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="基础语法相关"><a href="#基础语法相关" class="headerlink" title="基础语法相关"></a>基础语法相关</h2><h3 id="特殊变量"><a href="#特殊变量" class="headerlink" title="特殊变量"></a>特殊变量</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="variable">$&#123;n&#125;</span>：<span class="variable">$0</span> 表示命令本身，<span class="variable">$1</span>-<span class="variable">$9</span> 代表第 1 到第 9 个参数，10 以上加花括号，个人建议全部加花括号</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="variable">$&#123;*&#125;</span>：运行当前脚本时的所有参数，且把所有参数看做一个整体</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="variable">$&#123;@&#125;</span>：运行当前脚本时的所有参数，且把每个参数区别对待</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="variable">$&#123;#&#125;</span>：运行当前脚本时的所有参数个数</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="variable">$&#123;$&#125;</span>：当前进程 PID</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="variable">$&#123;!&#125;</span>：在当前脚本中后台运行的最后一个进程 PID</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="variable">$&#123;?&#125;</span>：最后一次执行的命令返回状态，0 为执行正确，非 0 为执行错误</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 测试文件名称：test.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 测试命令 ./test.sh 1 2 3 4 5 6 7 8 9</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 同目录下有一个输出 hello, world 的 hello.sh 文件</span></span><br><span class="line"></span><br><span class="line">echo $(dirname $&#123;0&#125;) # .</span><br><span class="line">echo $&#123;0&#125;            # ./test.sh</span><br><span class="line">echo $&#123;1&#125;            # 1</span><br><span class="line">echo $&#123;2&#125;            # 2</span><br><span class="line">echo $&#123;6&#125;            # 6</span><br><span class="line">echo $&#123;99&#125;           # 无输出</span><br><span class="line">echo $&#123;*&#125;            # 1 2 3 4 5 6 7 8 9</span><br><span class="line">echo $&#123;@&#125;            # 1 2 3 4 5 6 7 8 9</span><br><span class="line">echo $&#123;#&#125;            # 9</span><br><span class="line">echo $&#123;$&#125;            # 70149</span><br><span class="line">./hello.sh           # 注意：这里不会立即输出结果</span><br><span class="line">echo $&#123;!&#125;            # 70151</span><br><span class="line">echo $&#123;?&#125;            # 0</span><br><span class="line">                     # hello.sh 的输出结果 -&gt; hello, world</span><br></pre></td></tr></table></figure>
+
+<h3 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h3><h4 id="井号"><a href="#井号" class="headerlink" title="# | 井号"></a># | 井号</h4><p>注释符。如果一行脚本的开头是#（除了#!），那么代表这一行是注释，不会被执行。</p>
+<h4 id="分号"><a href="#分号" class="headerlink" title="; | 分号"></a>; | 分号</h4><p>命令分隔符。允许在同一行内放置两条或更多的命令。</p>
+<h4 id="冒号"><a href="#冒号" class="headerlink" title=": | 冒号"></a>: | 冒号</h4><p>空命令。它在 shell 中等价于 “NOP”（即no op，空操作）与 shell 内建命令 true 有同样的效果。它本身也是 Bash 的内建命令之一，返回值是 true（0）。</p>
+<p>如果你学过 Python 的话，它很像 Python 中的 pass（个人感觉）。</p>
+<h4 id="单组小括号"><a href="#单组小括号" class="headerlink" title="() | 单组小括号"></a>() | 单组小括号</h4><p>在<strong>新的子 shell （环境）里</strong>执行使用分号（;）隔开的一组命令，且最后一个命令<strong>可以不用分号</strong>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 测试文件路径 /root/test.sh</span></span><br><span class="line"></span><br><span class="line">pwd            # /root</span><br><span class="line">(cd /etc;pwd)  # /etc</span><br><span class="line">pwd            # /root</span><br></pre></td></tr></table></figure>
+
+<h4 id="花括号"><a href="#花括号" class="headerlink" title="{} | 花括号"></a>{} | 花括号</h4><p>在<strong>当前 shell （环境）里</strong>执行使用分号（;）隔开的一组命令，<strong>最后一个命令也需要加分号</strong>，且<strong>左括号和第一个命令之间必须有空格（分隔符）</strong>。</p>
+<blockquote>
+<p>代码块，又被称作内联组（inline group）。<br>它实际上创建了一个匿名函数（anonymous function），即没有名字的函数。<br>但是，不同于那些“标准”函数，代码块内的变量在脚本的其他部分仍旧是可见的。</p>
+<p><a href="https://linuxstory.gitbook.io/advanced-bash-scripting-guide-in-chinese/" target="_blank" rel="external nofollow noopener noreferrer">Advanced Bash-Scripting Guide-中文版</a></p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 测试文件路径 /root/test.sh</span></span><br><span class="line"></span><br><span class="line">pwd                # /root</span><br><span class="line">&#123; cd /etc; pwd; &#125;  # /etc</span><br><span class="line">pwd                # /etc</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 注意 &#123; <span class="built_in">cd</span> /etc; <span class="built_in">pwd</span>; &#125; 命令中，除了 &#123; 和 c 之间 以及 <span class="built_in">cd</span> 和 / 之间的空格是必须的其他空格都可省略</span></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">### $() 和 ``</span></span></span><br><span class="line"></span><br><span class="line">二者都可用于「命令替换」，所谓命令替换与前面变量章节提到的变量替换类似，即完成区域内部的命令并将结果替换出来和当前命令行重组。</span><br><span class="line"></span><br><span class="line">```shell</span><br><span class="line">echo "today is $(date +%Y-%m-%d)" # today is 2021-05-15</span><br><span class="line">echo "today is `date +%Y-%m-%d`"  # today is 2021-05-15</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 执行逻辑是：先运行命令 date +%Y-%m-%d 然后将结果和原先命令所在的位置进行替换，程序执行时实际运行的是替换后的语句</span></span><br></pre></td></tr></table></figure>
+
+<p>比较推荐使用 $() 这种形式，理由有：</p>
+<ol>
+<li>反引号（``）容易与单引号（’’）混淆；</li>
+<li>在复合命令替换中，使用反引号（``）需要进行额外的转义</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a=`command1 \`command2\` `</span><br><span class="line">b=$(command1 $(command2))</span><br></pre></td></tr></table></figure>
+
+<p>但是 $() 不能支持全部 shell（但 bash 中是可以用的），而反引号（``）基本上可以在所有 unix shell 中使用。</p>
+<h4 id="和-双组小括号"><a href="#和-双组小括号" class="headerlink" title="(()) 和 $(()) | 双组小括号"></a>(()) 和 $(()) | 双组小括号</h4><p>(()) 的特性：与 let 命令类似，允许对算术表达式的扩展和求值，是 let 命令的简化形式。</p>
+<p>(()) 单独使用时的一些作用：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">a=3</span><br><span class="line">(( b = 10 + a ))  # C 语言风格变量赋值， = 前后都有空格</span><br><span class="line">echo $&#123;b&#125;         # 13</span><br><span class="line">(( b-- ))</span><br><span class="line">echo $&#123;b&#125;         # 12</span><br><span class="line">(( b++ ))</span><br><span class="line">echo $&#123;b&#125;         # 13</span><br><span class="line">(( ++b ))</span><br><span class="line">echo $&#123;b&#125;         # 14</span><br><span class="line">(( --b ))</span><br><span class="line">echo $&#123;b&#125;         # 13</span><br><span class="line"></span><br><span class="line">(( t = b &lt; 45 ? 7 : 11 ))</span><br><span class="line"></span><br><span class="line">echo $&#123;t&#125;         # 7</span><br></pre></td></tr></table></figure>
+
+<p>(()) 配合其他语句使用时的一些例子：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">for (( i = 0; i &lt; 5; i++)); do</span><br><span class="line">  echo $&#123;i&#125;    # 依次输出 0 1 2 3 4</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">if (( 1 + 2 )); then</span><br><span class="line">  echo "true"  # true</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if !(( 1 - 1 )); then</span><br><span class="line">  echo "false" # false</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if (( 3 &gt; 2 )); then</span><br><span class="line">  echo "3 &gt; 2" # 3 &gt; 2 在 if 语句下可以使用双圆括号直接进行数值比较</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<p>$(()) 的作用：整数运算（不支持浮点数）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> $(()) 中支持 + - * / % &amp; | ^ !</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 此外，$(()) 还可用作不同进制的运算，但只能输出十进制结果</span></span><br><span class="line">a=1</span><br><span class="line">b=2</span><br><span class="line">c=3</span><br><span class="line">echo $(( a + b ))         # 3</span><br><span class="line">echo $(( c - a ))         # 2</span><br><span class="line">echo $(( a * c ))         # 3</span><br><span class="line">echo $(( c / a ))         # 3</span><br><span class="line">echo $(( c / b ))         # 1 可见这里的取整方式是直接抛弃小数点后面的数</span><br><span class="line">echo $(( c % a ))         # 0</span><br><span class="line">echo $(( (a + b) * c ))   # 9</span><br><span class="line">echo $(( a &amp; b ))         # 0</span><br><span class="line">echo $(( a | b ))         # 3</span><br><span class="line">echo $(( a ^ b ))         # 3</span><br><span class="line">echo $(( !a ))            # 0</span><br><span class="line">echo $(( 16#2a ))         # 42 这里是将 16 进制的 2a 转化成了十进制的 42</span><br></pre></td></tr></table></figure>
+
+<h4 id="单组中括号"><a href="#单组中括号" class="headerlink" title="[] | 单组中括号"></a>[] | 单组中括号</h4><p>在 shell 中 <code>[ expr ]</code> <strong>（注意：左右中括号和命令之间都有空格）</strong>等同于命令 <code>test expr</code>，主要用于：数值判断、文件判断和字符串判断。</p>
+<p>test 和 [] 中可用的比较运算符只有 = 和 !=，要比较大小则只能使用 <code>test 3 -eq 4</code> 或 <code>[ 3 -eq 4 ]</code> 这种形式</p>
+<ol>
+<li>数值判断</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">A -eq B</td>
+<td align="center">判断 A 是否等于 B</td>
+</tr>
+<tr>
+<td align="center">A -ne B</td>
+<td align="center">判断 A 是否不等于 B</td>
+</tr>
+<tr>
+<td align="center">A -gt B</td>
+<td align="center">判断 A 是否大于 B</td>
+</tr>
+<tr>
+<td align="center">A -ge B</td>
+<td align="center">判断 A 是否大于等于 B</td>
+</tr>
+<tr>
+<td align="center">A -lt B</td>
+<td align="center">判断 A 是否小于 B</td>
+</tr>
+<tr>
+<td align="center">A -le B</td>
+<td align="center">判断 A 是否小于等于 B</td>
+</tr>
+</tbody></table>
+<p><strong>注：A 和 B 为任意数值或数值变量</strong></p>
+<ol start="2">
+<li>文件判断</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-e filename</td>
+<td align="center">判断文件是否存在</td>
+</tr>
+<tr>
+<td align="center">-r filename</td>
+<td align="center">判断文件是否可读</td>
+</tr>
+<tr>
+<td align="center">-w filename</td>
+<td align="center">判断文件是否可写</td>
+</tr>
+<tr>
+<td align="center">-x filename</td>
+<td align="center">判断文件是否可执行</td>
+</tr>
+<tr>
+<td align="center">-s filename</td>
+<td align="center">判断文件是否存在且至少有一个字符</td>
+</tr>
+<tr>
+<td align="center">-d filename</td>
+<td align="center">判断文件是否存在且为目录文件</td>
+</tr>
+<tr>
+<td align="center">-f filename</td>
+<td align="center">判断文件是否存在且为普通文件</td>
+</tr>
+<tr>
+<td align="center">-c filename</td>
+<td align="center">判断文件是否存在且为字符型特殊文件</td>
+</tr>
+<tr>
+<td align="center">-b filename</td>
+<td align="center">判断文件是否存在且为块特殊文件</td>
+</tr>
+</tbody></table>
+<p><strong>注：filename 为完整（但可以是相对也可以是绝对）文件路径或文件路径变量</strong></p>
+<ol>
+<li>字符串判断</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">stringA = stringB</td>
+<td align="center">判断 stringA 是否等于 stringB</td>
+</tr>
+<tr>
+<td align="center">stringA == stringB</td>
+<td align="center">判断 stringA 是否等于 stringB</td>
+</tr>
+<tr>
+<td align="center">stringA != stringB</td>
+<td align="center">判断 stringA 是否不等于 stringB</td>
+</tr>
+<tr>
+<td align="center">-z stringA</td>
+<td align="center">判断 stringA 长度是否为零</td>
+</tr>
+<tr>
+<td align="center">-n stringA</td>
+<td align="center">判断 stringA 长度是否不为零</td>
+</tr>
+</tbody></table>
+<p><strong>注：stringA 和 stringB 代表任意字符串或字符串变量</strong></p>
+<h4 id="双组中括号"><a href="#双组中括号" class="headerlink" title="[[]] | 双组中括号"></a>[[]] | 双组中括号</h4><p>[[]] 并非 shell 通用关键字，但大多数常用 shell 都支持，与 [] 相比，[[]] 更加常用。</p>
+<p>[[]] 支持字符串的模式匹配，使用 == 操作符时还支持 shell 的正则表达式，字符串在比较的时候可以将等号右边的内容当做一个正则表达式的匹配模式，而不仅仅是一个字符串，例如 <code>[[ hello == hell? ]]</code> 的结果为 true，[[]] 中匹配字符串或通配符不需要引号。</p>
+<p>在 if 语句中使用 [[]] 可以直接在判断语句中使用 &amp;&amp; || 等操作符，但在 [] 中会报错，例如 <code>if [[ ${a} == 1 &amp;&amp; ${a} != 2 ]]</code>，如果使用 [] 则需写成 <code>if [ ${a} -ne 1 ] &amp;&amp; [ ${a} != 2 ]</code> 或者 <code>if [ ${a} -ne 1 -a ${a} != 2]</code>。</p>
+<p><strong>注：在 [[]] 中使用 &lt; &gt; 是基于字符串进行判断的，例如 <code>[[ 321 &gt; 1234 ]]</code> 输出为真，因为按照字符串来判断，3 大于 1</strong></p>
+<p>在支持 [[]] 的 shell 中会把它内部的表达式当做一个单独的元素，并返回一个退出状态码（0 为真，1 为假）。 </p>
+<h3 id="用户输入"><a href="#用户输入" class="headerlink" title="用户输入"></a>用户输入</h3><h4 id="基本读取"><a href="#基本读取" class="headerlink" title="基本读取"></a>基本读取</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">echo -n "Enter your name: " # -n 的作用是不换行</span><br><span class="line">read name</span><br><span class="line">echo "hello $&#123;name&#125;, welcome to my program"</span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
+
+<h4 id="read-参数"><a href="#read-参数" class="headerlink" title="read 参数"></a>read 参数</h4><table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-a</td>
+<td align="center">后面跟一个变量，该变量会被认为是一个数组，通过 read 给其赋值，默认以空格为分隔符</td>
+</tr>
+<tr>
+<td align="center">-d</td>
+<td align="center">后面跟一个标志符，作为结束的标志</td>
+</tr>
+<tr>
+<td align="center">-p</td>
+<td align="center">后面根提示信息，在输入前打印提示信息</td>
+</tr>
+<tr>
+<td align="center">-e</td>
+<td align="center">输入的时候打开自动补全功能</td>
+</tr>
+<tr>
+<td align="center">-n</td>
+<td align="center">后面跟一个数字，定义输入文本长度</td>
+</tr>
+<tr>
+<td align="center">-r</td>
+<td align="center">屏蔽 \，如果没有该选项 \ 会被认为是转义符，如果有的话会被认为是正常字符</td>
+</tr>
+<tr>
+<td align="center">-s</td>
+<td align="center">安静模式，输入字符时不在屏幕上显示，常用于密码输入</td>
+</tr>
+<tr>
+<td align="center">-t</td>
+<td align="center">后面跟秒数，定义输入字符的等待时间</td>
+</tr>
+<tr>
+<td align="center">-u</td>
+<td align="center">后面跟 fd，从文件描述符中读入</td>
+</tr>
+</tbody></table>
+<h2 id="函数语法相关"><a href="#函数语法相关" class="headerlink" title="函数语法相关"></a>函数语法相关</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 基础语法格式</span></span><br><span class="line">function function_name() &#123;</span><br><span class="line">    command(s)...</span><br><span class="line">    [ return value ] # 用 [] 框起来表示此语句可选</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 函数返回值，可以显式增加 <span class="built_in">return</span> 语句；</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果不加，会将最后一条命令运行结果作为返回值。</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 函数在定义时无需在 function_name() 的 () 中写入具体参数，而是通过 <span class="variable">$&#123;1&#125;</span> <span class="variable">$&#123;2&#125;</span> 的形式对参数进行调用</span></span><br><span class="line"></span><br><span class="line">name param1 param2 param3</span><br></pre></td></tr></table></figure>
+
+<h2 id="流程控制相关"><a href="#流程控制相关" class="headerlink" title="流程控制相关"></a>流程控制相关</h2><h3 id="if-语句"><a href="#if-语句" class="headerlink" title="if 语句"></a>if 语句</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 基本语法格式</span></span><br><span class="line">if [ condition ]; then   </span><br><span class="line">  command(s)...</span><br><span class="line">elif [ condition ]; then </span><br><span class="line">  command(s)...</span><br><span class="line">else</span><br><span class="line">  command(s)...</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if [ $&#123;1&#125; -ge 60 ]; then</span><br><span class="line">  echo "及格"</span><br><span class="line">elif [ $&#123;1&#125; -lt 60 ]; then</span><br><span class="line">  echo "不及格" </span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<h3 id="case-语句"><a href="#case-语句" class="headerlink" title="case 语句"></a>case 语句</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 基本语法格式</span></span><br><span class="line">case $&#123;variable&#125; in</span><br><span class="line">  "condition1")</span><br><span class="line">    command...</span><br><span class="line">    ;;</span><br><span class="line">  "condition1")</span><br><span class="line">    command...</span><br><span class="line">    ;;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">  *)</span><br><span class="line">    command...</span><br><span class="line">    ;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 实例</span></span><br><span class="line">case $&#123;1&#125; in</span><br><span class="line">  "1")</span><br><span class="line">    echo 周一</span><br><span class="line">    ;;</span><br><span class="line">  "2")</span><br><span class="line">    echo 周二</span><br><span class="line">    ;;</span><br><span class="line">  *)</span><br><span class="line">    echo 其它</span><br><span class="line">    ;;</span><br><span class="line">esac</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 简写</span></span><br><span class="line">case $&#123;1&#125; in</span><br><span class="line">  "1") echo 周一 ;;</span><br><span class="line">  "2") echo 周二 ;;</span><br><span class="line">  *) echo 其它 ;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+
+<h2 id="循环语法相关"><a href="#循环语法相关" class="headerlink" title="循环语法相关"></a>循环语法相关</h2><p>循环是当循环控制条件为真时，一系列命令迭代执行的代码块。</p>
+<h3 id="for-循环"><a href="#for-循环" class="headerlink" title="for 循环"></a>for 循环</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">my_array=("test" 2 "abc" $&#123;a&#125;)</span><br><span class="line"></span><br><span class="line">for i in $&#123;my_array[*]&#125;; do</span><br><span class="line">  echo $&#123;i&#125;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for (( i = 0; i &lt; $&#123;#my_array&#125;; i++ )) do</span><br><span class="line">  echo $&#123;my_array[i]&#125;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for i in "test" 2 "abc" $&#123;a&#125;; do</span><br><span class="line">  echo $&#123;i&#125;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<h3 id="while-循环"><a href="#while-循环" class="headerlink" title="while 循环"></a>while 循环</h3><p>while 循环结构会在循环顶部检测循环条件，若循环条件为真（退出状态为 0）则循环持续进行。<br>与 for 循环 不同的是，while 循环是在不知道循环次数的情况下使用的。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sum=0</span><br><span class="line">i=0</span><br><span class="line"></span><br><span class="line">while [[ $&#123;i&#125; -le 100 ]]; do</span><br><span class="line">  sum=$(( sum + i ))</span><br><span class="line">  (( i++ ))</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">echo $&#123;sum&#125; # 5050</span><br></pre></td></tr></table></figure>
+
+<h3 id="util-循环"><a href="#util-循环" class="headerlink" title="util 循环"></a>util 循环</h3><p>与 while 循环相反，until 循环测试其顶部的循环条件，直到其中的条件为真时停止。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sum=0</span><br><span class="line">i=0</span><br><span class="line"></span><br><span class="line">until [[ $&#123;i&#125; -gt 100 ]]; do</span><br><span class="line">  sum=$(( sum + i ))</span><br><span class="line">  (( i++ ))</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">echo $&#123;sum&#125; # 5050</span><br></pre></td></tr></table></figure>
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本来就是想简单的整理一下 shell 的常用基础语法，没想到越整理接触到的概念越多，导致我要往这篇文章里塞入的东西也越来越多，当你读完以上文章内容，不过是接触到了 shell 语法的冰山一角。它还有很多基础语法是我没有整理到位的，也有很多进阶应用是这篇文章不应涉及但却十分重要的，毕竟 shell 非常接近 Unix 系统内核，因此如果你想要系统的学习 shell 还请根据自身情况参考我在 <a href="#前言">前言</a> 中给出的书籍进行学习。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="https://www.runoob.com/linux/linux-shell-variable.html" target="_blank" rel="external nofollow noopener noreferrer">菜鸟教程：Shell 变量</a></li>
+<li><a href="https://www.runoob.com/linux/linux-shell-test.html" target="_blank" rel="external nofollow noopener noreferrer">菜鸟教程：Shell test 命令</a></li>
+<li><a href="https://www.runoob.com/linux/linux-comm-read.html" target="_blank" rel="external nofollow noopener noreferrer">菜鸟教程：Linux read 命令</a></li>
+<li><a href="https://wiki.jikexueyuan.com/project/13-questions-of-shell/" target="_blank" rel="external nofollow noopener noreferrer">Zhongbo Wang：Shell 十三问</a></li>
+<li><a href="https://www.cnblogs.com/hkui/p/6423918.html" target="_blank" rel="external nofollow noopener noreferrer">梦想远航：shell中的(),{}几种语法用法</a></li>
+<li><a href="https://blog.csdn.net/yjk13703623757/article/details/79028738" target="_blank" rel="external nofollow noopener noreferrer">Locutus：Shell编程中的用户输入处理…</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/102176365" target="_blank" rel="external nofollow noopener noreferrer">知乎-小晶：掌握Shell编程，一篇就够了</a></li>
+<li><a href="https://linuxstory.gitbook.io/advanced-bash-scripting-guide-in-chinese/" target="_blank" rel="external nofollow noopener noreferrer">Advanced Bash-Scripting Guide-中文版</a></li>
+<li><a href="https://www.cnblogs.com/chengd/p/7803664.html" target="_blank" rel="external nofollow noopener noreferrer">chengd：Linux—shell中$(( ))、$( )、``与${ }的区别</a></li>
+</ol>
+
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</div></article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/archives/ab9fcc5d.html" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    虚拟机常见的网络模式
+                
+            </div>
+        </a>
+    
+    
+        <a href="/archives/a45966e2.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">块加密的工作模式</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+        <section id="comments"> <div id="vcomments"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'sz7ny95XiYWkxht3H3YDs2GX-gzGzoHsz',
+        appKey: 'T8JJugDkbqtFLONIIzcPWW76',
+        placeholder: '不要吝啬赞美的语句ヾﾉ≧∀≦)o!',
+        avatar: 'mp',
+        meta: ['nick','mail','link'],
+        pageSize: 10,
+        visitor: true,
+        notify: true,
+        verify: true
+    })
+    let info = document.querySelectorAll('#vcomments>.info')[0]
+    if (info) { info.style.display = 'none' }
+</script> </section>
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            ryomahan &copy; 2021 
+            <a rel="external nofollow noopener noreferrer" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png"></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>. Comment By <a href="https://valine.js.org/" target="_blank" rel="external nofollow noopener noreferrer">valine</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten" target="_blank" rel="external nofollow noopener noreferrer">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>

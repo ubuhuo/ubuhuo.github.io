@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    
+    <title>Django 笔记-1-从请求到响应 | 小白维基</title>
+    
+    
+        <meta name="keywords" content="Django,学习笔记">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="本文所用 Django 代码版本：2.1.3 本文中进行的分析并不局限于某一个 Django 版本但都会尽量讨论版本 2.0+ 流程总览 概述：Django 和其他 Web 框架的 HTTP 处理的流程大致相同：先通过 Request Middleware 对请求对象做定义处理，然后再通过默认的 URL 指向的方法，最后再通过 Response Middleware 对响应对象做自定义处理。 细则">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django 笔记-1-从请求到响应">
+<meta property="og:url" content="https://wiki.blanc.site/archives/953c2552.html">
+<meta property="og:site_name" content="小白维基">
+<meta property="og:description" content="本文所用 Django 代码版本：2.1.3 本文中进行的分析并不局限于某一个 Django 版本但都会尽量讨论版本 2.0+ 流程总览 概述：Django 和其他 Web 框架的 HTTP 处理的流程大致相同：先通过 Request Middleware 对请求对象做定义处理，然后再通过默认的 URL 指向的方法，最后再通过 Response Middleware 对响应对象做自定义处理。 细则">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.blanc.site/wiki/img/30.png">
+<meta property="og:image" content="https://img.blanc.site/wiki/img/31.png">
+<meta property="og:image" content="https://img.blanc.site/wiki/img/33.png">
+<meta property="og:image" content="https://img.blanc.site/wiki/img/32.png">
+<meta property="og:image" content="https://img.blanc.site/wiki/img/34.png">
+<meta property="article:published_time" content="2019-01-26T00:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-23T12:08:45.159Z">
+<meta property="article:author" content="ryomahan">
+<meta property="article:tag" content="Django">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.blanc.site/wiki/img/30.png">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="小白维基" type="application/atom+xml">
+    
+    
+        <link rel="icon" href="/favicon.ico">
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110100486-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-110100486-1');
+</script>
+    
+    
+        <meta name="google-site-verification" content="D9ld5oQABBxIwNpgD_WN61p51-ZcABZ6Olt4HKcxlWw">
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?fac7e69191f0847b886888aa7c794fa7";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- 字体引入 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 4.2.1"></head>
+</html>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">小白维基</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://www.gravatar.com/avatar/e30ee2d02a4632e35575fec3944497df">
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://www.gravatar.com/avatar/e30ee2d02a4632e35575fec3944497df?s=128">
+            <h2 id="name">Ryoma</h2>
+            <h3 id="title">毕己一生，依依东望。</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Jinan, China</span>
+            <a id="follow" target="_blank" href="https://github.com/ryomahan/" rel="external nofollow noopener noreferrer">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                105
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                65
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://blog.blanc.site" target="_blank" title="wordpress" class="tooltip">
+                            <i class="fa fa-wordpress"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/ryomahan1996" target="_blank" title="twitter" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/xiaobaidh" target="_blank" title="weibo" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://github.com/ryomahan" target="_blank" title="github" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class="tooltip">
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+
+    
+        <div class="widget-wrap widget-list">
+            <h3 class="widget-title"><span>链接</span></h3>
+            <div class="widget">
+                <ul>
+                    
+                        <li>
+                            <a href="https://www.blanc.site" target="_blank">依依东望</a>
+                        </li>
+                    
+                        <li>
+                            <a href="https://blog.blanc.site" target="_blank">一只小白</a>
+                        </li>
+                    
+                        <li>
+                            <a href="https://wiki.blanc.site" target="_blank">小白维基</a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    
+</aside>
+
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id="categories">
+        <h3 class="widget-title">
+            <span>分类</span>
+            &nbsp;
+            <a id="allExpand" href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            1-网络笔记
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8678286b.html">U盘安装 Linux distribution 提示 waring /dev/root does not exist</a></li>  <li class="file"><a href="/archives/ee66e659.html">适合 Linux 新手的 man page 使用手册</a></li>  <li class="file"><a href="/archives/3c798f3a.html">「转载」如何选择开源许可证？</a></li>  <li class="file"><a href="/archives/573af784.html">不翻墙下载 Chrome + 不用 VPN 上 Google</a></li>  <li class="file"><a href="/archives/50486745.html">Fatal error in launcher：Unable to create process using '"'</a></li>  <li class="file"><a href="/archives/7cd2d86d.html">Web 安全学习笔记</a></li>  <li class="file"><a href="/archives/7f71ea0e.html">影梭（Shadowsocks）服务端安装、配置及多用户</a></li>  <li class="file"><a href="/archives/6bfb5db9.html">Linux 下安装 Node.js</a></li>  <li class="file"><a href="/archives/3f439512.html">Nginx rtmp 模块配合 OBS 推流实现直播(监控)功能</a></li>  <li class="file"><a href="/archives/ff98c7a2.html">CentOS7 下配置 Nginx + PHP7 + MariaDB + ThinkPHP5.1</a></li>  <li class="file"><a href="/archives/71825b94.html">ThinkPHP5 的 Nginx 配置</a></li>  <li class="file"><a href="/archives/f63c0d8d.html">「转载」同步和异步的区别</a></li>  <li class="file"><a href="/archives/e94a0a36.html">新部署一台Linux云服务器时常用的命令</a></li>  <li class="file"><a href="/archives/22a754d3.html">CentOS7 + Python3 + Django(rest_framework) + MariaDB + nginx + uwsgi 部署 API 开发环境</a></li>  <li class="file"><a href="/archives/ab4a885.html">Python 虚拟环境：virtualenv 以及 virtualenvwrapper</a></li>  <li class="file"><a href="/archives/72d385fc.html">webpack 4 入门</a></li>  <li class="file"><a href="/archives/f1bf1c1a.html">单点问题</a></li>  <li class="file"><a href="/archives/a07e5380.html">注册中心</a></li>  <li class="file"><a href="/archives/cb0153ff.html">「未完成」正则中的贪婪模式与非贪婪模式</a></li>  <li class="file"><a href="/archives/7172d605.html">正则表达式中的回溯过程</a></li>  <li class="file"><a href="/archives/2c12e091.html">CentOS 7 安装 Java 环境</a></li>  <li class="file"><a href="/archives/9a031a35.html">Linux 下的压缩和解压缩</a></li>  <li class="file"><a href="/archives/4b35af27.html">「转载」水晶头接法</a></li>  <li class="file"><a href="/archives/c7ab70f8.html">软件版本号命名规则</a></li>  <li class="file"><a href="/archives/6f328d06.html">鸭子类型</a></li>  <li class="file"><a href="/archives/f2b92668.html">各个平台的包管理器</a></li>  <li class="file"><a href="/archives/42f2446d.html">写给小白的 ShadowSocks 全平台客户端使用说明</a></li>  <li class="file"><a href="/archives/4fcffd79.html">各种软件配置文件规范</a></li>  <li class="file"><a href="/archives/16f6299.html">MySQL8 Grant check the manual that corresponds to your MySQL server version for the right syntax to use.m</a></li>  <li class="file"><a href="/archives/37910dd2.html">计算机的启动</a></li>  <li class="file"><a href="/archives/4940711f.html">8086 处理器寻址方式</a></li>  <li class="file"><a href="/archives/ab9fcc5d.html">虚拟机常见的网络模式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            2-软件使用
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Chrome
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/decc86d5.html">「转载」解析谷歌 Chrome 各分支版本</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            CodeBlock
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/51f295ff.html">Code::Block 新手配置教程</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Django
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file active"><a href="/archives/953c2552.html">Django 笔记-1-从请求到响应</a></li>  <li class="file"><a href="/archives/55c5932a.html">Django 不同环境下使用不同设置文件</a></li>  <li class="file"><a href="/archives/dfb4f33e.html">Django 时间字段中 auto_now 和 auto_now_add 的区别</a></li>  <li class="file"><a href="/archives/8bf18292.html">Django admin 笔记</a></li>  <li class="file"><a href="/archives/44c1e81d.html">Django app 笔记</a></li>  <li class="file"><a href="/archives/5d9ebead.html">Django 中有趣又有用的代码设计</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Excel
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6cc2e3a0.html">Excel 利用函数获取行号、列号、当前行的上一行</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            JetBrains
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/e82cc623.html">JetBrains 系列软件如何在 macOS 下快速创建文件</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            PHPStrom
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/297592c5.html">PHPStrom 常用快捷键汇总</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            SublimeText
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/59657ebc.html">Sublime Text 3 安装 SVN 插件</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            ThinkPHP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/d9089534.html">ThinkPHP5 静态资源[CSS , JS , img]加载</a></li>  <li class="file"><a href="/archives/87acc549.html">解决 TP5 无法接收客户端 Post 传递的 Json 参数</a></li>  <li class="file"><a href="/archives/7d2dd65c.html">ThinkPHP5 下商城类微信小程序下单 + 支付开发流程图</a></li>  <li class="file"><a href="/archives/28f0dfb7.html">ThinkPHP5 + 梦网实现手机验证码登陆后台逻辑</a></li>  <li class="file"><a href="/archives/d2b8c7e4.html">Windows 下 ThinkPHP5 配置 redis 缓存</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VMware
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/4dedf7b2.html">VMware 安装 CentOS 后网络设置</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VOX
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/aeea741e.html">解决 macOS 下 VOX 中文乱码问题</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VSCode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/a29d84d8.html">VS Code + PHPStudy 断点调试 PHP</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Vue
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b4f7e05e.html">vue-cli 下配置 Element + axios + Mockjs</a></li>  <li class="file"><a href="/archives/793400e.html">解决 Vue CSS 样式重复载入，为 Vue 添加全局 less 或 sass 基础样式库</a></li>  <li class="file"><a href="/archives/341c107a.html">Vue Router 实现动态路由和常见问题解决方案</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            WordPress
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6ec97606.html">WordPress 配置七牛云 CDN 具体操作</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            ZooKeeper
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/f1db9330.html">ZooKeeper 入门简介</a></li>  <li class="file"><a href="/archives/2b7b1ffc.html">ZooKeeper 命令</a></li>  <li class="file"><a href="/archives/bb55e9ff.html">ZooKeeper 配置文件解析</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            zsh
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/2025325c.html">zsh 历史文件损坏</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            命令行工具
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Git
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/3c3cdb74.html">Git 学习笔记</a></li>  <li class="file"><a href="/archives/6c235203.html">「转载」Git 远程仓库 pull/push 操作详解</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            curl
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/41e09627.html">格式化 curl 输出的 json 内容</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            dmidecode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/89447a6c.html">dmidecode 解析</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            homebrew
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/819175d6.html">homebrew tap</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            pip
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b47b33aa.html">pip 自动生成或安装 requiremen 依赖</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            pyenv
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6005f6af.html">macOS 下利用 pyenv 管理 Python 版本和虚拟环境</a></li>  <li class="file"><a href="/archives/22859f2b.html">利用本地缓存解决 pyenv 下载缓慢问题</a></li>  <li class="file"><a href="/archives/911a03cb.html">通过 shell 文件激活 pyenv virtualenv 虚拟环境失败</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            tmux
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/9e40babb.html">tmux 入门 + 快捷键整理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            vim
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/211d6e8d.html">vim 创建文件时根据文件类型自动添加内容</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            3-计算机科学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            1-理论计算机科学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            1-数据结构和算法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/f3c5e08e.html">数据结构笔记1-概论</a></li>  <li class="file"><a href="/archives/e3cbe031.html">数据结构笔记2-线性表</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            4-编程语言和编译器
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            C&CPP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/154e48dc.html">cpp 中的声明和定义</a></li>  <li class="file"><a href="/archives/ca916e4c.html">对比 C 和 CPP 中 struct class 和 union</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Erlang
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/76405d8b.html">Erlang 程序设计笔记-第一部分</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            HTML
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/cd7f373a.html">如何用纯 HTML 区分一个 form 表单中的多个 submit</a></li>  <li class="file"><a href="/archives/8b008844.html">利用 position + rgba 将 HTML 背景灰化</a></li>  <li class="file"><a href="/archives/c0d98826.html">固定一个 div 在另一个 div 的底部</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            PHP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/60232ab3.html">「转载」PHP 常用缓存技术的总结</a></li>  <li class="file"><a href="/archives/e639e72a.html">「转载」PHP 静态方法和非静态方法简单对比</a></li>  <li class="file"><a href="/archives/44e28494.html">「转载」PHP 判断文件存在是用 file_exists 还是 is_file</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Python
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/19ed6e31.html">Python + OpenCV 图像处理-1</a></li>  <li class="file"><a href="/archives/4007339e.html">Python 中的内置异常</a></li>  <li class="file"><a href="/archives/e0455099.html">Python 中的异常处理</a></li>  <li class="file"><a href="/archives/7a294715.html">所谓 WSGI</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Shell
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8f9d5c85.html">Shell 获取当前脚本的绝对路径</a></li>  <li class="file"><a href="/archives/17043032.html">echo</a></li>  <li class="file"><a href="/archives/b422aa7d.html">Shell 区分不同 Unix 系统</a></li>  <li class="file"><a href="/archives/3beb222a.html">Shell 基础语法</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            TypeScript
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/e7cd2bef.html">TypeScript 名词理解</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            汇编语言
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/f3934733.html">x86汇编指令</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            2-计算机系统
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            2-操作系统
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            CiscoIOS
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/3bd55461.html">Cisco IOS 系列-0-概览</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Linux
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/1d036a8c.html">Linux 系统下不同类型文件默认的颜色</a></li>  <li class="file"><a href="/archives/d19e8f5d.html">Linux 学习笔记-1</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            macOS
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/607dec48.html">macOS 如何删除自带 ABC 输入法</a></li>  <li class="file"><a href="/archives/26aeca3.html">macOS 访达常用快捷键</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            5-计算机安全和密码学
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/a45966e2.html">块加密的工作模式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            6-数据库
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            MongoDB
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b880b012.html">自用 MongoDB 手册</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            MySQL
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/ef1e0835.html">MySQL 修改数据库名</a></li>  <li class="file"><a href="/archives/466aea21.html">MySQL GRANT 授权语句</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            3-计算机应用技术
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            4-人工智能
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8fbb5ea2.html">人工智能-0-概览</a></li>  <li class="file"><a href="/archives/61dc3b15.html">神经网络-1-概览</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            4-软件工程
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            RESTful
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/7e15b804.html">RESTful 笔记-1-接口设计规范</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/archives/f15c2f60.html">「转载」互联网产品研发流程概论</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+        
+  <div class="toc-flag"></div>
+  <div class="toc-wrap">
+      <h3>
+          <span>文章目录</span>
+      </h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#流程总览"><span class="toc-number">1.</span> <span class="toc-text">流程总览</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#概述："><span class="toc-number">1.1.</span> <span class="toc-text">概述：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#细则："><span class="toc-number">1.2.</span> <span class="toc-text">细则：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动"><span class="toc-number">2.</span> <span class="toc-text">启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WSGI"><span class="toc-number">3.</span> <span class="toc-text">WSGI</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Django-WSGI-Application"><span class="toc-number">3.1.</span> <span class="toc-text">Django WSGI Application</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Django-WSGI-Server"><span class="toc-number">3.2.</span> <span class="toc-text">Django WSGI Server</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-WSGIServer"><span class="toc-number">3.2.1.</span> <span class="toc-text">1. WSGIServer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-WSGIRequestHandler"><span class="toc-number">3.2.2.</span> <span class="toc-text">2. WSGIRequestHandler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-ServerHandler"><span class="toc-number">3.2.3.</span> <span class="toc-text">3. ServerHandler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-WSGIHandler（即-Django-WSGI-Application）"><span class="toc-number">3.2.4.</span> <span class="toc-text">4. WSGIHandler（即 Django WSGI Application）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-wsgiref-simple-server"><span class="toc-number">3.3.</span> <span class="toc-text">Python wsgiref simple_server</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加载配置"><span class="toc-number">4.</span> <span class="toc-text">加载配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#中间件-Middleware"><span class="toc-number">5.</span> <span class="toc-text">中间件-Middleware</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#概述：-1"><span class="toc-number">5.1.</span> <span class="toc-text">概述：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#细则：-1"><span class="toc-number">5.2.</span> <span class="toc-text">细则：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#中间件执行顺序"><span class="toc-number">5.3.</span> <span class="toc-text">中间件执行顺序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何编写自己的中间件即中间件的深入了解"><span class="toc-number">5.4.</span> <span class="toc-text">如何编写自己的中间件即中间件的深入了解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#process-request"><span class="toc-number">5.4.1.</span> <span class="toc-text">process_request</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#process-view"><span class="toc-number">5.4.2.</span> <span class="toc-text">process_view</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#process-template-response"><span class="toc-number">5.4.3.</span> <span class="toc-text">process_template_response</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#process-response"><span class="toc-number">5.4.4.</span> <span class="toc-text">process_response</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#process-exception"><span class="toc-number">5.4.5.</span> <span class="toc-text">process_exception</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URL-Resolver"><span class="toc-number">6.</span> <span class="toc-text">URL Resolver</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#概述：-2"><span class="toc-number">6.1.</span> <span class="toc-text">概述：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#细则：-2"><span class="toc-number">6.2.</span> <span class="toc-text">细则：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总述"><span class="toc-number">7.</span> <span class="toc-text">总述</span></a></li></ol>
+  </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-2-软件使用/Django/Django 笔记-1-从请求到响应" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/2-%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/">2-软件使用</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/2-%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/Django/">Django</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Django/" rel="tag">Django</a>, <a class="tag-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/archives/953c2552.html">
+            <time datetime="2019-01-26T00:00:00.000Z" itemprop="datePublished">2019-01-26</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/raw/backups/source/_posts/2-软件使用/Django/Django 笔记-1-从请求到响应.md" target="_blank" rel="external nofollow noopener noreferrer"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/edit/backups/source/_posts/2-软件使用/Django/Django 笔记-1-从请求到响应.md" target="_blank" rel="external nofollow noopener noreferrer"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/commits/backups/source/_posts/2-软件使用/Django/Django 笔记-1-从请求到响应.md" target="_blank" rel="external nofollow noopener noreferrer"> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Django 笔记-1-从请求到响应
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+        
+            <!-- 内容失效提醒 -->
+            
+    <!-- 如果文章创建超过一年或最后一次更新时间超过一个月(默认)则提示文章过期 -->
+    
+        <div class="aging">
+            <i class="fa fa-exclamation-circle aging-icon" aria-hidden="true"></i>
+            <span class="aging-content">请注意：本文编写于 <span class="aging-content-date">2019-01-26</span>，其中某些信息可能已经失去时效性。</span>
+        </div>
+    
+
+            <p>本文所用 <code>Django</code> 代码版本：<code>2.1.3</code></p>
+<p>本文中进行的分析并不局限于某一个 <code>Django</code> 版本但都会尽量讨论版本 <code>2.0+</code></p>
+<h2 id="流程总览"><a href="#流程总览" class="headerlink" title="流程总览"></a>流程总览</h2><p><img src="https://img.blanc.site/wiki/img/30.png" alt="Django 处理请求流程"></p>
+<h3 id="概述："><a href="#概述：" class="headerlink" title="概述："></a>概述：</h3><p><code>Django</code> 和其他 <code>Web</code> 框架的 <code>HTTP</code> 处理的流程大致相同：先通过 <code>Request Middleware</code> 对请求对象做定义处理，然后再通过默认的 <code>URL</code> 指向的方法，最后再通过 <code>Response Middleware</code> 对响应对象做自定义处理。</p>
+<h3 id="细则："><a href="#细则：" class="headerlink" title="细则："></a>细则：</h3><ol>
+<li>[启动-&gt;WSGI]通过任意方式启动 <code>Django</code> 创建 <code>WSGIServer</code> 类的实例</li>
+<li>用户通过浏览器请求某个 <code>Django</code> 页面</li>
+<li>[WSGI]<code>Django WSGIServer</code> 接收客户端（浏览器）请求初始化 <code>WSGIHandler</code> 实例</li>
+<li>[WSGI-&gt;加载配置]导入 <code>setting</code> 配置和 <code>Django</code> 异常类</li>
+<li>[WSGI-&gt;中间件]加载 <code>setting</code> 中设置的中间件</li>
+<li>[中间件]创建 <code>_request_middleware,_view_middleware,_response_middleware,_exception_middleware</code> 四个列表</li>
+<li>[中间件]遍历执行 <code>_request_middleware</code>，对 <code>request</code> 进行处理：若返回 <code>None</code> 进入到 8；若直接返回 <code>HttpResponse</code> 对象进入到 12</li>
+<li>[URL Resolver]解析 <code>url</code> 并进行匹配（假设匹配成功）</li>
+<li>[中间件]遍历执行 <code>_view_middleware</code>，对 <code>request</code> 进行处理：若返回 <code>None</code> 进入到 10；若直接返回 <code>HttpResponse</code> 对象进入到 12。</li>
+<li>[中间件]实现 <code>url</code> 匹配的 <code>view</code> 逻辑：若引发异常进入到 11;若正常返回 <code>HttpResponse</code> 对象进入到 12</li>
+<li>[中间件]遍历执行 <code>_exception_middleware</code></li>
+<li>[中间件]遍历执行 <code>_response_middleware</code>，对 <code>HttpResponse</code> 进行处理并最终返回 <code>response</code></li>
+</ol>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p>在开发环境中，我们一般是通过命令行执行 <code>runserver</code> 命令，<code>ruserver</code> 命令是使用 <code>Django</code> 自带的的 <code>Web Server</code>，而在正式的环境中，一般会使用 <code>Nginx+uWSGI</code> 模式。</p>
+<p>无论通过哪种方式，启动一个项目时，都会做两件事：</p>
+<ol>
+<li>创建一个 <code>WSGIServer</code> 类的实例，来接受用户的请求。</li>
+<li>当一个用户的 <code>HTTP</code> 请求到达的时，为用户指定一个 <code>WSGIHandler</code>，用于处理用户请求与响应，这个 <code>Handler</code> 是处理整个 <code>Request</code> 的核心。</li>
+</ol>
+<h2 id="WSGI"><a href="#WSGI" class="headerlink" title="WSGI"></a>WSGI</h2><p><code>WSGI</code>：全称 <code>Web Server Gateway Interface</code>。</p>
+<p><code>WSGI</code> 不是服务器，<code>Python</code> 模块，框架，<code>API</code> 或者任何软件，只是一种规范，描述 <code>Web Server</code> 如何与 <code>Web Application</code> 通信的规范。</p>
+<p><code>WSGI</code> 协议主要包括 <code>server</code> 和 <code>application</code> 两部分：</p>
+<ol>
+<li><code>WSGI Server</code> 负责从客户端接收请求，将 <code>request</code> 转发给 <code>application</code>，将<code>application</code> 返回的 <code>response</code> 返回给客户端；</li>
+<li><code>WSGI Application</code> 接收由 <code>server</code> 转发的 <code>request</code>，处理请求，并将处理结果返回给 <code>server</code>。<code>application</code> 中可以包括多个栈式的中间件(middlewares)，这些中间件需要同时实现 <code>server</code> 与 <code>application</code>，因此可以在 <code>WSGI</code> 服务器与 <code>WSGI</code> 应用之间起调节作用：对服务器来说，中间件扮演应用程序，对应用程序来说，中间件扮演服务器。</li>
+</ol>
+<h3 id="Django-WSGI-Application"><a href="#Django-WSGI-Application" class="headerlink" title="Django WSGI Application"></a>Django WSGI Application</h3><p><code>WSGI Application</code> 应该实现为一个可调用对象，例如：函数、方法、类（包含 <code>call</code> 方法）。</p>
+<p>需要接收两个参数：</p>
+<ol>
+<li>包含客户端请求的信息以及其他信息的字典。可以认为是请求上下文，一般叫做<code>environment</code>（编码中多简写为 <code>environ</code>、<code>env</code>）；</li>
+<li>用于发送 <code>HTTP</code> 响应状态（<code>HTTP Status</code>）、响应头（<code>HTTP Headers</code>）的回调函数；</li>
+</ol>
+<p>通过回调函数将响应状态和响应头返回给 <code>WSGI Server</code>，同时返回响应正文，响应正文是可迭代的、并包含了多个字符串。下面是 <code>Django WSGI Application</code> 的具体实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WSGIHandler</span><span class="params">(base.BaseHandler)</span>:</span></span><br><span class="line">    request_class = WSGIRequest</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, *args, **kwargs)</span>:</span></span><br><span class="line">        super().__init__(*args, **kwargs)</span><br><span class="line">        <span class="comment"># 本文作者注：加载中间件</span></span><br><span class="line">        self.load_middleware()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, environ, start_response)</span>:</span></span><br><span class="line">        set_script_prefix(get_script_name(environ))</span><br><span class="line">        <span class="comment"># 本文作者注：处理请求前发送信号</span></span><br><span class="line">        signals.request_started.send(sender=self.__class__, environ=environ)</span><br><span class="line">        request = self.request_class(environ)</span><br><span class="line">        response = self.get_response(request)</span><br><span class="line"></span><br><span class="line">        response._handler_class = self.__class__</span><br><span class="line"></span><br><span class="line">        status = <span class="string">'%d %s'</span> % (response.status_code, response.reason_phrase)</span><br><span class="line">        response_headers = list(response.items())</span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> response.cookies.values():</span><br><span class="line">            response_headers.append((<span class="string">'Set-Cookie'</span>, c.output(header=<span class="string">''</span>)))</span><br><span class="line">        <span class="comment"># 本文作者注：将响应的 header 和 status 返回给 server</span></span><br><span class="line">        start_response(status, response_headers)</span><br><span class="line">        <span class="keyword">if</span> getattr(response, <span class="string">'file_to_stream'</span>, <span class="literal">None</span>) <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> environ.get(<span class="string">'wsgi.file_wrapper'</span>):</span><br><span class="line">            response = environ[<span class="string">'wsgi.file_wrapper'</span>](response.file_to_stream)</span><br><span class="line">        <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+
+<p>可以看出 <code>Django WSGI Application</code> 的流程包括:</p>
+<ol>
+<li>加载所有中间件，以及执行框架相关的操作，设置当前线程脚本前缀，发送请求开始信号；</li>
+<li>处理请求，调用 <code>get_response()</code> 方法处理当前请求，该方法的的主要逻辑是通过<code>urlconf</code> 找到对应的 <code>view</code> 和 <code>callback</code>，按顺序执行各种 <code>middleware</code> 和 <code>callback</code>；</li>
+<li>调用由 <code>WSGI Server</code> 传入的 <code>start_response()</code> 方法将响应 <code>header</code> 与 <code>status</code> 返回给 <code>WSGI Server</code>；</li>
+<li>返回响应正文。</li>
+</ol>
+<h3 id="Django-WSGI-Server"><a href="#Django-WSGI-Server" class="headerlink" title="Django WSGI Server"></a>Django WSGI Server</h3><p>负责获取 <code>HTTP</code> 请求，将请求传递给 <code>Django WSGI Application</code>，由 <code>Django WSGI Application</code> 处理请求后返回 <code>response</code>。以 <code>Django</code> 内建 <code>server</code> 为例看一下具体实现。</p>
+<p>通过 <code>runserver</code> 命令运行 <code>Django</code> 项目，在启动时都会调用下面的 <code>run</code> 方法，创建一个 <code>WSGIServer</code> 的实例，之后再调用其 <code>serve_forever()</code> 方法启动服务。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(addr, port, wsgi_handler, ipv6=False, threading=False, server_cls=WSGIServer)</span>:</span></span><br><span class="line">    server_address = (addr, port)</span><br><span class="line">    <span class="keyword">if</span> threading:</span><br><span class="line">        httpd_cls = type(<span class="string">'WSGIServer'</span>, (socketserver.ThreadingMixIn, server_cls), &#123;&#125;)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        httpd_cls = server_cls</span><br><span class="line">    httpd = httpd_cls(server_address, WSGIRequestHandler, ipv6=ipv6)</span><br><span class="line">    <span class="keyword">if</span> threading:</span><br><span class="line">        httpd.daemon_threads = <span class="literal">True</span></span><br><span class="line">    httpd.set_app(wsgi_handler)</span><br><span class="line">    httpd.serve_forever()</span><br></pre></td></tr></table></figure>
+
+<p>下图表示 <code>WSGI Server</code> 服务器处理流程中关键的类和方法（来自：<a href="https://www.jianshu.com/p/679dee0a4193" target="_blank" rel="external nofollow noopener noreferrer">参考引用_1</a>）</p>
+<p><img src="https://img.blanc.site/wiki/img/31.png" alt="WSGI Server 服务器处理流程中关键的类和方法"></p>
+<h4 id="1-WSGIServer"><a href="#1-WSGIServer" class="headerlink" title="1. WSGIServer"></a>1. WSGIServer</h4><p><code>run()</code> 方法会创建 <code>WSGIServer</code> 实例，主要作用是接收客户端请求，将请求传递给<code>WSGI Application</code>，然后将 <code>WSGI Application</code> 返回的 <code>response</code> 返回给客户端。</p>
+<ul>
+<li>创建实例时会指定 <code>HTTP</code> 请求的 <code>handler</code> ：<code>WSGIRequestHandler</code> 类;</li>
+<li>通过 <code>set_app</code> 和 <code>get_app</code> 方法设置和获取 <code>WSGIApplication</code> 实例<code>wsgi_handler</code>;</li>
+<li>处理 <code>HTTP</code> 请求时，调用 <code>handler_request</code> 方法，会创建 <code>WSGIRequestHandler</code> 实例处理 <code>HTTP</code> 请求;</li>
+<li><code>WSGIServer</code> 中 <code>get_request</code> 方法通过 <code>socket</code> 接受请求数据;</li>
+</ul>
+<h4 id="2-WSGIRequestHandler"><a href="#2-WSGIRequestHandler" class="headerlink" title="2. WSGIRequestHandler"></a>2. WSGIRequestHandler</h4><ul>
+<li>由 <code>WSGIServer</code> 在调用 <code>handle_request</code> 时创建实例，传入 <code>request,cient_address,WSGIServer</code> 三个参数，<code>__init__</code> 方法在实例化同时还会调用自身的 <code>handle</code> 方法；</li>
+<li><code>handle</code> 方法会创建 <code>ServerHandler</code> 实例，然后调用其 <code>run</code> 方法处理请求；</li>
+</ul>
+<h4 id="3-ServerHandler"><a href="#3-ServerHandler" class="headerlink" title="3. ServerHandler"></a>3. ServerHandler</h4><ul>
+<li><code>WSGIRequestHandler</code> 在其 <code>handle</code> 方法中调用 <code>run</code> 方法，传入<code>self.server.get_app()</code> 参数，获取 <code>WSGIApplication</code>，然后调用实例(<strong>call</strong>)，获取 <code>response</code>，其中会传入 <code>start_response</code> 回调，用来处理返回的 <code>header</code> 和 <code>status</code>；</li>
+<li>通过 <code>application</code> 获取 <code>response</code> 以后，通过 <code>finish_response</code> 返回 <code>response</code>；</li>
+</ul>
+<h4 id="4-WSGIHandler（即-Django-WSGI-Application）"><a href="#4-WSGIHandler（即-Django-WSGI-Application）" class="headerlink" title="4. WSGIHandler（即 Django WSGI Application）"></a>4. WSGIHandler（即 Django WSGI Application）</h4><ul>
+<li><code>WSGI</code> 协议中的 <code>application</code>，接收两个参数，<code>environ</code> 字典包含了客户端请求的信息以及其他信息，可以认为是请求上下文，<code>start_response</code> 用于发送返回 <code>status</code> 和 <code>header</code> 的回调函数</li>
+</ul>
+<p>虽然上面一个 <code>Django WSGI Server</code> 涉及到多个类实现以及相互引用，但其实原理还是调用<code>WSGIHandler</code>，传入请求参数以及回调方法 <code>start_response()</code>，并将响应返回给客户端。</p>
+<h3 id="Python-wsgiref-simple-server"><a href="#Python-wsgiref-simple-server" class="headerlink" title="Python wsgiref simple_server"></a>Python wsgiref simple_server</h3><p>在 <code>Python3.7</code> 的源码中给出了一个 <code>simple_server</code> 案例位于 <code>python3.7/wsgiref/simple_server.py</code>。</p>
+<p>模块实现了一个简单的 <code>HTTP</code> 服务器，并给出了一个简单的 <code>demo</code>，可以直接运行，运行结果会将请求中涉及到的环境变量在浏览器中展示出来。其中包括上述描述的整个 <code>HTTP</code> 请求的所有组件：<code>ServerHandler,WSGIServer,WSGIRequestHandler</code> 以及 <code>demo_app</code> 表示的简易版的 <code>WSGIApplication</code>。</p>
+<p>感兴趣的话可以自己去看一下源码。</p>
+<h2 id="加载配置"><a href="#加载配置" class="headerlink" title="加载配置"></a>加载配置</h2><p><code>Django</code> 的配置都在 <code>{project_name}/settings.py</code> 中定义，可以是 <code>Django</code> 的配置，也可以是自定义的配置，并且都通过 <code>django.conf.settings</code> 访问。</p>
+<h2 id="中间件-Middleware"><a href="#中间件-Middleware" class="headerlink" title="中间件-Middleware"></a>中间件-Middleware</h2><h3 id="概述：-1"><a href="#概述：-1" class="headerlink" title="概述："></a>概述：</h3><p><code>Django</code> 中的 <code>Middleware</code> 类似底层中一个轻量级的插件系统，它能够介入 <code>Django</code> 的请求和响应过程，在全局修改 <code>Django</code> 的输入和输出内容。从流程总览图中可以看出 <code>Django</code> 请求处理过程的核心在于 <code>Middleware</code>，<code>Django</code> 中所有的请求和响应都有 <code>Middleware</code> 的参与。</p>
+<h3 id="细则：-1"><a href="#细则：-1" class="headerlink" title="细则："></a>细则：</h3><p><img src="https://img.blanc.site/wiki/img/33.png" alt="中间件流程图"></p>
+<p>一个 <code>HTTP</code> 请求，首先被转化成一个 <code>HttpRequest</code> 对象，然后该对象被传递给 <code>Request Middleware</code> 处理，如果它返回了 <code>HttpResponse</code> 对象，则直接传递给 <code>Response Middleware</code> 做收尾处理。否则的话 <code>Request Middleware</code> 将访问 <code>URL</code> 配置，确定目标 <code>view</code> 来处理 <code>HttpRequest</code> 对象，在确定了 <code>view</code>，但是还没有执行时候，系统会把 <code>HttpRequest</code> 对象传递给 <code>View Middleware</code> 进行处理，如果它返回了 <code>HttpResponse</code> 对象，那么该 <code>HttpResponse</code> 对象将被传递给 <code>Response Middleware</code> 进行后续处理，否则将执行确定的 <code>view</code> 函数处理并返回 <code>HttpResponse</code> 对象，在整个过程中如果引发了异常并抛出，会被 <code>Exception Middleware</code> 进行处理。</p>
+<h3 id="中间件执行顺序"><a href="#中间件执行顺序" class="headerlink" title="中间件执行顺序"></a>中间件执行顺序</h3><p><img src="https://img.blanc.site/wiki/img/32.png" alt="中间件流程图"></p>
+<p>在请求阶段，调用视图之前，<code>Django</code> 按照 <code>setting.py</code> 设置的顺序，自顶向下应用遍历执行 <code>Request Middleware</code>。你可以把它想象成一个洋葱：每个中间件类都是一个“层”，它覆盖了洋葱的核心。如果请求通过洋葱的所有层（每一个调用 <code>get_response</code>）以将请求传递到下一层，一直到内核的视图，那么响应将在返回的过程中通过每个层（以相反的顺序）。</p>
+<h3 id="如何编写自己的中间件即中间件的深入了解"><a href="#如何编写自己的中间件即中间件的深入了解" class="headerlink" title="如何编写自己的中间件即中间件的深入了解"></a>如何编写自己的中间件即中间件的深入了解</h3><p>编写一个自己的中间件是很容易的，每个中间件组件都是一个独立的 <code>Python Class</code>，你可以在自定义的 <code>Class</code> 下编写一个或多个下面的方法：</p>
+<h4 id="process-request"><a href="#process-request" class="headerlink" title="process_request"></a>process_request</h4><p>函数样式：<code>process_request(request)</code>；</p>
+<p>参数解析：<code>request</code> 是一个 <code>HTTPRequest</code> 对象；</p>
+<p>调用时间：在 <code>Django</code> 决定执行哪个 <code>view</code> 之前，<code>process_request()</code> 会被请求调用；</p>
+<p>产生响应：它应该返回一个 <code>None</code> 或一个 <code>HttpResponse</code> 对象，如果返回 <code>None</code>，<code>Django</code> 会继续处理这个请求；如果它返回一个 <code>HTTPResponse</code> 对象，<code>Django</code> 会直接跳转到 <code>Response Middleware</code>；</p>
+<h4 id="process-view"><a href="#process-view" class="headerlink" title="process_view"></a>process_view</h4><p>函数样式：<code>process_view(request, view_func, view_args, view_kwargs)</code>；</p>
+<p>参数解析：<code>request</code> 是一个 <code>HTTPRequest</code> 对象，<code>view_func</code> 是 <code>Django</code> 会调用的一个函数（准确的说是一个函数对象而非一个表示函数名的字符串），<code>view_args</code> 是一个会被传递到视图的 <code>*args</code>，<code>view_kwargs</code> 是一个会被传递到视图的 <code>**kwargs</code>，<code>view_args</code> 和 <code>view_kwargs</code> 都不包括 <code>request</code>；</p>
+<p>调用时间：<code>process_view()</code> 会在 <code>Django</code> 调用 <code>view</code> 前被调用；</p>
+<p>产生响应：它应该返回一个 <code>None</code> 或一个 <code>HttpResponse</code> 对象，如果返回 <code>None</code>，<code>Django</code> 会继续处理这个请求；如果它返回一个 <code>HTTPResponse</code> 对象，<code>Django</code> 会直接跳转到 <code>Response Middleware</code>；</p>
+<p>PS：除 <code>CsrfViewMiddleware</code> 外中间件运行时在视图运行前或在 <code>process_view()</code> 中访问 <code>request.POST</code> 会使得之后的所有视图无法修改 <code>request</code>，所以应该尽量避免。</p>
+<h4 id="process-template-response"><a href="#process-template-response" class="headerlink" title="process_template_response"></a>process_template_response</h4><p>函数样式：<code>process_template_response(request, response)</code>；</p>
+<p>参数解析：<code>request</code> 是一个 <code>HttpRequest</code> 对象，<code>response</code> 是一个 <code>TemplateResponse</code> 对象（或类似对象），由 <code>Django</code> 视图或中间件返回；</p>
+<p>调用时间：如果 <code>response</code> 的实例有 <code>render()</code> 方法，<code>process_template_response()</code> 在视图刚好执行完毕之后被调用，这表明他是一个 <code>TemplateResponse</code> 对象（或类似对象）；</p>
+<p>产生响应：这个方法必须返回一个实现了 <code>render()</code> 方法的 <code>TemplateResponse</code> 对象（或类似对象），它可以修改给定的 <code>response</code> 对象，也可以创建一个全新的 <code>TemplateResponse</code> 对象（或类似对象）；</p>
+<p>PS：在响应处理阶段，中间件以相反的顺序运行，包括 <code>process_template_response</code>；</p>
+<h4 id="process-response"><a href="#process-response" class="headerlink" title="process_response"></a>process_response</h4><p>函数样式：<code>process_response(request, response)</code>；</p>
+<p>参数解析：<code>request</code> 是一个 <code>HttpRequest</code> 对象，<code>response</code> 是一个 <code>HttpResponse</code> 对象，由 <code>Django</code> 视图或中间件返回；</p>
+<p>调用时间：<code>process_request</code> 在所有响应返回客户端前被调用;</p>
+<p>产生响应：这个方法必须返回一个 <code>HttpRequest</code> 对象，它可以修改给定的 <code>response</code> 对象，也可以创建一个全新的 <code>HttpRequest</code> 对象；</p>
+<p>PS：<code>process_response</code> 总是被调用，这意味着你的 <code>process_response</code> 不能依赖 <code>process_request</code></p>
+<h4 id="process-exception"><a href="#process-exception" class="headerlink" title="process_exception"></a>process_exception</h4><p>函数样式：<code>process_exception(request, exception)</code>；</p>
+<p>参数解析：<code>request</code> 是一个 <code>HttpRequest</code> 对象，<code>exception</code> 是一个被视图抛出 <code>Exception</code> 对象；</p>
+<p>调用时间：当一个视图抛出异常，<code>Django</code> 会调用 <code>process_exception</code> 来处理;</p>
+<p>产生响应：它应该返回一个 <code>None</code> 或一个 <code>HttpResponse</code> 对象，如果返回 <code>None</code>，<code>Django</code> 会继续处理这个请求；如果它返回一个 <code>HTTPResponse</code> 对象，模板对象和 <code>Response Middleware</code> 会被直接返回给客户端；否则，将启动默认异常处理。；</p>
+<h2 id="URL-Resolver"><a href="#URL-Resolver" class="headerlink" title="URL Resolver"></a>URL Resolver</h2><h3 id="概述：-2"><a href="#概述：-2" class="headerlink" title="概述："></a>概述：</h3><p>假设：中间件便利执行完 <code>_request_middleware,_view_middleware</code> 后都返回 <code>None</code>。</p>
+<p>当 <code>Django</code> 遍历执行完 <code>_request_middleware</code> 后会得到一个经过处理的 <code>request</code> 对象，此时 <code>Django</code> 将按顺序进行对 <code>url</code> 进行正则匹配，如果匹配不成功，就会抛出异常；如果匹配成功，<code>Django</code> 会继续循环执行 <code>_view_middleware</code> 并在执行后继续执行刚刚匹配成功的 <code>view</code>。</p>
+<p>在 <code>setting</code> 中有一个 <code>ROOT_URLCONF</code>，它指向 <code>urls.py</code> 文件，根据这个文件可以生产一个 <code>urlconf</code>，本质上，他就是 <code>url</code> 与视图函数之间的映射表，然后通过 <code>resolver</code> 解析用户的 <code>url</code>，找到第一个匹配的 <code>view</code>。</p>
+<h3 id="细则：-2"><a href="#细则：-2" class="headerlink" title="细则："></a>细则：</h3><p><img src="https://img.blanc.site/wiki/img/34.png" alt="URL Resolver流程图"></p>
+<p>重要函数源码位置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">_path: django&#x2F;urls&#x2F;conf.py</span><br><span class="line">URLPattern: django&#x2F;urls&#x2F;resolvers.py</span><br><span class="line">ResolverMatch: django&#x2F;urls&#x2F;resolvers.py</span><br><span class="line">URLResolver: django&#x2F;urls&#x2F;resolvers.py</span><br></pre></td></tr></table></figure>
+
+<p>源码比较长，就不放出来了，感兴趣的话自己去看吧。</p>
+<ol>
+<li>通过 <code>urlpatterns</code> 的配置执行 <code>_path</code> 函数；</li>
+<li><code>_path</code> 函数进行判断：如果是一个 <code>list</code> 或者 <code>tuple</code>，就用 <code>URLResolver</code> 处理，跳至 4；如果是一个正常的可调用的 <code>view</code> 函数，则用 <code>URLPattern</code> 处理，跳至；如果匹配失败，抛出异常；</li>
+<li><code>URLPattern</code> 初始化相应值后执行 <code>resolve</code> 方法：如果匹配成功，返回 <code>ResolverMatch</code>；如果匹配失败，抛出异常；</li>
+<li><code>URLResolver</code> 匹配 <code>path</code> 如果匹配成功，则继续匹配它的 <code>url_patterns</code>，跳至 5；匹配失败，抛出异常；</li>
+<li>匹配 <code>url_patterns</code>：若为 <code>urlpattern</code> 匹配成功，返回 <code>ResolverMatch</code>；若为 <code>URLResolver</code> 递归调用 <code>URLResolver</code> 跳至 4；若匹配失败，抛出异常；</li>
+</ol>
+<p>可以发现，整个过程的关键就是 <code>ResolverMatch</code>，<code>URLPattern</code> 和 <code>URLResolver</code> 三个类，其中：<br><code>ResolverMatch</code> 是匹配结果，包含匹配成功后需要的信息；<br><code>URLPattern</code> 是一个 <code>url</code> 映射信息的对象，包含了 <code>url</code> 映射对应的可调用对象等信息；<br><code>URLResolver</code> 是实现 <code>url</code> 路由，解析 <code>url</code> 的关键的地方，它的 <code>url_patterns</code>既可以是<code>URLPattern</code> 也可以是 <code>URLResolver</code>，正是因为这种设计, 实现了对 <code>url</code> 的层级解析。</p>
+<h2 id="总述"><a href="#总述" class="headerlink" title="总述"></a>总述</h2><p>真实的请求响应过程肯定是比我提到的这些还要复杂的多，但是我的能力实在有限，目前仅能理解到这个层面了，如果错误欢迎指正。</p>
+<p>参考引用：</p>
+<ol>
+<li><a href="https://www.jianshu.com/p/679dee0a4193" target="_blank" rel="external nofollow noopener noreferrer">简书：做Python Web开发你要理解：WSGI &amp; uWSGI 作者：rainybowe</a></li>
+<li><a href="https://juejin.im/post/5a6c4cc2f265da3e4c080605" target="_blank" rel="external nofollow noopener noreferrer">掘金：Django从请求到响应的过程 作者：__奇犽犽</a></li>
+<li><a href="http://www.nowamagic.net/academy/detail/13281808" target="_blank" rel="external nofollow noopener noreferrer">现代魔法学院：Python 与 Django 篇-Django 架构流程分析</a></li>
+<li><a href="https://www.jianshu.com/p/5b7bb930b170" target="_blank" rel="external nofollow noopener noreferrer">简书：django源码分析之url路由(URLResolver) 作者：2hanson</a></li>
+<li><a href="https://docs.djangoproject.com/en/2.1/" target="_blank" rel="external nofollow noopener noreferrer">Django 官方文档</a></li>
+</ol>
+
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</div></article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/archives/ab4a885.html" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Python 虚拟环境：virtualenv 以及 virtualenvwrapper
+                
+            </div>
+        </a>
+    
+    
+        <a href="/archives/7e15b804.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">RESTful 笔记-1-接口设计规范</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+        <section id="comments"> <div id="vcomments"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'sz7ny95XiYWkxht3H3YDs2GX-gzGzoHsz',
+        appKey: 'T8JJugDkbqtFLONIIzcPWW76',
+        placeholder: '不要吝啬赞美的语句ヾﾉ≧∀≦)o!',
+        avatar: 'mp',
+        meta: ['nick','mail','link'],
+        pageSize: 10,
+        visitor: true,
+        notify: true,
+        verify: true
+    })
+    let info = document.querySelectorAll('#vcomments>.info')[0]
+    if (info) { info.style.display = 'none' }
+</script> </section>
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            ryomahan &copy; 2021 
+            <a rel="external nofollow noopener noreferrer" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png"></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>. Comment By <a href="https://valine.js.org/" target="_blank" rel="external nofollow noopener noreferrer">valine</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten" target="_blank" rel="external nofollow noopener noreferrer">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>

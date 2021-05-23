@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    
+    <title>「转载」互联网产品研发流程概论 | 小白维基</title>
+    
+    
+        <meta name="keywords" content="转载,软件工程">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="原文地址：人人都是产品经理：互联网产品研发流程概论转载过程中有所删减，本文不代表原文作者观点。 产品研发流程大体分为：立项阶段、设计阶段、开发阶段、测试阶段、上线阶段、磨合阶段、运营阶段、总结阶段。 立项阶段从分解公司战略开始，先通过市场调研获取客户需求，然后梳理产品方向形成产品提案给项目负责人审批，审批通过后正式进入产品研发阶段。 市场调研市场调研就是通过调研筛选典型客户，并对这些客户的需求细节">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「转载」互联网产品研发流程概论">
+<meta property="og:url" content="https://wiki.blanc.site/archives/f15c2f60.html">
+<meta property="og:site_name" content="小白维基">
+<meta property="og:description" content="原文地址：人人都是产品经理：互联网产品研发流程概论转载过程中有所删减，本文不代表原文作者观点。 产品研发流程大体分为：立项阶段、设计阶段、开发阶段、测试阶段、上线阶段、磨合阶段、运营阶段、总结阶段。 立项阶段从分解公司战略开始，先通过市场调研获取客户需求，然后梳理产品方向形成产品提案给项目负责人审批，审批通过后正式进入产品研发阶段。 市场调研市场调研就是通过调研筛选典型客户，并对这些客户的需求细节">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803161317.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803164033.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803164601.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803164725.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803165557.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803170344.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803171212.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803172050.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803172217.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803172256.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803172709.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803173305.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803173357.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803173610.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803173737.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803173916.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803174036.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803174200.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803174240.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803174724.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803175033.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803175518.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803180240.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803180808.jpg">
+<meta property="og:image" content="https://img.blanc.site//wiki/img/20190803182403.jpg">
+<meta property="article:published_time" content="2019-08-03T00:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-23T12:08:45.167Z">
+<meta property="article:author" content="ryomahan">
+<meta property="article:tag" content="转载">
+<meta property="article:tag" content="软件工程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.blanc.site//wiki/img/20190803161317.jpg">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="小白维基" type="application/atom+xml">
+    
+    
+        <link rel="icon" href="/favicon.ico">
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110100486-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-110100486-1');
+</script>
+    
+    
+        <meta name="google-site-verification" content="D9ld5oQABBxIwNpgD_WN61p51-ZcABZ6Olt4HKcxlWw">
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?fac7e69191f0847b886888aa7c794fa7";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- 字体引入 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 4.2.1"></head>
+</html>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">小白维基</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://www.gravatar.com/avatar/e30ee2d02a4632e35575fec3944497df">
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://www.gravatar.com/avatar/e30ee2d02a4632e35575fec3944497df?s=128">
+            <h2 id="name">Ryoma</h2>
+            <h3 id="title">毕己一生，依依东望。</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Jinan, China</span>
+            <a id="follow" target="_blank" href="https://github.com/ryomahan/" rel="external nofollow noopener noreferrer">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                105
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                65
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://blog.blanc.site" target="_blank" title="wordpress" class="tooltip">
+                            <i class="fa fa-wordpress"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/ryomahan1996" target="_blank" title="twitter" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://weibo.com/xiaobaidh" target="_blank" title="weibo" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://github.com/ryomahan" target="_blank" title="github" class="tooltip" rel="external nofollow noopener noreferrer">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class="tooltip">
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+
+    
+        <div class="widget-wrap widget-list">
+            <h3 class="widget-title"><span>链接</span></h3>
+            <div class="widget">
+                <ul>
+                    
+                        <li>
+                            <a href="https://www.blanc.site" target="_blank">依依东望</a>
+                        </li>
+                    
+                        <li>
+                            <a href="https://blog.blanc.site" target="_blank">一只小白</a>
+                        </li>
+                    
+                        <li>
+                            <a href="https://wiki.blanc.site" target="_blank">小白维基</a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    
+</aside>
+
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id="categories">
+        <h3 class="widget-title">
+            <span>分类</span>
+            &nbsp;
+            <a id="allExpand" href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            1-网络笔记
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8678286b.html">U盘安装 Linux distribution 提示 waring /dev/root does not exist</a></li>  <li class="file"><a href="/archives/ee66e659.html">适合 Linux 新手的 man page 使用手册</a></li>  <li class="file"><a href="/archives/3c798f3a.html">「转载」如何选择开源许可证？</a></li>  <li class="file"><a href="/archives/573af784.html">不翻墙下载 Chrome + 不用 VPN 上 Google</a></li>  <li class="file"><a href="/archives/50486745.html">Fatal error in launcher：Unable to create process using '"'</a></li>  <li class="file"><a href="/archives/7cd2d86d.html">Web 安全学习笔记</a></li>  <li class="file"><a href="/archives/7f71ea0e.html">影梭（Shadowsocks）服务端安装、配置及多用户</a></li>  <li class="file"><a href="/archives/6bfb5db9.html">Linux 下安装 Node.js</a></li>  <li class="file"><a href="/archives/3f439512.html">Nginx rtmp 模块配合 OBS 推流实现直播(监控)功能</a></li>  <li class="file"><a href="/archives/ff98c7a2.html">CentOS7 下配置 Nginx + PHP7 + MariaDB + ThinkPHP5.1</a></li>  <li class="file"><a href="/archives/71825b94.html">ThinkPHP5 的 Nginx 配置</a></li>  <li class="file"><a href="/archives/f63c0d8d.html">「转载」同步和异步的区别</a></li>  <li class="file"><a href="/archives/e94a0a36.html">新部署一台Linux云服务器时常用的命令</a></li>  <li class="file"><a href="/archives/22a754d3.html">CentOS7 + Python3 + Django(rest_framework) + MariaDB + nginx + uwsgi 部署 API 开发环境</a></li>  <li class="file"><a href="/archives/ab4a885.html">Python 虚拟环境：virtualenv 以及 virtualenvwrapper</a></li>  <li class="file"><a href="/archives/72d385fc.html">webpack 4 入门</a></li>  <li class="file"><a href="/archives/f1bf1c1a.html">单点问题</a></li>  <li class="file"><a href="/archives/a07e5380.html">注册中心</a></li>  <li class="file"><a href="/archives/cb0153ff.html">「未完成」正则中的贪婪模式与非贪婪模式</a></li>  <li class="file"><a href="/archives/7172d605.html">正则表达式中的回溯过程</a></li>  <li class="file"><a href="/archives/2c12e091.html">CentOS 7 安装 Java 环境</a></li>  <li class="file"><a href="/archives/9a031a35.html">Linux 下的压缩和解压缩</a></li>  <li class="file"><a href="/archives/4b35af27.html">「转载」水晶头接法</a></li>  <li class="file"><a href="/archives/c7ab70f8.html">软件版本号命名规则</a></li>  <li class="file"><a href="/archives/6f328d06.html">鸭子类型</a></li>  <li class="file"><a href="/archives/f2b92668.html">各个平台的包管理器</a></li>  <li class="file"><a href="/archives/42f2446d.html">写给小白的 ShadowSocks 全平台客户端使用说明</a></li>  <li class="file"><a href="/archives/4fcffd79.html">各种软件配置文件规范</a></li>  <li class="file"><a href="/archives/16f6299.html">MySQL8 Grant check the manual that corresponds to your MySQL server version for the right syntax to use.m</a></li>  <li class="file"><a href="/archives/37910dd2.html">计算机的启动</a></li>  <li class="file"><a href="/archives/4940711f.html">8086 处理器寻址方式</a></li>  <li class="file"><a href="/archives/ab9fcc5d.html">虚拟机常见的网络模式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            2-软件使用
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Chrome
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/decc86d5.html">「转载」解析谷歌 Chrome 各分支版本</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            CodeBlock
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/51f295ff.html">Code::Block 新手配置教程</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Django
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/953c2552.html">Django 笔记-1-从请求到响应</a></li>  <li class="file"><a href="/archives/55c5932a.html">Django 不同环境下使用不同设置文件</a></li>  <li class="file"><a href="/archives/dfb4f33e.html">Django 时间字段中 auto_now 和 auto_now_add 的区别</a></li>  <li class="file"><a href="/archives/8bf18292.html">Django admin 笔记</a></li>  <li class="file"><a href="/archives/44c1e81d.html">Django app 笔记</a></li>  <li class="file"><a href="/archives/5d9ebead.html">Django 中有趣又有用的代码设计</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Excel
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6cc2e3a0.html">Excel 利用函数获取行号、列号、当前行的上一行</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            JetBrains
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/e82cc623.html">JetBrains 系列软件如何在 macOS 下快速创建文件</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            PHPStrom
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/297592c5.html">PHPStrom 常用快捷键汇总</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            SublimeText
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/59657ebc.html">Sublime Text 3 安装 SVN 插件</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            ThinkPHP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/d9089534.html">ThinkPHP5 静态资源[CSS , JS , img]加载</a></li>  <li class="file"><a href="/archives/87acc549.html">解决 TP5 无法接收客户端 Post 传递的 Json 参数</a></li>  <li class="file"><a href="/archives/7d2dd65c.html">ThinkPHP5 下商城类微信小程序下单 + 支付开发流程图</a></li>  <li class="file"><a href="/archives/28f0dfb7.html">ThinkPHP5 + 梦网实现手机验证码登陆后台逻辑</a></li>  <li class="file"><a href="/archives/d2b8c7e4.html">Windows 下 ThinkPHP5 配置 redis 缓存</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VMware
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/4dedf7b2.html">VMware 安装 CentOS 后网络设置</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VOX
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/aeea741e.html">解决 macOS 下 VOX 中文乱码问题</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VSCode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/a29d84d8.html">VS Code + PHPStudy 断点调试 PHP</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Vue
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b4f7e05e.html">vue-cli 下配置 Element + axios + Mockjs</a></li>  <li class="file"><a href="/archives/793400e.html">解决 Vue CSS 样式重复载入，为 Vue 添加全局 less 或 sass 基础样式库</a></li>  <li class="file"><a href="/archives/341c107a.html">Vue Router 实现动态路由和常见问题解决方案</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            WordPress
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6ec97606.html">WordPress 配置七牛云 CDN 具体操作</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            ZooKeeper
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/f1db9330.html">ZooKeeper 入门简介</a></li>  <li class="file"><a href="/archives/2b7b1ffc.html">ZooKeeper 命令</a></li>  <li class="file"><a href="/archives/bb55e9ff.html">ZooKeeper 配置文件解析</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            zsh
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/2025325c.html">zsh 历史文件损坏</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            命令行工具
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Git
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/3c3cdb74.html">Git 学习笔记</a></li>  <li class="file"><a href="/archives/6c235203.html">「转载」Git 远程仓库 pull/push 操作详解</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            curl
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/41e09627.html">格式化 curl 输出的 json 内容</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            dmidecode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/89447a6c.html">dmidecode 解析</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            homebrew
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/819175d6.html">homebrew tap</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            pip
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b47b33aa.html">pip 自动生成或安装 requiremen 依赖</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            pyenv
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/6005f6af.html">macOS 下利用 pyenv 管理 Python 版本和虚拟环境</a></li>  <li class="file"><a href="/archives/22859f2b.html">利用本地缓存解决 pyenv 下载缓慢问题</a></li>  <li class="file"><a href="/archives/911a03cb.html">通过 shell 文件激活 pyenv virtualenv 虚拟环境失败</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            tmux
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/9e40babb.html">tmux 入门 + 快捷键整理</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            vim
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/211d6e8d.html">vim 创建文件时根据文件类型自动添加内容</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            3-计算机科学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            1-理论计算机科学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            1-数据结构和算法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/f3c5e08e.html">数据结构笔记1-概论</a></li>  <li class="file"><a href="/archives/e3cbe031.html">数据结构笔记2-线性表</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            4-编程语言和编译器
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            C&CPP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/154e48dc.html">cpp 中的声明和定义</a></li>  <li class="file"><a href="/archives/ca916e4c.html">对比 C 和 CPP 中 struct class 和 union</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Erlang
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/76405d8b.html">Erlang 程序设计笔记-第一部分</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            HTML
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/cd7f373a.html">如何用纯 HTML 区分一个 form 表单中的多个 submit</a></li>  <li class="file"><a href="/archives/8b008844.html">利用 position + rgba 将 HTML 背景灰化</a></li>  <li class="file"><a href="/archives/c0d98826.html">固定一个 div 在另一个 div 的底部</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            PHP
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/60232ab3.html">「转载」PHP 常用缓存技术的总结</a></li>  <li class="file"><a href="/archives/e639e72a.html">「转载」PHP 静态方法和非静态方法简单对比</a></li>  <li class="file"><a href="/archives/44e28494.html">「转载」PHP 判断文件存在是用 file_exists 还是 is_file</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Python
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/19ed6e31.html">Python + OpenCV 图像处理-1</a></li>  <li class="file"><a href="/archives/4007339e.html">Python 中的内置异常</a></li>  <li class="file"><a href="/archives/e0455099.html">Python 中的异常处理</a></li>  <li class="file"><a href="/archives/7a294715.html">所谓 WSGI</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Shell
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8f9d5c85.html">Shell 获取当前脚本的绝对路径</a></li>  <li class="file"><a href="/archives/17043032.html">echo</a></li>  <li class="file"><a href="/archives/b422aa7d.html">Shell 区分不同 Unix 系统</a></li>  <li class="file"><a href="/archives/3beb222a.html">Shell 基础语法</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            TypeScript
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/e7cd2bef.html">TypeScript 名词理解</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            汇编语言
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/f3934733.html">x86汇编指令</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            2-计算机系统
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            2-操作系统
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            CiscoIOS
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/3bd55461.html">Cisco IOS 系列-0-概览</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Linux
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/1d036a8c.html">Linux 系统下不同类型文件默认的颜色</a></li>  <li class="file"><a href="/archives/d19e8f5d.html">Linux 学习笔记-1</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            macOS
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/607dec48.html">macOS 如何删除自带 ABC 输入法</a></li>  <li class="file"><a href="/archives/26aeca3.html">macOS 访达常用快捷键</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            5-计算机安全和密码学
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/a45966e2.html">块加密的工作模式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            6-数据库
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            MongoDB
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/b880b012.html">自用 MongoDB 手册</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            MySQL
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/ef1e0835.html">MySQL 修改数据库名</a></li>  <li class="file"><a href="/archives/466aea21.html">MySQL GRANT 授权语句</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            3-计算机应用技术
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            4-人工智能
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/8fbb5ea2.html">人工智能-0-概览</a></li>  <li class="file"><a href="/archives/61dc3b15.html">神经网络-1-概览</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            4-软件工程
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            RESTful
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/archives/7e15b804.html">RESTful 笔记-1-接口设计规范</a></li>  </ul> 
+                    </li> 
+                     <li class="file active"><a href="/archives/f15c2f60.html">「转载」互联网产品研发流程概论</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+        
+  <div class="toc-flag"></div>
+  <div class="toc-wrap">
+      <h3>
+          <span>文章目录</span>
+      </h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#立项阶段"><span class="toc-number">1.</span> <span class="toc-text">立项阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#市场调研"><span class="toc-number">1.1.</span> <span class="toc-text">市场调研</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户需求调研"><span class="toc-number">1.2.</span> <span class="toc-text">客户需求调研</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编写产品提案（BRD）"><span class="toc-number">1.3.</span> <span class="toc-text">编写产品提案（BRD）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#产品设计（设计阶段）"><span class="toc-number">2.</span> <span class="toc-text">产品设计（设计阶段）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#产品概念设计"><span class="toc-number">2.1.</span> <span class="toc-text">产品概念设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#确定产品功能组合"><span class="toc-number">2.2.</span> <span class="toc-text">确定产品功能组合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#确定功能清单"><span class="toc-number">2.3.</span> <span class="toc-text">确定功能清单</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#输出需求概要文档"><span class="toc-number">2.4.</span> <span class="toc-text">输出需求概要文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#输出需求详情文档"><span class="toc-number">2.5.</span> <span class="toc-text">输出需求详情文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#需求评审"><span class="toc-number">2.6.</span> <span class="toc-text">需求评审</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#交互设计"><span class="toc-number">3.</span> <span class="toc-text">交互设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#交互设计需求分析"><span class="toc-number">3.1.</span> <span class="toc-text">交互设计需求分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#功能交互设计"><span class="toc-number">3.2.</span> <span class="toc-text">功能交互设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#交互细节设计"><span class="toc-number">3.3.</span> <span class="toc-text">交互细节设计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#视觉设计"><span class="toc-number">4.</span> <span class="toc-text">视觉设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#视觉设计需求分析"><span class="toc-number">4.1.</span> <span class="toc-text">视觉设计需求分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#视觉概念设计"><span class="toc-number">4.2.</span> <span class="toc-text">视觉概念设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主界面设计"><span class="toc-number">4.3.</span> <span class="toc-text">主界面设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#视觉细节设计"><span class="toc-number">4.4.</span> <span class="toc-text">视觉细节设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#视觉设计规范"><span class="toc-number">4.5.</span> <span class="toc-text">视觉设计规范</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#架构设计"><span class="toc-number">5.</span> <span class="toc-text">架构设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#系统架构设计"><span class="toc-number">5.1.</span> <span class="toc-text">系统架构设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#软件架构设计"><span class="toc-number">5.2.</span> <span class="toc-text">软件架构设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#网络架构设计"><span class="toc-number">5.3.</span> <span class="toc-text">网络架构设计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建版本计划"><span class="toc-number">6.</span> <span class="toc-text">创建版本计划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开发阶段"><span class="toc-number">7.</span> <span class="toc-text">开发阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#开发测试环境准备"><span class="toc-number">7.1.</span> <span class="toc-text">开发测试环境准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开发设计文档"><span class="toc-number">7.2.</span> <span class="toc-text">开发设计文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前端开发"><span class="toc-number">7.3.</span> <span class="toc-text">前端开发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#APP客户端开发"><span class="toc-number">7.4.</span> <span class="toc-text">APP客户端开发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#后台开发"><span class="toc-number">7.5.</span> <span class="toc-text">后台开发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开发工程师自测"><span class="toc-number">7.6.</span> <span class="toc-text">开发工程师自测</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试阶段"><span class="toc-number">8.</span> <span class="toc-text">测试阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#测试用例"><span class="toc-number">8.1.</span> <span class="toc-text">测试用例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#功能体验测试"><span class="toc-number">8.2.</span> <span class="toc-text">功能体验测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#性能测试"><span class="toc-number">8.3.</span> <span class="toc-text">性能测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据初始化运营"><span class="toc-number">8.4.</span> <span class="toc-text">数据初始化运营</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#产品内部测试"><span class="toc-number">8.5.</span> <span class="toc-text">产品内部测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发布上线阶段"><span class="toc-number">9.</span> <span class="toc-text">发布上线阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#发布环境准备"><span class="toc-number">9.1.</span> <span class="toc-text">发布环境准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库上线"><span class="toc-number">9.2.</span> <span class="toc-text">数据库上线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#程序文件编译上线"><span class="toc-number">9.3.</span> <span class="toc-text">程序文件编译上线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上线版本整体评估"><span class="toc-number">9.4.</span> <span class="toc-text">上线版本整体评估</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#灰度发布"><span class="toc-number">9.5.</span> <span class="toc-text">灰度发布</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优化阶段"><span class="toc-number">10.</span> <span class="toc-text">优化阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#研发工作总结"><span class="toc-number">10.1.</span> <span class="toc-text">研发工作总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上线后收集用户反馈"><span class="toc-number">10.2.</span> <span class="toc-text">上线后收集用户反馈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#产品体验可用性测试"><span class="toc-number">10.3.</span> <span class="toc-text">产品体验可用性测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运维系统优化"><span class="toc-number">10.4.</span> <span class="toc-text">运维系统优化</span></a></li></ol></li></ol>
+  </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-3-计算机科学/4-软件工程/「转载」互联网产品研发流程概论" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/3-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">3-计算机科学</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/3-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/4-%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/">4-软件工程</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/%E8%BD%AC%E8%BD%BD/" rel="tag">转载</a>, <a class="tag-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" rel="tag">软件工程</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/archives/f15c2f60.html">
+            <time datetime="2019-08-03T00:00:00.000Z" itemprop="datePublished">2019-08-03</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/raw/backups/source/_posts/3-计算机科学/4-软件工程/「转载」互联网产品研发流程概论.md" target="_blank" rel="external nofollow noopener noreferrer"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/edit/backups/source/_posts/3-计算机科学/4-软件工程/「转载」互联网产品研发流程概论.md" target="_blank" rel="external nofollow noopener noreferrer"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/ryomahan/ryomahan.github.io/commits/backups/source/_posts/3-计算机科学/4-软件工程/「转载」互联网产品研发流程概论.md" target="_blank" rel="external nofollow noopener noreferrer"> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            「转载」互联网产品研发流程概论
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+        
+            <!-- 内容失效提醒 -->
+            
+    <!-- 如果文章创建超过一年或最后一次更新时间超过一个月(默认)则提示文章过期 -->
+    
+        <div class="aging">
+            <i class="fa fa-exclamation-circle aging-icon" aria-hidden="true"></i>
+            <span class="aging-content">请注意：本文编写于 <span class="aging-content-date">2019-08-03</span>，其中某些信息可能已经失去时效性。</span>
+        </div>
+    
+
+            <p>原文地址：<a href="http://www.woshipm.com/pd/841065.html" target="_blank" rel="external nofollow noopener noreferrer">人人都是产品经理：互联网产品研发流程概论</a><br>转载过程中有所删减，本文不代表原文作者观点。</p>
+<p>产品研发流程大体分为：立项阶段、设计阶段、开发阶段、测试阶段、上线阶段、磨合阶段、运营阶段、总结阶段。</p>
+<h2 id="立项阶段"><a href="#立项阶段" class="headerlink" title="立项阶段"></a>立项阶段</h2><p>从分解公司战略开始，先通过市场调研获取客户需求，然后梳理产品方向形成产品提案给项目负责人审批，审批通过后正式进入产品研发阶段。</p>
+<h3 id="市场调研"><a href="#市场调研" class="headerlink" title="市场调研"></a>市场调研</h3><p>市场调研就是通过调研筛选典型客户，并对这些客户的需求细节进行汇总和梳理。</p>
+<p>典型用户一般都是通过用户画像的形式进行描述。对已有产品可以直接通过数据统计部门拿到用户画像数据。用户画像一般都是通过抽样方法，随机抽取一批客户进行问卷调查。</p>
+<p>新产品则需要先约定大致客户群特征，然后针对这个群体做抽样问卷调查。问卷设计一般由产品经理完成，然后可以找专业调研公司实施。</p>
+<h3 id="客户需求调研"><a href="#客户需求调研" class="headerlink" title="客户需求调研"></a>客户需求调研</h3><p>客户需求分析就是将调研过程中涉及的需求信息，根据需求重要程度分级，优先满足客户基础需求，即用户痛点。</p>
+<p>在拿到一个新的产品以前，产品经理应该把需求进行一次整理，看<strong>哪些是真需求？哪些是边缘需求？哪些是伪需求</strong>？进而把功能点、产品卖点思路整理清晰。</p>
+<p>一定要注重需求层次，并不是所有的需求都要满足，重点是：解决用户痛点行程产品卖点。</p>
+<h3 id="编写产品提案（BRD）"><a href="#编写产品提案（BRD）" class="headerlink" title="编写产品提案（BRD）"></a>编写产品提案（BRD）</h3><p>立项阶段主要是输出产品提案，提交给公司项目负责人决策。产品提案也就是「商业需求文档」简称 BRD(Business Requirement Document)，是基于商业目的或价值所描述的商业需求。其核心用途在于能够在产品投入研发之前为企业高层提供决策评估依据。其内容涉及：<strong>产品概述、市场需求、竞争环境、重要性、成功要素、营销策略、盈利预测等</strong>内容，一般比较短小精炼，<strong>不包含产品细节</strong>，PPT 形式居多。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803161317.jpg" alt="支付宝用户事业部产品提案模板"></p>
+<h2 id="产品设计（设计阶段）"><a href="#产品设计（设计阶段）" class="headerlink" title="产品设计（设计阶段）"></a>产品设计（设计阶段）</h2><p>产品设计分为输出概念设计、输出功能清单、输出需求概要文档、输出需求详情文档等步骤。</p>
+<h3 id="产品概念设计"><a href="#产品概念设计" class="headerlink" title="产品概念设计"></a>产品概念设计</h3><p>概念设计是非常关键的产品环节，简单明确的概念不仅<strong>让客户更容易理解</strong>，也<strong>让产品研发过程思路清晰、少走弯路</strong>。而且，概念设计<strong>也是软件架构师将产品概念转化为技术对象化模型的关键环节</strong>。</p>
+<p>以支付宝产品为例，就是采用了「钱包」概念模型。钱包里有现金、银行卡，也可以放身份证、名片、照片、小票、发票等。区分好<strong>需求层级</strong>，产品交互体验的层次和用力程度自然就出来了。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803164033.jpg" alt="支付宝钱包用户产品模型"></p>
+<h3 id="确定产品功能组合"><a href="#确定产品功能组合" class="headerlink" title="确定产品功能组合"></a>确定产品功能组合</h3><p>根据产品概念模型和需求优先级，确认<strong>关键性的功能要点</strong>。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803164601.jpg" alt="QQ 音乐关键功能要点"></p>
+<h3 id="确定功能清单"><a href="#确定功能清单" class="headerlink" title="确定功能清单"></a>确定功能清单</h3><p>对功能进行<strong>树状化</strong>梳理，把所有功能点都整理到一个列表里。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803164725.jpg" alt="QQ影音产品功能清单V1.0"></p>
+<p>这些功能点后续都作为需求点加入项目管理系统中，方便团队所有成员沟通和完善这个功能清单。形成功能清单初稿后，产品经理需要先在产品团队中组织讨论完善，然后再找运营团队沟通完善，然后是找交互视觉团队补充完善，最后再找研发项目经理、研发、测试、运维等角色沟通完善。</p>
+<p>这个过程既是帮产品经理完善的过程，也是形成团队共识、激发团队热情的过程。</p>
+<h3 id="输出需求概要文档"><a href="#输出需求概要文档" class="headerlink" title="输出需求概要文档"></a>输出需求概要文档</h3><p>概要文档明确某个功能模块下的功能介绍，一般是多个功能点的描述。需求概要一般由产品经理负责撰写，<strong>不包含功能细节描述</strong>。为了方便与产品设计师们沟通需求，可以将主要功能界面草稿加入该文档中，用原型草图能更好地描述主要功能。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803165557.jpg" alt="腾讯视频PC版播放模块的需求概要文档"></p>
+<p>有了某个模块的需求概要文档后，<strong>研发项目经理组织团队沟通需求概要</strong>。产品经理首先介绍需求概要然后由其他团队成员提出自己关心的专业问题。会前产品经理提前分享文档，并收集准备大家的问题点。</p>
+<p>会后<strong>主架构师根据需求概要做架构设计框架</strong>，<strong>研发工程师也可以针对自己负责的模块做技术预研</strong>。有经验的工程师，往往在这个阶段就<strong>开始试着做个Demo</strong>，把主体功能流程跑通，这样在正式进入研发时就会比较轻松，专注于细节完善和产品质量。</p>
+<h3 id="输出需求详情文档"><a href="#输出需求详情文档" class="headerlink" title="输出需求详情文档"></a>输出需求详情文档</h3><p>需求详情文档由<strong>产品设计师负责编写</strong>。需求概要中的需求点，<strong>每个都需要单独编写需求详情文档</strong>，而不是把所有的需求详情都写在一个文档里。这样会导致需求详情文档非常长，内容庞杂，这个会导致后续很多问题。需求点最好<strong>都能拆分到1周内能完成研发测试</strong>比较好，这样才能有效实现敏捷开发。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803170344.jpg" alt="腾讯视频PC版自动登录需求文档"></p>
+<p>需求文档并不是产品设计师一个人闭门造车就能写出来的。产品设计师需要频繁与交互、运营、视觉、用户研究（UER）、架构师、测试经理、开发、运维等人员沟通。沟通的过程更多是产品设计师学习和融合各个角色思考的过程，同时也让各个角色的工作更加明确。</p>
+<p>一般需求文档的编写分成以下步骤：</p>
+<p>第一步：根据需求概要设计<strong>用户操作流程图</strong>。</p>
+<p>第二步：根据用户操作流程<strong>拆分各个界面</strong>，<strong>绘制主界面草图</strong>加入文档，再分别描述每个界面的<strong>主要元素和功能点</strong>，再描述界面之间<strong>交互的逻辑</strong>，最后加上交互背后涉及的<strong>业务逻辑</strong>。</p>
+<p>第三步：找运营沟通需求，根据运营人员的建议<strong>补充营销位</strong>、<strong>运营后台工具等</strong>内容。</p>
+<p>第四步：找交互设计师沟通交互细节，根据交互设计师的疑问<strong>补充</strong>界面中的<strong>交互逻辑</strong>。交互设计师完成交互设计稿后，将交互稿截图并加入文档，并完善交互逻辑说明。</p>
+<p>第五步：找视觉设计师沟通视觉细节，提醒视觉设计师<strong>突出重点</strong>。视觉设计师完成设计稿后，将设计稿截图并加入文档，并完善视觉界面说明。</p>
+<p>第六步：找架构师沟通算法和技术逻辑，根据架构师提出的疑问<strong>完善业务逻辑</strong>。</p>
+<p>第七步：找测试经理沟通<strong>测试用例</strong>，根据测试经理提出的疑问完善功能细节。因为测试经理需要写测试用例，<strong>测试用例是以需求文档为蓝本</strong>，如果需求文档不清楚必然会导致测试用例不完善，因此测试经理往往对产品设计师的帮助很大，<strong>甚至会比产品设计师更了解产品细节</strong>。</p>
+<p>第八步：找 UER 做功能调研。UER 将需求文档转化为调研文档，然后通过产品体验群、邀请客户当面体验等方式找出产品设计中的问题。然后 UER 反馈给产品经理，产品设计师合并优化成产品需求详情文档。有的公司 UER 调研也是由产品设计师承担，但是专业性上有可能难以保障。</p>
+<p>第九步：找产品经理、研发项目经理、运维确认需求文档，并<strong>初步确定排期</strong>。</p>
+<h3 id="需求评审"><a href="#需求评审" class="headerlink" title="需求评审"></a>需求评审</h3><p>如果之前编写过程<strong>与每个角色都有了充分的沟通</strong>，需求评审就会变得很轻松愉快。否则，产品经理和产品设计师将会陷入无止境的辩论中，往往动辄就让整个团队消耗了几个小时还无法形成结论。</p>
+<p>因此，需求评审的关键就是产品设计师事先做好评审会的一切准备。提前准备好所有资料并提前发给团队所有成员，并事先与所有角色都逐一确认过关键问题，而且得到了产品经理和研发项目经理的确认。在评审会上，先讲总体，再讲重要细节，再讲次重要细节，并层层确认。</p>
+<p>对于会议上争议较大的问题点，5分钟 后还没结论的马上记录下来，会后再单独讨论。如果问题点太多，就说明产品设计师还没考虑清楚，那就尽早结束会议，重新修改后再召开评审。这种情况会严重影响产品团队的声誉，因为耽误的是所有人的时间。为了减少这种风险，<strong>需求评审一定要提前 1-2周 召开，而不要等到开发前夕才进行评审</strong>。</p>
+<h2 id="交互设计"><a href="#交互设计" class="headerlink" title="交互设计"></a>交互设计</h2><p>交互设计主要是<strong>将</strong>产品经理的<strong>功能设计</strong>，<strong>用原型图和交互流程的形式展现出来</strong>，方便与用户及团队进行沟通。交互设计原型将产品经理提供的产品原型草图<strong>具象化</strong>，<strong>减少了需求不确定性，保证产品功能可用性</strong>。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803171212.jpg" alt="腾讯设计完整流程图"></p>
+<h3 id="交互设计需求分析"><a href="#交互设计需求分析" class="headerlink" title="交互设计需求分析"></a>交互设计需求分析</h3><p>交互设计需求分析主要是要回答以下问题：</p>
+<ol>
+<li>重点是给哪些角色看？</li>
+</ol>
+<p>涉及交互稿的角色很多，几乎每个角色都需要，但是<strong>只要有专业细致的交互稿</strong>，也就能满足所有角色的需求了，<strong>无需针对每个人提供不同的交互稿版本</strong>。</p>
+<p>产品经理：产品经理需要将交互稿截图合并到需求文档，提供给各个角色作为需求源。</p>
+<p>视觉设计师：需要以交互设计稿为基础，设计出每个界面的 PSD 文档。</p>
+<p>研发经理：需要通过交互设计稿，判断需要调配哪些角色参与，大概需要多少时间。</p>
+<p>架构师：需要通过交互设计稿，梳理出软件架构设计，特别是<strong>功能流程设计与软件架构和网络架构设计紧密相关</strong>。</p>
+<p>Web 前端开发：需要通过交互设计稿，确认网页界面是如何串联起来的。这里不仅涉及功能流程设计，也包括交互细节。</p>
+<p>APP 客户端开发：需要通过交互设计稿，确认 APP 软件界面是如何串联起来的。这里不仅涉及功能流程设计，也包括交互细节。</p>
+<p>后台开发：需要通过交互设计稿，确认采用哪种后台调用方式，以及如何通过交互设计让用户在面对网络延迟等情况时体验更佳。</p>
+<p>测试：需要通过交互设计稿，编写功能测试用例，以及每个交互体验细节的测试用例。</p>
+<p>用户研究：需要通过交互设计稿，访谈客户，让客户更容易理解产品功能，从而获得更有效的反馈。</p>
+<ol start="2">
+<li>用户场景是什么？</li>
+</ol>
+<p>确定是要做什么场景下的交互设计。具体包括用户画像、主要功能流程等。</p>
+<ol start="3">
+<li>采用什么样的形式？</li>
+</ol>
+<p>交互文档大多都采用 Axure 进行设计，一般都采用线框稿的形式。</p>
+<ol start="4">
+<li>要达到什么标准？</li>
+</ol>
+<p>一般衡量交互水平的指标，是整个功能操作流程的流量转化率。</p>
+<p>以注册登录为例，可以通过抽样监测从进入注册到登录完成每个步骤进行数据跟踪，然后得出转化率数据值，然后再跟竞品或类似产品进行对比，不断提升这个转化率。</p>
+<h3 id="功能交互设计"><a href="#功能交互设计" class="headerlink" title="功能交互设计"></a>功能交互设计</h3><p>功能交互设计主要是将软件界面之间的跳转关联关系表达清楚。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803172050.jpg" alt="百度电脑管家功能交互设计"></p>
+<h3 id="交互细节设计"><a href="#交互细节设计" class="headerlink" title="交互细节设计"></a>交互细节设计</h3><p>交互细节<strong>涉及点非常多</strong>，不同公司、不同类型的产品都会有自己不同的交互设计风格和细节处理方式。为了保证产品交互细节上的统一和规范，<strong>互联网公司一般都会制定自己的交互设计规范</strong>，以便指导设计师完成交互设计。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803172217.jpg" alt="腾讯网站产品交互设计规范V1.0"></p>
+<p>交互细节设计，一般涉及交互控件元素、交互文案、装饰图形等内容。</p>
+<p>每个看似很小的功能细节，都往往需要花费大量精力去做细。为了节省成本，在这样的功能开发出来后，都最好对象化模块化，其他场景只需调用这个模块即可快速创建类似的功能。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803172256.jpg" alt="网页翻页功能细节交互设计"></p>
+<h2 id="视觉设计"><a href="#视觉设计" class="headerlink" title="视觉设计"></a>视觉设计</h2><h3 id="视觉设计需求分析"><a href="#视觉设计需求分析" class="headerlink" title="视觉设计需求分析"></a>视觉设计需求分析</h3><p>视觉设计需求分析主要是<strong>明确视觉设计需要达到的目的</strong>。</p>
+<p>以 Logo 设计为例，最常见的需求要点是两个：明确表义、吸引视线。因此在设计过程中，通过<strong>把竞品和不同设计方案可以放到一起</strong>，从而找到最优的设计方案。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803172709.jpg" alt="百度输入法Logo设计需求调研"></p>
+<h3 id="视觉概念设计"><a href="#视觉概念设计" class="headerlink" title="视觉概念设计"></a>视觉概念设计</h3><p>视觉概念设计建立在视觉风格推导基础上，用以描绘出产品视觉风格的基本方向。</p>
+<p>该步骤需要<strong>确定产品风格</strong>，为后续确</p>
+<p>定设计元素、明度、色调、质感等设计细节奠定基础。</p>
+<h3 id="主界面设计"><a href="#主界面设计" class="headerlink" title="主界面设计"></a>主界面设计</h3><p>主视觉设计师拿到交互稿后，针对主要功能界面设计风格定位稿。</p>
+<h3 id="视觉细节设计"><a href="#视觉细节设计" class="headerlink" title="视觉细节设计"></a>视觉细节设计</h3><p>针对界面中的每个控件，都按照<strong>像素级标准</strong>进行绘制。</p>
+<p>每个空间的分层素材都需要通过 PSD 文档进行保留，色块区域的颜色值需要标注，按钮的每个状态都需要单独设计，每个控件的尺寸也需要明确标注。交互设计中的每个细节设计状态，也都应该有对应的设计稿。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803173305.jpg" alt="腾讯视频播放器内容库视觉细节设计"></p>
+<h3 id="视觉设计规范"><a href="#视觉设计规范" class="headerlink" title="视觉设计规范"></a>视觉设计规范</h3><p>与交互设计类似，视觉设计涉及点也非常多。为了保证产品视觉细节上的统一和规范，互联网公司一般都会制定自己的产品视觉设计规范，以便指导设计师完成视觉设计。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803173357.jpg" alt="QQ音乐视觉设计规范"></p>
+<h2 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h2><p>架构设计是架构师<strong>对各个子系统关系的抽象模型</strong>，<strong>用于指导大型系统的开发和运维</strong>。</p>
+<p>架构设计主要包括三项工作：<strong>系统</strong>架构设计、<strong>软件</strong>架构设计、<strong>网络</strong>架构设计三个部分。</p>
+<p>系统架构设计一般都会采用 MVC(Model-View-Controller) 模型，将业务逻辑模型、软件界面、控制器逻辑层进行分层处理，然后通过控制器逻辑层确保业务逻辑层和软件界面层的同步。MVC 模型的好处是在优化界面及用户交互的同时，无需重新编写业务逻辑。同时也有助于管理复杂的应用程序，可以在不依赖业务逻辑的情况下专注于视图设计，不同开发人员可以同时开发界面、控制器逻辑和业务逻辑，同时也让测试变得更加容易。</p>
+<h3 id="系统架构设计"><a href="#系统架构设计" class="headerlink" title="系统架构设计"></a>系统架构设计</h3><p>如果整个系统研发是从零开始的，架构设计则需要从概况图开始梳理，然后再补充各个模块的架构图。这部分一般由首席架构师牵头，属于<strong>整个产品技术架构的总纲</strong>。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803173610.jpg" alt="支付宝平台系统架构概况图"></p>
+<p>一般而言，<strong>子系统名称都会与产品概念保持一致</strong>。子系统不论是应用前台还是后台，<strong>通过公共服务层、业务逻辑层、基础业务逻辑层关联到一起</strong>。这种对象化的架构设计方法，会让整个团队使用同一种语言在沟通， 相互理解起来更容易，有利于提高协作效率 。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803173737.jpg" alt="支付宝财会系统架构图"></p>
+<h3 id="软件架构设计"><a href="#软件架构设计" class="headerlink" title="软件架构设计"></a>软件架构设计</h3><p>软件架构设计一般采用<strong>分层架构设计模型</strong>。</p>
+<p>软件首先分为两个大层次：前端和后台。前端应用负责提供与用户交互的软件，分成 Web 应用，PC 客户端应用、移动 APP 应用等场景；后台负责实现所有业务相关的操作和服务，分成接口层、业务逻辑层、基础逻辑层。</p>
+<p>软件架构设计时，需要主要做到以下几点：支持<strong>模块化</strong>、<strong>高内聚</strong>、<strong>低耦合</strong>、<strong>可伸缩性</strong>，同时也要防止过度设计。已上线软件如果要新增某个功能，则需要针对该功能进行软件架构设计，并最终形成软件架构设计图。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803173916.jpg" alt="腾讯视频邮件推荐功能软件架构设计图"></p>
+<p>然后针对这个软件架构图进行<strong>细化</strong>，先明确系统涉及的所<strong>有基础逻辑层</strong>模块（对象），以及该模块的<strong>输入和输出项</strong>，并明确<strong>模块内部的基本处理逻辑</strong>。这些模块有的有可能已经存在，则无需再开发，单独标注出来即可；还没有开发的模块，则可以交给软件项目经理指派给工程师开发。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803174036.jpg" alt="模块功能和处理流程"></p>
+<p>然后明确界面上可以直接调用的各个业务逻辑层模块（对象）名称，以及对应接口、属性、方法。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803174200.jpg" alt></p>
+<p>对于还未开发的接口，如果涉及到数据调用，则需要梳理相关的<strong>数据结构</strong>，并确定算法。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803174240.jpg" alt></p>
+<p>上面介绍的只是最基础的软件架构设计流程，为了保证软件的<strong>柔性可用</strong>，经常还会加入 RPC 服务组件（让网络分布式应用开发变得更容易）、消息中间件（将模块之间的交互异步化）等方案。</p>
+<h3 id="网络架构设计"><a href="#网络架构设计" class="headerlink" title="网络架构设计"></a>网络架构设计</h3><ol>
+<li>运维架构</li>
+</ol>
+<p>架构设计需要保证<strong>每个环节都能快速迭代配置</strong>，尤其是在<strong>服务器CPU、内存、存储、带宽几个方面需要做到高可用性</strong>。</p>
+<p>以新零售个性化推荐动态 Feed 为例，我们梳理了整个网络结构设计的流程。首先需要<strong>根据业务数据分析网络系统需求</strong>。一般 Feed 信息流前 3页 访问量往往占了 90% 以上，因此在做缓存设计的时候，我们完全可以在缓存数据中只保存每个用户最近的 100条 数据，其他的需要用户下拉再从数据库中实时生成。</p>
+<p>然后需要从技术上解决<strong>高并发</strong>和<strong>高性能</strong>的问题。因为 Feed 性能压力主要集中在查询请求量上，而且一条 Feed 数据经常是数百甚至上百万人访问，因此 Feed 很适合采用缓存系统。当访问压力不大时，采用<strong>单层缓存</strong>数据就可以了。如果日均访问量达到了百万人次而且峰值非常明显，则最好采用<strong>双层缓存机制</strong>以增加系统扩容的灵活性。当写入 Feed 量很小但是访问量暴增时，只需扩容 L1 层服务即可；写入量暴增，则对 L2 层服务快速扩容。缓存扩容主要是提升 QPS、带宽瓶颈以及缓存数据库性能。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803174724.jpg" alt></p>
+<p>如果希望降低研发成本，也可以考虑购买云个性化推荐服务，这些中间处理过程就全部交给云服务去处理，这样可以集中力量解决业务层问题。</p>
+<p>Feed 中除了文本数据外，还会有大量图片甚至视频数据，此时可以采用该 CDN 做文件缓存。Local Cache + 分布式缓存，这是常见 CDN 缓存策略。此时比较经济的选择，是购买 CDN 云服务，发布 Feed 时，把这些图片和视频数据先 Post 到服务器，然后再同步到 CDN 云服务中去。</p>
+<p>然后是数据库的分布式架构。网络架构师拿到软件架构师的数据结构后，首先对 Feed 数据区分冷热数据。Feed 数据冷热一般都非常明显，可以按<strong>时间维度</strong>拆分做分表（例如每天 Feed 数据是独立一张分表）进行冷热数据分离，并对冷热数据采用不同的存储方案降低成本。Feed 数据还有快速检索的需求，因此需要通过<strong>建立索引提高检索速度</strong>。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803175033.jpg" alt></p>
+<ol start="2">
+<li>服务拨测系统（服务器监控）</li>
+</ol>
+<p>运维发布系统后，运维团队的压力才真正开始。随着用户量的不断增加，稳定性、性能和监控成了刚需。每个客户请求过来，都需要在后台不同机器之间不停地调用并返回。只要有 1个 接口出现问题，就会导致整个系统出现性能下降、服务延时甚至崩溃。</p>
+<p>此时，就需要有效的<strong>服务追踪系统</strong>。对新零售企业而言，最经济有效的办法是采用云拨测系统。<strong>通过部署抽样接口到云拨测系统，特别是在高峰时段进行监测，即可通过手机短信或邮件监控服务异常</strong>。</p>
+<ol start="3">
+<li>日志统计系统</li>
+</ol>
+<p>要考虑全链路压测、服务器登录安全性、运维权限分配、流量峰后降级预案、共享 Docker 集群资源等问题，确保系统可用性、安全性、单位成本。</p>
+<h2 id="创建版本计划"><a href="#创建版本计划" class="headerlink" title="创建版本计划"></a>创建版本计划</h2><p>当架构设计完成并评审后，研发项目经理开始<strong>对需求和架构进行切分，形成版本计划</strong>。</p>
+<p>版本主要作用是用来<strong>明确研发节奏，方便团队协作，特别是方便测试和产品发布</strong>。</p>
+<p>一般产品研发节奏都是按<strong>每周 1个 小版本</strong>，以便安排和协作。但是因为 APP 有发布周期和推广成本的考虑，因此会<strong>每隔几周发布一个大版本</strong>。</p>
+<p>每个版本都包括若干需求点，因此自然就明确了测试范畴，这样测试范围就不会无限制蔓延，可以让产品节奏非常明确，形成快速迭代和敏捷开发的研发风格。</p>
+<p>版本落地到代码管理层面上，关键就是代码管理系统（一般都选用 Git）中的 Trunk 版本。首先项目经理需要在 Git 中创建 Trunk 版本，并为每个研发人员创建分支版本。研发人员在分支版本中测试没有问题的版本代码，将由架构师或项目经理合并到 Trunk 版本中，这个版本经过编译后进行功能和系统测试，没问题后再同步到运维发布系统中发布。</p>
+<h2 id="开发阶段"><a href="#开发阶段" class="headerlink" title="开发阶段"></a>开发阶段</h2><h3 id="开发测试环境准备"><a href="#开发测试环境准备" class="headerlink" title="开发测试环境准备"></a>开发测试环境准备</h3><p>主要是部署 Web, APP 开发测试环境，以及部署需求管理系统、代码管理系统 Git 等。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803175518.jpg" alt="QQ游戏大厅研发环境搭建计划"></p>
+<h3 id="开发设计文档"><a href="#开发设计文档" class="headerlink" title="开发设计文档"></a>开发设计文档</h3><p>开发工程师拿到架构师设计文档后，就可以<strong>将自己负责的部分拆分出来</strong>，然后提前对这部分的开发细节进行补充和完善，形成开发设计文档。开发设计文档主要用来提高软件开发效率，保证软件质量，并有利于后续<strong>产品客服文档</strong>的编写，也非常有利于后续的研发迭代和代码维护工作。</p>
+<p>前端开发、APP 客户端开发、后台开发完善的内容和细节各不相同，但是内容主要集中在<strong>开发环境、开发语言、使用框架、对象属性方法、接口封装、数据结构设计、界面开发、编译发布等</strong>方面。</p>
+<h3 id="前端开发"><a href="#前端开发" class="headerlink" title="前端开发"></a>前端开发</h3><p>前端开发工程师通过使用 JavaScript 来编写和封装具有良好性能的前端交互组件，并通过 CSS + HTML 输出 Web 操作界面。前端工程师经常不仅要考虑前端实现，很多时候也需要了解后台研发，从而能不断优化前端代码分层架构，让 Web 产品的稳定性和可用性不断提升。</p>
+<h3 id="APP客户端开发"><a href="#APP客户端开发" class="headerlink" title="APP客户端开发"></a>APP客户端开发</h3><p>App 客户端开发主要是指 IOS, Android、微信小程序的开发。</p>
+<p>IOS 开发推荐使用 Xcode，需要运行在 Mac OS 上；Android 开发推荐使用 Eclipse；微信小程序开发需要使用微信开发者工具。</p>
+<h3 id="后台开发"><a href="#后台开发" class="headerlink" title="后台开发"></a>后台开发</h3><p>后台开发主要是指的服务器端的程序开发，包括 Web 后台开发、组件开发两类。两者之间其实本质上一体的，Web 后台可以看作是组件的前端。Web 后台解析了 HTTP 请求，然后通过层层转发给了后面分布式系统的多个组件并调用服务。</p>
+<p>因为互联网公司的 Server 一般都是 Linux，因此还会涉及到 Shell 脚本 编写、Linux 环境编程等内容，需要熟悉 Linux/Unix 下各种环境编程的 API。</p>
+<h3 id="开发工程师自测"><a href="#开发工程师自测" class="headerlink" title="开发工程师自测"></a>开发工程师自测</h3><p>开发工程师可以一边研发一边自测，完成所负责功能模块的开发后再进行完整功能模块的自测。</p>
+<p>开发自测和测试的重点不一样，是为了减少不必要成本，而不是要替代测试工程师的工作。因为代码是开发自己写的，自测可以发现的问题，就完全没必要让测试工程师去发现。而且发现问题马上就可以自己修改自己验证，减少了沟通和返工成本。</p>
+<h2 id="测试阶段"><a href="#测试阶段" class="headerlink" title="测试阶段"></a>测试阶段</h2><p>从需求详情文档经过评审，测试工作就开始了。</p>
+<h3 id="测试用例"><a href="#测试用例" class="headerlink" title="测试用例"></a>测试用例</h3><p>测试经理组织测试工程师，<strong>根据需求详情文档撰写测试用例</strong>。</p>
+<p>测试用例是软件测试质量稳定的保障，用于<strong>指导测试的实施</strong>、<strong>规划测试数据</strong>、<strong>设计测试脚本</strong>、<strong>评估测试结果</strong>、<strong>分析缺陷标准等</strong>。测试用例一般都详细记录测试工程师应该有的操作信息，这样可以帮助测试工程师参与测试。</p>
+<p>测试用例文档一般包括修订记录、测试用例、测试数据等内容。测试用例可以直接在项目管理系统中批量创建。</p>
+<p>有很多常见模块可以<strong>归纳成测试用例库</strong>，然后不断优化完善，这样可以减少重复设计测试用例。相当于把测试工作也组件化，减少低效沟通提高效率。例如注册功能测试用例，每隔一段时间就更新一次，以后出现需要测试注册功能的时候测试工程师即可按照此规范进行测试，而无需针对这个功能重复编写测试用例。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803180240.jpg" alt="注册功能的测试用例规范（部分）"></p>
+<h3 id="功能体验测试"><a href="#功能体验测试" class="headerlink" title="功能体验测试"></a>功能体验测试</h3><p>功能测试就是<strong>对产品功能进行验证</strong>，根据功能测试用例逐项测试，检查产品功能是否达到用户要求。功能测试主要采用黑盒测试方法，把测试对象看作黑盒子，主要测试功能而不考虑软件内部结构及代码。一般从软件产品的界面、架构出发，按照需求编写出来的测试用例，输入数据在预期结果和实际结果之间进行评测，进而提出更加使产品达到用户使用的要求。</p>
+<p>黑盒测试试图发现以下类型的错误：功能错误或遗漏、界面错误、数据结构或外部数据库访问错误、性能错误、初始化和终止错误等。</p>
+<p>这部分测试除了测试工程师需要参与外，<strong>产品、交互、视觉设计师也需要深度参与，因为很多隐性信息都很难在需求文档中写得无一遗漏</strong>，但是产品设计师一看就能看出很多的问题，而这些问题测试工程师却难以判断，因为他们经常不知道产品设计师怎么想的。</p>
+<p>功能体验测试最好是与研发同步。Web 测试提供测试环境，产品设计团队通过配置 host 即可访问测试环境，随时能看到开发进展情况。对客户端的开发，则每天定时合并代码到 Trunk 并提供 daily build 版本，产品设计团队及时下载体验，并在下班前将体验问题通过工作群告知研发人员，以便研发人员第二天及时改进。这样可以及时纠偏，减少研发憋大招。这个地方看似很小的工作习惯改变，但是会产生天壤之别的结果。所谓敏捷开发，也体现在这些协作细节里。</p>
+<h3 id="性能测试"><a href="#性能测试" class="headerlink" title="性能测试"></a>性能测试</h3><p>性能测试关注软件完成特定功能的响应速度、稳定性和运维成本消耗。主要是为了优化系统容量、可扩展性、系统稳定性、资源利用率等指标。</p>
+<p>性能测试一般采用压力测试的方法，<strong>通过给系统加载一定负荷的业务压力，让系统持续运行一段时间（一般为 7×24小时），检测系统是否能稳定运行</strong>。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803180808.jpg" alt="性能测试方案模板（大纲部分）"></p>
+<p>性能测试主要步骤如下：</p>
+<ol>
+<li>罗列主要用户<strong>场景</strong>及相应负载量</li>
+</ol>
+<p><strong>重点针对可能出现性能瓶颈的场景，逐项分解和预估负载量。</strong></p>
+<p>为了让系统抗压能力更大一些，一般都会<strong>多预估一定比例的负载量</strong>，以防出现意外情况。</p>
+<ol start="2">
+<li>识别稳定性的主要性能指标</li>
+</ol>
+<p>然后根据每个场景的负载量，<strong>分解</strong>每个后台服务、APP、Web 端所需<strong>关注的系统指标</strong>，比如响应时间、CPU、内存使用率等。</p>
+<ol start="3">
+<li>单元性能测试与改进</li>
+</ol>
+<p>在准备好测试环境后，使用测试工具对每个接口按照合法输入格式进行压力测试，确保在目标负载量都不会导致出现问题。比较常用的压力测试工具是 Loadrunner。</p>
+<p>如果系统出现响应延迟或崩溃的情况，则需要运维和研发快速迭代。然后再次测试，直到系统性能指标达标为止。</p>
+<ol start="4">
+<li>客户端兼容性测试</li>
+</ol>
+<p>Web 界面的兼容性测试，可以直接用 Chrome 内置开发工具即可完成。</p>
+<p>APP 兼容性测试，最好借用第三方工具（例如 Testin云测），提交 APP 后，Testin 云测将会部署 APP 到数百款手机，然后自动输出兼容性稳定性报告。也可以根据测试工程师提供的测试用例，针对每款手机批量进行功能和体验测试。</p>
+<ol start="5">
+<li>整体系统测试与改进</li>
+</ol>
+<p>当每个场景下的单元测试完成后，再针对整个系统进行完整的压力测试。</p>
+<p>同样，如果出现响应延迟或崩溃的情况，则需要运维和研发快速迭代，找到出问题的后台接口或前台模块进行优化，直到系统性能指标达标为止。</p>
+<h3 id="数据初始化运营"><a href="#数据初始化运营" class="headerlink" title="数据初始化运营"></a>数据初始化运营</h3><p>数据初始化首先是数据库工程师根据产品和运营人员的需求，<strong>对基础数据进行完善和补充，以达到能用户能正常使用的状态</strong>。</p>
+<p>比较麻烦的是以往旧系统的数据迁移，由于旧系统和现有系统的字段，类型，日期格式，数字格式等差异，需要抽丝剥茧一层层把数据注入到对应的数据表里，特别是表间关系需要继续保留下来。</p>
+<p>然后是运营人员通过运营后台，手动修改部分有问题的数据。</p>
+<h3 id="产品内部测试"><a href="#产品内部测试" class="headerlink" title="产品内部测试"></a>产品内部测试</h3><p>测试工程师完成所有测试用例的测试工作，研发人员将所有必须完成的 BUG 修正修正完成，其他待修正 BUG 完成转需求后，就可以启动产品内部测试了。</p>
+<p>内部测试首先可以针对产品相关的所有员工，包括产品、研发、运营、市场、运维等各个角色。这个过程一方面是为了收集产品缺陷反馈，同时也是让相关人员有参与产品改进的机会，让大家能荣辱与共。同事对于产品的容忍度比用户要高得多，就算产品做得很烂，他们都会坚持着把产品所有功能都用一遍，而真实用户很可能看到一个不好的体验点转身就走。因此产品经理一定要高度重视同事反馈，同事发现每个的缺陷，都一定会导致大量用户流失。</p>
+<p>员工反馈的问题如果是之前没有发现的缺陷，就需要尽快改进修正。如果对当前版本影响不大，就可以放到以后版本 BUG 转需求，并记录下反馈人信息和详细沟通结论。</p>
+<p>等员工完成内测后，产品经理可以将产品内部测试版发到核心用户群里，以有奖测试的形式刺激大家提交缺陷。如果线上反馈不够深入，可以由 UER 调研小组邀请用户当面沟通交流，找到更深入的缺陷。这些问题汇总提交到 BUG 列表中，可以马上修正的尽快修正，可以放下个版本的 BUG 转需求。</p>
+<h2 id="发布上线阶段"><a href="#发布上线阶段" class="headerlink" title="发布上线阶段"></a>发布上线阶段</h2><p>发布环境的搭建，包括预发布环境、生产环境、灰度发布环境的准备等工作。</p>
+<p>而正式上线的工作，则包括数据库上线、程序文件上线等工作。</p>
+<h3 id="发布环境准备"><a href="#发布环境准备" class="headerlink" title="发布环境准备"></a>发布环境准备</h3><p>预发布环境准备：预发布环境是跟生产环境配置一模一样的系统，只是往往只有一个测试节点，但是它后面调用的是正式生产环境的资源（例如 DB, Cache、队列等）。</p>
+<p>预发布环境主要是要在正式发布前，做一次完整回归测试。测试人员可以通过地址参数、Cookie、请求头参数、VPN 等工具，接入预发布环境进行系统整体回归测试。预发布环境下，最常见的 BUG 如下：生产环境代码已更新到最新版本了，但是数据库变更却忘了操作生产数据库。这个情况下，测试环境很可能都是正常的，但是预发布环境就可以很好的发现 BUG。</p>
+<p>跟开发环境不同，<strong>预发布环境不允许开发人员直接接触</strong>，以防因为开发人员提交代码的瑕疵影响预发布环境里的系统。因为这是运维人员保障上线质量的最后一道屏障，运维标准也基本等同于生产环境。</p>
+<p>正式生产环境准备：生产环境包括发布产品所需要的所有服务器资源，包括 Web 服务器、数据服务器、CDN 服务等。</p>
+<p>灰度发布环境准备：每个项目一般都会部署到多台机器，所以一般会拿 1-3台 服务器看看是否可用，如果失败则只需要回滚这几台服务器，比较方便。灰度发布需要使用<strong>跳板机</strong>并进行域名绑定，这样才能保证用户访问到的只有最新代码的服务器。</p>
+<h3 id="数据库上线"><a href="#数据库上线" class="headerlink" title="数据库上线"></a>数据库上线</h3><p>生成数据库项目时，可以先从测试环境导出数据库对象定义脚本，然后再将预先部署脚本、数据库对象定义和后期部署脚本合并为一个生成脚本，再将该脚本拿到主数据库服务器上生成数据库。然后通过主数据库备份到各台从属数据库。</p>
+<p>如果系统对读取及时性要求非常高，则可在数据库层之上架构 Redis 这样的分布式缓存，其性能肯定远高于从数据库读取数据。</p>
+<h3 id="程序文件编译上线"><a href="#程序文件编译上线" class="headerlink" title="程序文件编译上线"></a>程序文件编译上线</h3><p>组件部署：将 C/C++ 或 Java 编写的组件编译，然后通过自动部署工具发布到所有 Web 服务器。</p>
+<p>Web 前端部署：一般先将静态资源（例如图片、JavaScript 代码等）拆分出来，发布到 CDN 云服务。然后再通过 Git 将合并测试通过的 Trunk 版本发布到正式生产环境，再通过灰度发布工具同步到所有 Web 服务器。</p>
+<p>IOS APP 发布：App Stores 是 iTunes Store 的一部分，是 iPhone, iPod Touch, iPad, Mac 唯一的正规下载渠道。企业用户申请证书后，即可上传并发布 IOS 应用。</p>
+<p>Android APP 发布：推荐腾讯应用宝发布安卓版本的手机应用。应用宝提供防盗版功能，可有效帮助用户解决误下载山寨应用的问题。支持点击微信、QQ 分享链接，即可打开下载界面。因为没有唯一的安卓发布市场，因此建议主流安卓市场都能上线安卓的版本。</p>
+<h3 id="上线版本整体评估"><a href="#上线版本整体评估" class="headerlink" title="上线版本整体评估"></a>上线版本整体评估</h3><p>上线评估阶段需经过市场、产品、运营、开发、测试等对于上线做出整体评估后才能正式上线运营。这个过程一般是由产品经理先在全员群里提醒大家最后一次确认还有什么问题。</p>
+<p>如果有任何问题，则需要在群里和相关人员评估是否要在当前版本解决，如果是则尽快解决以免影响版本发布计划，如果不是则转需求到后续版本。</p>
+<p>如果每个人都没有提出异议则发出上线版本发布告知邮件，进入正式发布流程。</p>
+<h3 id="灰度发布"><a href="#灰度发布" class="headerlink" title="灰度发布"></a>灰度发布</h3><p>Web 前端灰度发布：对比较小的 Web 应用，在页面 JavaScript 或服务器端实现分流即可。但对于大规模用户的 Web 应用，采用<strong>分流发布引擎</strong>很有必要。</p>
+<p>组件灰度发布：</p>
+<p>IOS APP 灰度发布：常见做法是制作一个带数字签名的测试版，然后提供给测试用户使用。</p>
+<p>Android APP 灰度发布：由于 Android 没有统一的发布渠道，因此只需逐个替换发布渠道的安装包即可。</p>
+<h2 id="优化阶段"><a href="#优化阶段" class="headerlink" title="优化阶段"></a>优化阶段</h2><h3 id="研发工作总结"><a href="#研发工作总结" class="headerlink" title="研发工作总结"></a>研发工作总结</h3><p>产品上线后需要对产品研发过程做总结，不论是产品上的还是流程配合上的，为后续加强沟通协作、产品运营打好基础。</p>
+<p>产品流程也并不是一成不变的，不同的产品有不同的要求。对一些中小互联网公司而言，采用完整研发流程必然成本高昂，<strong>因此如何裁剪成自己需要的研发流程，是这类公司面临的关键问题。</strong></p>
+<h3 id="上线后收集用户反馈"><a href="#上线后收集用户反馈" class="headerlink" title="上线后收集用户反馈"></a>上线后收集用户反馈</h3><p>对于产品做出优化，对于用户常见的问题及反馈做出调整，这阶段更多是产品与用户的磨合，做到更好的用户体验。</p>
+<p>为了更好的收集用户反馈，需要在所有产品上都增加反馈入口，以便用户提交反馈内容。用户反馈的所有问题将出现在用户反馈平台中，以便产品和运营团队跟进。</p>
+<p>一般每天的反馈量都数以万计，因此产品设计师每天都需要花费相当比例的时间去浏览，并将反馈建议转化产品需求点加入需求池。</p>
+<h3 id="产品体验可用性测试"><a href="#产品体验可用性测试" class="headerlink" title="产品体验可用性测试"></a>产品体验可用性测试</h3><p>可用性测试常见方法是邀请一批真实的典型客户，针对典型场景使用产品，用户研究员在一旁观察、聆听、记录，从而发现产品中存在的可用性缺陷。</p>
+<p>为什么需要可用性测试呢？这是因为产品运营团队的员工往往潜意识里会认为用户一定会怎样操作，<strong>但是事实上用户很大概率上都不会按照他们希望的进行操作，甚至会陷入茫然根本用不下去</strong>。而通过可用性测试，就可以找到问题点，通过优化体验设计降低用户使用门槛。</p>
+<p><img src="https://img.blanc.site//wiki/img/20190803182403.jpg" alt="腾讯UER团队用户参与体验调研流程"></p>
+<h3 id="运维系统优化"><a href="#运维系统优化" class="headerlink" title="运维系统优化"></a>运维系统优化</h3><p>产品上线后运维工作才刚开始，具体包括<strong>升级版本上线工作</strong>、<strong>服务监控</strong>、<strong>应用状态统计</strong>、<strong>日常服务状态巡检</strong>、<strong>突发故障处理</strong>、<strong>服务日常变更调整</strong>、<strong>集群管理</strong>、<strong>服务性能评估优化</strong>、<strong>数据库管理优化</strong>、<strong>随着应用 PV 增减进行应用架构的伸缩、安全、运维开发等工作</strong>。</p>
+
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</div></article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/archives/6cc2e3a0.html" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Excel 利用函数获取行号、列号、当前行的上一行
+                
+            </div>
+        </a>
+    
+    
+        <a href="/archives/607dec48.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">macOS 如何删除自带 ABC 输入法</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+        <section id="comments"> <div id="vcomments"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'sz7ny95XiYWkxht3H3YDs2GX-gzGzoHsz',
+        appKey: 'T8JJugDkbqtFLONIIzcPWW76',
+        placeholder: '不要吝啬赞美的语句ヾﾉ≧∀≦)o!',
+        avatar: 'mp',
+        meta: ['nick','mail','link'],
+        pageSize: 10,
+        visitor: true,
+        notify: true,
+        verify: true
+    })
+    let info = document.querySelectorAll('#vcomments>.info')[0]
+    if (info) { info.style.display = 'none' }
+</script> </section>
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            ryomahan &copy; 2021 
+            <a rel="external nofollow noopener noreferrer" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png"></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>. Comment By <a href="https://valine.js.org/" target="_blank" rel="external nofollow noopener noreferrer">valine</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten" target="_blank" rel="external nofollow noopener noreferrer">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>

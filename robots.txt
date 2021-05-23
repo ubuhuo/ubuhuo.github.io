@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Allow: /archives/
+Allow: /categories/
+Allow: /about/
+Disallow: /vendors/
+Disallow: /js/
+Disallow: /css/
+Disallow: /vendor/
+Disallow: /content.json
+Disallow: /404.html
+Sitemap: https://wiki.blanc.site/sitemap.xml
+Sitemap: https://wiki.blanc.site/baidusitemap.xml
